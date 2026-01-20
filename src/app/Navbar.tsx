@@ -1,18 +1,35 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronRight, Globe, Shield } from 'lucide-react';
+import { Menu, X, ChevronRight } from 'lucide-react';
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Scrolled state for background styling
+      setIsScrolled(currentScrollY > 20);
+
+      // Visibility state for hide/show logic
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setIsVisible(false); // Scrolling down
+      } else {
+        setIsVisible(true); // Scrolling up
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -25,114 +42,121 @@ export default function Navbar() {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled ? 'pt-2' : 'pt-6'}`}>
-        <div className="content-container !max-w-[1600px]">
-          {/* Top Utility Nav - Desktop Only */}
-          {!scrolled && (
-            <div className="hidden lg:flex items-center justify-between px-8 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--primary-teal-dark)]/40 mb-2">
-              <div className="flex items-center gap-6">
-                <span className="flex items-center gap-2"><Globe size={12} /> Global Enterprise Edition</span>
-                <span className="flex items-center gap-2"><Shield size={12} /> Military Grade Encryption</span>
-              </div>
-              <div className="flex items-center gap-6">
-                <Link href="#" className="hover:text-[var(--primary-teal)] transition-colors">Support</Link>
-                <Link href="#" className="hover:text-[var(--primary-teal)] transition-colors">Downloads</Link>
-              </div>
+      <motion.header
+        initial={{ y: 0 }}
+        animate={{ y: isVisible ? 0 : -100 }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        className={`fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300 ${isScrolled ? 'bg-white/80 backdrop-blur-xl border-b border-black/5 py-4 shadow-sm' : 'bg-transparent py-8'
+          }`}
+      >
+        <div className="w-full px-6 md:px-12 flex items-center justify-between">
+
+          {/* Logo Section - Responsive Name */}
+          <Link href="/" className="flex items-center gap-3 md:gap-4 group shrink-0">
+            <div className="relative w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-black/5 group-hover:scale-105 transition-all duration-500 overflow-hidden border border-black/5">
+              <Image
+                src="/app_logo.png"
+                alt="QLINE Logo"
+                width={48}
+                height={48}
+                className="object-contain p-1.5 md:p-2"
+              />
             </div>
-          )}
-
-          <nav className={`flex items-center justify-between px-8 h-20 rounded-[28px] border transition-all duration-500 ${scrolled ? 'glass-panel shadow-2xl bg-white/95 border-[var(--primary-teal)]/10' : 'bg-white shadow-lg border-transparent'}`}>
-
-            {/* Logo Section */}
-            <Link href="/" className="flex items-center gap-4 group shrink-0">
-              <div className="relative w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-xl shadow-black/5 group-hover:scale-105 transition-all duration-500 overflow-hidden">
-                <Image
-                  src="/app_logo.png"
-                  alt="QLINE Logo"
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
-              </div>
-              <div className="flex flex-col -gap-1">
-                <span className="text-2xl font-black tracking-tighter text-[var(--primary-teal-dark)] leading-none">
-                  QLINE <span className="text-[var(--primary-teal)]">POS</span>
-                </span>
-                <span className="text-[9px] font-black uppercase tracking-[0.4em] text-[var(--primary-teal)]">Revolution</span>
-              </div>
-            </Link>
-
-            {/* Desktop Center Nav */}
-            <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="px-6 py-2 text-sm font-bold text-[var(--primary-teal-dark)] hover:text-[var(--primary-teal)] hover:bg-[var(--primary-teal)]/5 rounded-full transition-all duration-300"
-                >
-                  {link.name}
-                </Link>
-              ))}
+            <div className="flex flex-col">
+              <span className="text-xl md:text-3xl font-black tracking-tighter text-[var(--primary-teal-dark)] leading-none">
+                QLINE <span className="hidden sm:inline text-[var(--primary-teal)]">POS</span>
+              </span>
+              <span className="hidden md:block text-[10px] font-black uppercase tracking-[0.4em] text-[var(--primary-teal)] mt-0.5">
+                Revolution
+              </span>
             </div>
+          </Link>
 
-            {/* CTA Section */}
-            <div className="flex items-center gap-6">
-              <Link href="/login" className="hidden sm:block text-sm font-black uppercase tracking-widest text-[var(--primary-teal-dark)] hover:text-[var(--primary-teal)] transition-colors">
-                Login
-              </Link>
-              <button className="btn-primary !py-3.5 !px-8 !text-sm shadow-[0_15px_30px_-10px_rgba(38,166,154,0.5)]">
-                Request Live Demo
-                <ChevronRight size={18} />
-              </button>
-
-              {/* Mobile Toggle */}
-              <button
-                className="lg:hidden p-3 text-[var(--primary-teal-dark)] bg-[var(--primary-teal)]/5 rounded-2xl"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="px-5 py-2 text-sm font-bold text-[var(--primary-teal-dark)]/70 hover:text-[var(--primary-teal)] hover:bg-[var(--primary-teal)]/5 rounded-full transition-all duration-200"
               >
-                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
+                {link.name}
+              </Link>
+            ))}
           </nav>
-        </div>
-      </header>
 
-      {/* Side-sliding Mobile Menu */}
+          {/* CTA Section */}
+          <div className="flex items-center gap-3 md:gap-6">
+            <Link
+              href="/login"
+              className="hidden sm:block text-xs md:text-sm font-black uppercase tracking-widest text-[var(--primary-teal-dark)] hover:text-[var(--primary-teal)] transition-colors"
+            >
+              Login
+            </Link>
+            <button className="btn-primary !py-2.5 !px-5 md:!py-3.5 md:!px-8 !text-[10px] md:!text-sm shadow-xl shadow-[var(--primary-teal)]/20">
+              <span className="hidden xs:inline">Request Live Demo</span>
+              <span className="xs:hidden">Demo</span>
+              <ChevronRight size={18} className="hidden md:block ml-1" />
+            </button>
+
+            {/* Mobile Menu Toggle Button */}
+            <button
+              className="lg:hidden p-2 text-[var(--primary-teal-dark)] bg-black/5 rounded-xl hover:bg-black/10 transition-colors"
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <Menu size={24} />
+            </button>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            className="fixed inset-0 z-[120] bg-[var(--primary-teal-dark)] p-8 lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[150] bg-black/60 backdrop-blur-md lg:hidden"
           >
-            <div className="flex justify-between items-center mb-16">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-2">
-                  <Image src="/app_logo.png" alt="Logo" width={32} height={32} />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-sm bg-white p-8 flex flex-col shadow-2xl"
+            >
+              <div className="flex justify-between items-center mb-12">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-[var(--primary-teal)] rounded-lg flex items-center justify-center p-2 shadow-sm">
+                    <Image src="/app_logo.png" alt="Logo" width={28} height={28} />
+                  </div>
+                  <span className="text-2xl font-black text-[var(--primary-teal-dark)]">QLINE</span>
                 </div>
-                <div className="text-3xl font-black text-white tracking-tighter">QLINE</div>
+                <button onClick={() => setMobileMenuOpen(false)} className="p-2 bg-black/5 rounded-xl text-[var(--primary-teal-dark)]">
+                  <X size={24} />
+                </button>
               </div>
-              <button onClick={() => setMobileMenuOpen(false)} className="text-white p-3 bg-white/10 rounded-2xl">
-                <X size={32} />
-              </button>
-            </div>
-            <div className="flex flex-col gap-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-5xl font-light text-white/40 hover:text-white transition-colors"
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <div className="h-px w-full bg-white/10 my-8"></div>
-              <button className="btn-primary !bg-white !text-[var(--primary-teal-dark)] text-2xl py-6 rounded-[30px] shadow-2xl">
-                Request Demo
-              </button>
-            </div>
+
+              <div className="flex flex-col gap-6">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-4xl font-bold text-[var(--primary-teal-dark)]/30 hover:text-[var(--primary-teal-dark)] transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+
+              <div className="mt-auto pt-8 border-t border-black/5">
+                <button className="w-full btn-primary py-5 rounded-2xl text-lg shadow-2xl shadow-[var(--primary-teal)]/20">
+                  Request Live Demo
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
