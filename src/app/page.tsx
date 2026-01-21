@@ -43,103 +43,199 @@ export default function Home() {
         <div className="absolute bottom-[0%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[var(--accent-blue)] blur-[100px] animation-delay-2000"></div>
       </div>
 
-      {/* Hero Section - The "Showstopper" */}
-      <section className="relative pt-48 pb-32 md:pt-64 md:pb-56">
-        <div className="content-container !max-w-[1600px]">
-          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-32">
+      {/* Text Header Section - Immediately after Navbar */}
+      <section className="pt-40 md:pt-52 pb-20 md:pb-24 bg-white relative overflow-hidden">
+        {/* Subtle Background accent */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-30">
+          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[var(--primary-teal)]/10 blur-[120px] rounded-full"></div>
+          <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-[var(--accent-blue)]/10 blur-[100px] rounded-full"></div>
+        </div>
+
+        <div className="content-container relative z-10 w-full text-center px-4">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="max-w-6xl mx-auto flex flex-col items-center"
+          >
+            {/* V4.0 Badge */}
             <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={staggerContainer}
-              className="w-full lg:w-[60%] text-center lg:text-left"
+              variants={fadeInUp}
+              className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-[var(--primary-teal)]/5 text-[var(--primary-teal)] text-[10px] font-black uppercase tracking-[0.3em] mb-10 border border-[var(--primary-teal)]/10"
+            >
+              <div className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--primary-teal)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--primary-teal)]"></span>
+              </div>
+              Quantum Engine V4.0
+            </motion.div>
+
+            <motion.h1
+              variants={fadeInUp}
+              className="text-6xl md:text-[100px] xl:text-[130px] font-[900] text-[var(--primary-teal-dark)] leading-[0.8] tracking-[-0.05em] mb-12"
+            >
+              The OS for <br />
+              <span className="text-teal-gradient">Dominating</span> the Floor.
+            </motion.h1>
+
+            <motion.p
+              variants={fadeInUp}
+              className="text-xl md:text-3xl text-[var(--text-muted)] max-w-4xl mb-16 leading-tight font-medium opacity-90"
+            >
+              Precision-engineered for high-pressure dining. Zero lag, military-grade financial auditing, and biometric staff sync.
+            </motion.p>
+
+            <motion.div
+              variants={fadeInUp}
+              className="flex flex-col md:flex-row items-center gap-8 mb-20"
+            >
+              <button className="btn-primary !px-16 !py-8 !text-2xl !rounded-full shadow-3xl group hover:scale-105 transition-all">
+                Claim Your Evolution
+                <ChevronRight size={32} className="group-hover:translate-x-2 transition-transform" />
+              </button>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Video Showcase Section - With Corner Floating Elements */}
+      <section className="relative px-6 md:px-12 pb-24 md:pb-40 bg-white overflow-visible">
+        <div className="max-w-[1700px] mx-auto relative">
+
+          {/* Large Corner Floating Elements */}
+          <div className="absolute inset-x-0 h-full pointer-events-none z-20 -inset-y-10">
+            {/* Badge 1: Top Left - Network Speed */}
+            <motion.div
+              animate={{
+                y: [0, -40, 20, 0],
+                x: [0, 30, -20, 0],
+                rotate: [0, 5, -5, 0]
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-[-20px] left-[-20px] md:top-[0px] md:left-[0px] pointer-events-auto"
             >
               <motion.div
-                variants={fadeInUp}
-                className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white shadow-2xl shadow-[var(--primary-teal)]/20 text-[var(--primary-teal-dark)] text-sm font-black uppercase tracking-[0.2em] mb-12 border border-[var(--primary-teal)]/10"
+                whileHover={{ scale: 1.1, rotate: -5 }}
+                className="glass-panel px-8 py-5 md:px-10 md:py-6 rounded-[32px] flex items-center gap-6 border-white shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] backdrop-blur-3xl border-2"
               >
-                <div className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--primary-teal)] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[var(--primary-teal)]"></span>
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-[22px] bg-teal-50 flex items-center justify-center text-[var(--primary-teal)] shadow-inner">
+                  <Zap size={32} className="fill-[var(--primary-teal)]" />
                 </div>
-                V4.0 Quantum Core Engine
-              </motion.div>
-
-              <motion.h1
-                variants={fadeInUp}
-                className="text-7xl md:text-[110px] font-[900] text-[var(--primary-teal-dark)] leading-[0.85] tracking-[-0.04em] mb-12"
-              >
-                The OS for <br />
-                <span className="text-teal-gradient">Dominating</span> <br />
-                the Floor.
-              </motion.h1>
-
-              <motion.p
-                variants={fadeInUp}
-                className="text-2xl md:text-3xl text-[var(--text-muted)] max-w-3xl mx-auto lg:mx-0 mb-16 leading-tight font-medium opacity-80"
-              >
-                Precision-engineered for high-pressure dining. Zero lag, military-grade financial auditing, and biometric staff sync.
-              </motion.p>
-
-              <motion.div
-                variants={fadeInUp}
-                className="flex flex-wrap items-center gap-8 justify-center lg:justify-start"
-              >
-                <button className="btn-primary !px-16 !py-8 !text-2xl !rounded-[40px] shadow-[0_25px_50px_-12px_rgba(38,166,154,0.5)] group hover:scale-105 transition-all">
-                  Claim Your Evolution
-                  <ChevronRight size={32} className="group-hover:translate-x-2 transition-transform" />
-                </button>
-                <div className="flex items-center gap-6">
-                  <div className="flex -space-x-4">
-                    {[1, 2, 3].map(i => <div key={i} className="w-14 h-14 rounded-full border-4 border-white bg-gray-200"></div>)}
-                  </div>
-                  <div className="text-sm">
-                    <div className="font-black text-[var(--primary-teal-dark)] underline">5,000+ Establishments</div>
-                    <div className="text-[var(--text-muted)] font-bold">Trading today on QLINE</div>
-                  </div>
+                <div className="text-left">
+                  <div className="text-[10px] md:text-[12px] font-black uppercase text-gray-400 tracking-[0.3em] mb-1">Latency</div>
+                  <div className="text-xl md:text-3xl font-black text-[var(--primary-teal-dark)] leading-none">0.1ms</div>
                 </div>
               </motion.div>
             </motion.div>
 
+            {/* Badge 2: Top Right - System Uptime */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] as const }}
-              className="w-full lg:w-[40%] relative"
+              animate={{
+                y: [0, 50, -30, 0],
+                x: [0, -40, 20, 0],
+                rotate: [0, -5, 5, 0]
+              }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute top-[40px] right-[-10px] md:top-[80px] md:right-[-20px] pointer-events-auto"
             >
-              <div className="relative z-10 glass-panel rounded-[80px] p-6 shadow-[0_80px_160px_-40px_rgba(0,0,0,0.2)] border-[6px] border-white backdrop-blur-3xl overflow-hidden group">
-                <div className="aspect-[4/5] rounded-[60px] bg-gradient-to-br from-[var(--primary-teal-dark)] to-[#0c1a19] flex items-center justify-center relative">
-                  <LayoutGrid size={240} className="text-white/[0.03] group-hover:scale-150 transition-transform duration-[3s]" />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1)_0%,transparent_60%)]"></div>
-
-                  {/* Abstract UI Elements */}
-                  <div className="absolute top-20 left-12 right-12 space-y-8">
-                    <div className="h-4 w-32 bg-[var(--primary-teal)]/30 rounded-full"></div>
-                    <div className="h-16 w-full bg-white/5 rounded-3xl border border-white/10"></div>
-                    <div className="h-64 w-full bg-white/5 rounded-3xl border border-white/10 relative overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary-teal)]/20 to-transparent"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Advanced Floating Badge */}
               <motion.div
-                animate={{ y: [0, -30, 0], rotate: [0, 2, 0] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-12 -left-12 p-10 bg-white rounded-[50px] shadow-3xl z-20 border-b-[8px] border-[var(--primary-teal)] flex items-center gap-6"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                className="glass-panel px-8 py-5 md:px-10 md:py-6 rounded-[32px] flex items-center gap-6 border-white shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] backdrop-blur-3xl border-2"
               >
-                <div className="w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center text-[var(--primary-teal)]">
-                  <Zap size={32} />
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-[22px] bg-blue-50 flex items-center justify-center text-[var(--accent-blue)] shadow-inner">
+                  <ShieldCheck size={32} />
                 </div>
-                <div>
-                  <div className="text-[12px] font-black uppercase text-gray-400 tracking-widest">Network Speed</div>
-                  <div className="text-4xl font-black text-[var(--primary-teal-dark)]">0.1ms</div>
+                <div className="text-left">
+                  <div className="text-[10px] md:text-[12px] font-black uppercase text-gray-400 tracking-[0.3em] mb-1">Reliability</div>
+                  <div className="text-xl md:text-3xl font-black text-[var(--primary-teal-dark)] leading-none">99.9%</div>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Badge 3: Bottom Left - Global Sync */}
+            <motion.div
+              animate={{
+                y: [0, 30, -50, 0],
+                x: [0, 40, -30, 0],
+                rotate: [0, 3, -3, 0]
+              }}
+              transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              className="absolute bottom-[80px] left-[-30px] md:bottom-[120px] md:left-[-40px] pointer-events-auto"
+            >
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: 3 }}
+                className="glass-panel px-8 py-5 md:px-10 md:py-6 rounded-[32px] flex items-center gap-6 border-white shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] backdrop-blur-3xl border-2"
+              >
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-[22px] bg-emerald-50 flex items-center justify-center text-emerald-500 shadow-inner">
+                  <LayoutGrid size={32} />
+                </div>
+                <div className="text-left">
+                  <div className="text-[10px] md:text-[12px] font-black uppercase text-gray-400 tracking-[0.3em] mb-1">Global Sync</div>
+                  <div className="text-xl md:text-3xl font-black text-[var(--primary-teal-dark)] leading-none">LIVE</div>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Badge 4: Bottom Right - AI Audit */}
+            <motion.div
+              animate={{
+                y: [0, -60, 40, 0],
+                x: [0, -20, 50, 0],
+                rotate: [0, -3, 3, 0]
+              }}
+              transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+              className="absolute bottom-[20px] right-[-20px] md:bottom-[40px] md:right-[-30px] pointer-events-auto"
+            >
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: -3 }}
+                className="glass-panel px-8 py-5 md:px-10 md:py-6 rounded-[32px] flex items-center gap-6 border-white shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] backdrop-blur-3xl border-2"
+              >
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-[22px] bg-purple-50 flex items-center justify-center text-purple-500 shadow-inner">
+                  <BarChart3 size={32} />
+                </div>
+                <div className="text-left">
+                  <div className="text-[10px] md:text-[12px] font-black uppercase text-gray-400 tracking-[0.3em] mb-1">AI Oversight</div>
+                  <div className="text-xl md:text-3xl font-black text-[var(--primary-teal-dark)] leading-none">L5 AUDIT</div>
                 </div>
               </motion.div>
             </motion.div>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 100, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="relative h-[600px] md:h-[90vh] w-full rounded-[60px] md:rounded-[100px] overflow-hidden shadow-[0_80px_160px_-40px_rgba(0,0,0,0.3)] border-8 md:border-[16px] border-white ring-1 ring-black/5 group z-10"
+          >
+            {/* Background Video */}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[10s] ease-out"
+            >
+              <source src="/video/hero-section-video.mp4" type="video/mp4" />
+            </video>
+
+            {/* Cinematic Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.2)_100%)]"></div>
+
+            {/* Interactive Play Badge for aesthetic */}
+            <div className="absolute bottom-12 right-12 md:bottom-20 md:right-20">
+              <div className="glass-panel !bg-white/20 !backdrop-blur-2xl !border-white/30 px-6 py-4 rounded-full flex items-center gap-4 text-white">
+                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                  <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1"></div>
+                </div>
+                <span className="text-xs font-black uppercase tracking-widest">Live Experience</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
+
 
       {/* Forced 3-Column Grid Section */}
       <section className="py-56 bg-white relative">
