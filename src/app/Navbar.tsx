@@ -10,7 +10,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [lastY, setLastY] = useState(0);
+  const lastYRef = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,17 +20,17 @@ export default function Navbar() {
       setIsScrolled(currentY > 20);
 
       // Smart Hide/Show Logic
-      if (currentY > lastY && currentY > 100) {
+      if (currentY > lastYRef.current && currentY > 100) {
         setHidden(true); // Scrolling Down
       } else {
         setHidden(false); // Scrolling Up
       }
 
-      setLastY(currentY);
+      lastYRef.current = currentY;
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastY]);
+  }, []);
 
   const navLinks = [
     { name: 'Home', href: '#' },
@@ -57,24 +57,24 @@ export default function Navbar() {
         <div className="w-full px-6 md:px-12 lg:px-20 flex items-center justify-between">
 
           {/* Enhanced Branding Section */}
-          <Link href="/" className="flex items-center gap-5 group shrink-0">
-            <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white flex items-center justify-center shadow-2xl shadow-[var(--primary-teal)]/10 group-hover:scale-105 transition-all duration-500 border border-white/40 overflow-hidden">
+          <Link href="/" className="flex items-center gap-2 md:gap-5 group shrink-0">
+            <div className="relative w-10 h-10 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-[var(--primary-teal)] to-[var(--primary-teal-dark)] flex items-center justify-center shadow-xl shadow-[var(--primary-teal)]/20 group-hover:scale-105 transition-all duration-500 border border-white/20 overflow-hidden">
               <Image
                 src="/app_logo.png"
                 alt="QLINE Logo"
                 width={60}
                 height={60}
-                className="object-contain p-2 md:p-2.5"
+                className="object-contain p-1.5 md:p-2.5 brightness-0 invert"
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-[var(--primary-teal)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
 
-            <div className="flex flex-col">
-              <span className="text-2xl md:text-3xl font-[900] tracking-[-0.05em] text-[var(--primary-teal-dark)] leading-none mb-1">
+            <div className="flex flex-col justify-center">
+              <span className="text-lg md:text-3xl font-[900] tracking-[-0.05em] text-[var(--primary-teal-dark)] leading-none mb-0.5 md:mb-1">
                 QLINE <span className="text-[var(--primary-teal)]">POS</span>
               </span>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.5em] text-[var(--primary-teal)] opacity-80">
+                <span className="text-[7px] md:text-[11px] font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-[var(--primary-teal)] opacity-80 whitespace-nowrap">
                   Evolutionary Intelligence
                 </span>
                 <div className="h-[1px] w-8 bg-[var(--primary-teal)]/30 hidden sm:block"></div>
@@ -105,10 +105,10 @@ export default function Navbar() {
               </div>
             </div>
 
-            <button className="btn-primary !py-4 !px-8 !text-xs !rounded-2xl shadow-xl shadow-[var(--primary-teal)]/20 hover:shadow-[var(--primary-teal)]/40 transition-shadow flex items-center gap-3">
-              <span className="font-black uppercase tracking-widest">Book a Demo</span>
-              <div className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center">
-                <ChevronRight size={16} />
+            <button className="btn-primary !py-3 !px-4 sm:!py-3.5 sm:!px-6 md:!py-4 md:!px-8 !text-[10px] sm:!text-xs !rounded-xl sm:!rounded-2xl shadow-xl shadow-[var(--primary-teal)]/20 hover:shadow-[var(--primary-teal)]/40 transition-shadow flex items-center gap-2 sm:gap-3">
+              <span className="font-black uppercase tracking-widest whitespace-nowrap">Book Demo</span>
+              <div className="hidden sm:flex w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-white/20 items-center justify-center">
+                <ChevronRight size={14} className="sm:size-4" />
               </div>
             </button>
 
