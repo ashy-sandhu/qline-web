@@ -9,28 +9,49 @@ import { Menu, X, ChevronRight, Globe, Zap } from 'lucide-react';
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [lastY, setLastY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentY = window.scrollY;
+
+      // Update background style
+      setIsScrolled(currentY > 20);
+
+      // Smart Hide/Show Logic
+      if (currentY > lastY && currentY > 100) {
+        setHidden(true); // Scrolling Down
+      } else {
+        setHidden(false); // Scrolling Up
+      }
+
+      setLastY(currentY);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastY]);
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Features', href: '/features' },
-    { name: 'Pricing', href: '#pricing' },
+    { name: 'Home', href: '#' },
+    { name: 'Anatomy', href: '#anatomy' },
+    { name: 'Features', href: '#features' },
+    { name: 'Engine', href: '#engine' },
     { name: 'Download', href: '#download' },
   ];
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-500 ease-in-out ${isScrolled
-            ? 'py-4 bg-white/60 backdrop-blur-2xl border-b border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)]'
-            : 'py-8 bg-transparent'
+      <motion.nav
+        variants={{
+          visible: { y: 0 },
+          hidden: { y: '-100%' },
+        }}
+        animate={hidden ? 'hidden' : 'visible'}
+        transition={{ duration: 0.35, ease: 'easeInOut' }}
+        className={`sticky top-0 left-0 right-0 z-[100] w-full transition-all duration-500 ease-in-out ${isScrolled
+          ? 'py-4 bg-white/90 backdrop-blur-2xl border-b border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)]'
+          : 'py-8 bg-white'
           }`}
       >
         <div className="w-full px-6 md:px-12 lg:px-20 flex items-center justify-between">
@@ -100,7 +121,7 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Premium Mobile Menu Overlay */}
       <AnimatePresence>
