@@ -45,7 +45,7 @@ export default function Home() {
       </div>
 
       {/* Text Header Section - Immediately after Navbar */}
-      <section className="pb-20 md:pb-24 bg-white relative overflow-hidden">
+      <section className="pb-12 md:pb-24 bg-white relative overflow-hidden">
         {/* Subtle Background accent */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-30">
           <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[var(--primary-teal)]/10 blur-[120px] rounded-full"></div>
@@ -88,7 +88,7 @@ export default function Home() {
 
             <motion.div
               variants={fadeInUp}
-              className="flex flex-col md:flex-row items-center gap-6 mb-16"
+              className="flex flex-col md:flex-row items-center gap-6"
             >
               <button className="btn-primary !px-10 !py-5 !text-lg !rounded-2xl shadow-2xl group hover:scale-105 transition-all">
                 Claim Your Evolution
@@ -256,7 +256,7 @@ export default function Home() {
       </section>
 
       {/* Forced 3-Column Grid Section */}
-      <section id="anatomy" className="pt-80 md:pt-96 pb-56 bg-white relative scroll-mt-32">
+      <section id="anatomy" className="pt-24 md:pt-32 pb-24 bg-white relative scroll-mt-24">
         <div className="content-container">
           <div className="text-center max-w-5xl mx-auto mb-40 pt-20">
             <motion.span
@@ -366,7 +366,7 @@ export default function Home() {
       </section>
 
       {/* DEEP FEATURE SHOWCASE - THE ART OF AI */}
-      <section id="features" className="py-40 bg-[var(--bg-main)] relative overflow-hidden">
+      <section id="features" className="py-20 bg-[var(--bg-main)] relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[var(--primary-teal)]/5 blur-[120px] rounded-full -z-10 translate-x-1/2"></div>
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[var(--accent-blue)]/5 blur-[120px] rounded-full -z-10 -translate-x-1/2"></div>
@@ -479,7 +479,7 @@ export default function Home() {
       </section>
 
       {/* QUANTUM ENGINE SECTION - FLUTTER POWER */}
-      <section id="engine" className="py-56 bg-white relative overflow-hidden">
+      <section id="engine" className="py-20 bg-white relative overflow-hidden">
         {/* Background Accents */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full -z-10 opacity-40">
           <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[var(--primary-teal)]/5 blur-[120px] rounded-full"></div>
