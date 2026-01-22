@@ -112,8 +112,8 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.9, x: -20, y: -20 }}
               whileInView={{
                 opacity: 1,
-                x: 24,
-                y: 24,
+                x: 12,
+                y: -55,
                 scale: 1,
                 transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }
               }}
@@ -121,17 +121,17 @@ export default function Home() {
               className="absolute top-0 left-0 z-30 pointer-events-auto"
             >
               <motion.div
-                animate={{ y: [0, -15, 10, 0], x: [0, 10, -5, 0] }}
+                animate={{ y: [0, -8, 5, 0], x: [0, 5, -3, 0] }}
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                whileHover={{ scale: 1.05 }}
-                className="glass-panel py-4 md:py-6 pl-6 pr-10 md:pl-10 md:pr-16 rounded-[30px] md:rounded-[40px] flex items-center gap-6 md:gap-8 border-white/40 border shadow-xl backdrop-blur-3xl"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(38, 166, 154, 0.3)" }}
+                className="dark-glass py-2 md:py-2.5 pl-2.5 md:pl-3 pr-5 md:pr-8 rounded-[18px] md:rounded-[24px] flex items-center gap-3 md:gap-4 border-white/10 border shadow-2xl backdrop-blur-3xl"
               >
-                <div className="w-10 h-10 md:w-16 md:h-16 rounded-[20px] md:rounded-[24px] bg-teal-50 flex items-center justify-center text-[var(--primary-teal)]">
-                  <Zap size={28} className="fill-[var(--primary-teal)] md:w-8 md:h-8" />
+                <div className="w-8 h-8 md:w-11 md:h-11 rounded-[12px] md:rounded-[14px] bg-white/10 flex items-center justify-center text-white border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                  <Zap size={18} className="fill-[var(--primary-teal)] md:w-5 md:h-5 drop-shadow-[0_0_8px_var(--primary-teal)]" />
                 </div>
-                <div className="text-left pr-4 md:pr-8">
-                  <div className="text-[8px] md:text-[12px] font-[900] uppercase text-gray-400 tracking-[0.3em] mb-1 leading-none opacity-80">Latency</div>
-                  <div className="text-lg md:text-3xl font-[900] text-[var(--primary-teal-dark)] leading-none">0.1ms</div>
+                <div className="text-left">
+                  <div className="text-[6px] md:text-[9px] font-[900] uppercase text-white/40 tracking-[0.25em] mb-0.5 leading-none">Latency</div>
+                  <div className="text-xs md:text-xl font-black text-white leading-none tabular-nums">0.1ms</div>
                 </div>
               </motion.div>
             </motion.div>
@@ -141,8 +141,8 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.9, x: 20, y: -20 }}
               whileInView={{
                 opacity: 1,
-                x: -24,
-                y: 24,
+                x: -12,
+                y: -55,
                 scale: 1,
                 transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }
               }}
@@ -150,17 +150,17 @@ export default function Home() {
               className="absolute top-0 right-0 z-30 pointer-events-auto"
             >
               <motion.div
-                animate={{ y: [0, 20, -15, 0], x: [0, -10, 5, 0] }}
+                animate={{ y: [0, 10, -8, 0], x: [0, -5, 3, 0] }}
                 transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-                whileHover={{ scale: 1.05 }}
-                className="glass-panel py-4 md:py-6 pl-6 pr-10 md:pl-10 md:pr-16 rounded-[30px] md:rounded-[40px] flex items-center gap-6 md:gap-8 border-white/40 border shadow-xl backdrop-blur-3xl"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(14, 165, 233, 0.3)" }}
+                className="dark-glass py-2 md:py-2.5 pl-2.5 md:pl-3 pr-5 md:pr-8 rounded-[18px] md:rounded-[24px] flex items-center gap-3 md:gap-4 border-white/10 border shadow-2xl backdrop-blur-3xl"
               >
-                <div className="w-10 h-10 md:w-16 md:h-16 rounded-[20px] md:rounded-[24px] bg-blue-50 flex items-center justify-center text-[var(--accent-blue)]">
-                  <ShieldCheck size={28} className="md:w-8 md:h-8" />
+                <div className="w-8 h-8 md:w-11 md:h-11 rounded-[12px] md:rounded-[14px] bg-white/10 flex items-center justify-center text-white border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                  <ShieldCheck size={18} className="md:w-5 md:h-5 text-[var(--accent-blue)] drop-shadow-[0_0_8px_var(--accent-blue)]" />
                 </div>
-                <div className="text-left pr-4 md:pr-8">
-                  <div className="text-[8px] md:text-[12px] font-[900] uppercase text-gray-400 tracking-[0.3em] mb-1 leading-none opacity-80">Uptime</div>
-                  <div className="text-lg md:text-3xl font-[900] text-[var(--primary-teal-dark)] leading-none">99.9%</div>
+                <div className="text-left">
+                  <div className="text-[6px] md:text-[9px] font-[900] uppercase text-white/40 tracking-[0.25em] mb-0.5 leading-none">Uptime</div>
+                  <div className="text-xs md:text-xl font-black text-white leading-none tabular-nums">99.9%</div>
                 </div>
               </motion.div>
             </motion.div>
@@ -170,8 +170,8 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.9, x: -20, y: 20 }}
               whileInView={{
                 opacity: 1,
-                x: 24,
-                y: -24,
+                x: 12,
+                y: 55,
                 scale: 1,
                 transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.5 }
               }}
@@ -179,17 +179,17 @@ export default function Home() {
               className="absolute bottom-0 left-0 z-30 pointer-events-auto"
             >
               <motion.div
-                animate={{ y: [0, 15, -10, 0], x: [0, 12, -8, 0] }}
+                animate={{ y: [0, 8, -5, 0], x: [0, 6, -4, 0] }}
                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                whileHover={{ scale: 1.05 }}
-                className="glass-panel py-4 md:py-6 pl-6 pr-10 md:pl-10 md:pr-16 rounded-[30px] md:rounded-[40px] flex items-center gap-6 md:gap-8 border-white/40 border shadow-xl backdrop-blur-3xl"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(16, 185, 129, 0.3)" }}
+                className="dark-glass py-2 md:py-2.5 pl-2.5 md:pl-3 pr-5 md:pr-8 rounded-[18px] md:rounded-[24px] flex items-center gap-3 md:gap-4 border-white/10 border shadow-2xl backdrop-blur-3xl"
               >
-                <div className="w-10 h-10 md:w-16 md:h-16 rounded-[20px] md:rounded-[24px] bg-emerald-50 flex items-center justify-center text-emerald-500">
-                  <LayoutGrid size={28} className="md:w-8 md:h-8" />
+                <div className="w-8 h-8 md:w-11 md:h-11 rounded-[12px] md:rounded-[14px] bg-white/10 flex items-center justify-center text-white border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                  <LayoutGrid size={18} className="md:w-5 md:h-5 text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,1)]" />
                 </div>
-                <div className="text-left pr-4 md:pr-8">
-                  <div className="text-[8px] md:text-[12px] font-[900] uppercase text-gray-400 tracking-[0.3em] mb-1 leading-none opacity-80">Global</div>
-                  <div className="text-lg md:text-2xl font-[900] text-[var(--primary-teal-dark)] leading-none">SYNC</div>
+                <div className="text-left">
+                  <div className="text-[6px] md:text-[9px] font-[900] uppercase text-white/40 tracking-[0.25em] mb-0.5 leading-none">Global</div>
+                  <div className="text-xs md:text-lg font-black text-white leading-none tracking-tight">SYNC</div>
                 </div>
               </motion.div>
             </motion.div>
@@ -199,8 +199,8 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.9, x: 20, y: 20 }}
               whileInView={{
                 opacity: 1,
-                x: -24,
-                y: -24,
+                x: -12,
+                y: 55,
                 scale: 1,
                 transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.7 }
               }}
@@ -208,20 +208,24 @@ export default function Home() {
               className="absolute bottom-0 right-0 z-30 pointer-events-auto"
             >
               <motion.div
-                animate={{ y: [0, -20, 15, 0], x: [0, -12, 8, 0] }}
+                animate={{ y: [0, -10, 8, 0], x: [0, -6, 4, 0] }}
                 transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-                whileHover={{ scale: 1.05 }}
-                className="glass-panel py-4 md:py-6 pl-6 pr-10 md:pl-10 md:pr-16 rounded-[30px] md:rounded-[40px] flex items-center gap-6 md:gap-8 border-white/40 border shadow-xl backdrop-blur-3xl"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(168, 85, 247, 0.3)" }}
+                className="dark-glass py-2 md:py-2.5 pl-2.5 md:pl-3 pr-5 md:pr-8 rounded-[18px] md:rounded-[24px] flex items-center gap-3 md:gap-4 border-white/10 border shadow-2xl backdrop-blur-3xl"
               >
-                <div className="w-10 h-10 md:w-16 md:h-16 rounded-[20px] md:rounded-[24px] bg-purple-50 flex items-center justify-center text-purple-500">
-                  <BarChart3 size={28} className="md:w-8 md:h-8" />
+                <div className="w-8 h-8 md:w-11 md:h-11 rounded-[12px] md:rounded-[14px] bg-white/10 flex items-center justify-center text-white border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                  <BarChart3 size={18} className="md:w-5 md:h-5 text-purple-400 drop-shadow-[0_0_8px_rgba(168,85,247,1)]" />
                 </div>
-                <div className="text-left pr-4 md:pr-8">
-                  <div className="text-[8px] md:text-[12px] font-[900] uppercase text-gray-400 tracking-[0.3em] mb-1 leading-none opacity-80">Audit</div>
-                  <div className="text-lg md:text-2xl font-[900] text-[var(--primary-teal-dark)] leading-none">L5 AI</div>
+                <div className="text-left">
+                  <div className="text-[6px] md:text-[9px] font-[900] uppercase text-white/40 tracking-[0.25em] mb-0.5 leading-none">Audit</div>
+                  <div className="text-xs md:text-lg font-black text-white leading-none">L5 AI</div>
                 </div>
               </motion.div>
             </motion.div>
+
+            {/* Ambient Background Glow for Video */}
+            <div className="absolute inset-[-10%] bg-[var(--primary-teal)]/5 blur-[120px] rounded-full -z-10 animate-pulse pointer-events-none"></div>
+
 
             {/* The Video Module Container */}
             <motion.div
@@ -229,25 +233,83 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative h-[600px] md:h-[90vh] w-full rounded-[60px] md:rounded-[100px] overflow-hidden shadow-[0_80px_160px_-40px_rgba(0,0,0,0.3)] border-8 md:border-[16px] border-white ring-1 ring-black/5 group z-10"
+              className="relative h-[500px] md:h-[90vh] w-full rounded-[40px] md:rounded-[100px] overflow-hidden shadow-[0_80px_160px_-40px_rgba(38,166,154,0.3)] border-[8px] md:border-[20px] border-white ring-1 ring-black/5 group z-10"
             >
-              <video
+              {/* HUD Element: Engine Badge (Top Center Inside Frame) */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1, duration: 1 }}
+                className="absolute top-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 pointer-events-none"
+              >
+                <div className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 rounded-full bg-black/20 backdrop-blur-xl border border-white/10 shadow-2xl">
+                  <div className="flex gap-1">
+                    {[0, 1, 2].map(i => (
+                      <motion.div
+                        key={i}
+                        animate={{ height: [4, 10, 4] }}
+                        transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
+                        className="w-0.5 bg-[var(--primary-teal)] rounded-full"
+                      />
+                    ))}
+                  </div>
+                  <span className="text-[7.5px] md:text-[10px] font-black text-white/90 tracking-[0.15em] md:tracking-[0.3em] uppercase whitespace-nowrap">Flutter Core Active</span>
+                  <div className="relative flex h-1.5 w-1.5 md:h-2 md:w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--primary-teal)] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 md:h-2 md:w-2 bg-[var(--primary-teal)]"></span>
+                  </div>
+                </div>
+              </motion.div>
+              <motion.video
                 autoPlay
                 muted
                 loop
                 playsInline
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[10s] ease-out"
+                animate={{
+                  objectPosition: ["0% 50%", "50% 50%"],
+                  scale: [1.05, 1]
+                }}
+                transition={{
+                  duration: 20,
+                  repeat: Infinity,
+                  ease: "linear",
+                  repeatType: "reverse"
+                }}
+                className="w-full h-full object-cover transition-transform duration-[15s] ease-out"
               >
                 <source src="/video/hero-section-video.mp4" type="video/mp4" />
-              </video>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
+              </motion.video>
+
+              {/* Glass Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary-teal-dark)]/40 via-transparent to-transparent opacity-60"></div>
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.2)_100%)]"></div>
+
+              {/* Internal Interface Elements - Making it look like a real POS Screen */}
+              {/* Left HUD: System info */}
+              <div className="absolute top-48 left-10 md:top-60 md:left-20 hidden md:block">
+                <div className="flex flex-col text-white/40">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal)]">System</span>
+                  <span className="text-xl font-black">Q-LINE v4.0</span>
+                </div>
+              </div>
+
+              {/* Right HUD: Interface info */}
+              <div className="absolute top-48 right-10 md:top-60 md:right-20 hidden md:block">
+                <div className="flex flex-col text-right text-white/40">
+                  <span className="text-[10px] font-black uppercase tracking-widest">Interface</span>
+                  <span className="text-xl font-bold">FLUTTER_UI</span>
+                </div>
+              </div>
+
               <div className="absolute bottom-12 right-12 md:bottom-20 md:right-20">
-                <div className="glass-panel !bg-white/20 !backdrop-blur-2xl !border-white/30 px-6 py-4 rounded-full flex items-center gap-4 text-white">
-                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                <div className="glass-panel !bg-white/10 !backdrop-blur-3xl !border-white/20 px-6 py-4 rounded-2xl flex items-center gap-4 text-white hover:scale-105 transition-transform border">
+                  <div className="w-8 h-8 rounded-full bg-[var(--primary-teal)]/20 flex items-center justify-center border border-white/20">
                     <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1"></div>
                   </div>
-                  <span className="text-xs font-black uppercase tracking-widest">Live Experience</span>
+                  <div className="flex flex-col">
+                    <span className="text-[8px] font-black uppercase tracking-[0.3em] opacity-60">Production Build</span>
+                    <span className="text-xs font-black uppercase tracking-widest">Live Experience</span>
+                  </div>
                 </div>
               </div>
             </motion.div>
