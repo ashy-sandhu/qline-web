@@ -3,7 +3,7 @@ import { LayoutGrid, Twitter, Linkedin, Facebook, Mail, MapPin, Phone } from 'lu
 
 export default function Footer() {
     return (
-        <footer className="bg-[var(--primary-teal-dark)] text-white pt-24 pb-12">
+        <footer className="bg-[var(--primary-teal-dark)] text-white pt-12 pb-6">
             <div className="content-container">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
                     {/* Brand Column */}

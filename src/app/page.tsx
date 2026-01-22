@@ -496,22 +496,22 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 1, ease: "easeOut" }}
             >
-              <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-blue-50 text-[var(--accent-blue)] text-[10px] font-black uppercase tracking-[0.3em] mb-10 border border-blue-100 shadow-sm">
+              <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-blue-50 text-[var(--accent-blue)] text-[10px] font-black uppercase tracking-[0.3em] mb-8! border border-blue-100 shadow-sm">
                 <div className="w-2 h-2 rounded-full bg-[var(--accent-blue)] animate-pulse"></div>
                 Powered by Google Flutter
               </div>
 
-              <h2 className="text-5xl md:text-8xl font-black text-[var(--primary-teal-dark)] leading-[1.1] tracking-tighter mb-10">
+              <h2 className="text-5xl md:text-8xl font-black text-[var(--primary-teal-dark)] leading-[1.1] tracking-tighter mb-8!">
                 Unified Core. <br />
                 <span className="text-teal-gradient">Infinite Display.</span>
               </h2>
 
-              <p className="text-xl text-[var(--text-muted)] font-medium leading-relaxed max-w-xl mb-12">
+              <p className="text-xl text-[var(--text-muted)] font-medium leading-relaxed max-w-xl mb-8!">
                 Q-Line is built on Google's high-performance <span className="text-[var(--primary-teal-dark)] font-black">Flutter</span> engine.
                 A single military-grade codebase that delivers 100% native performance across every device in your enterprise simultaneously.
               </p>
 
-              <div className="grid sm:grid-cols-2 gap-8 mb-12">
+              <div className="grid sm:grid-cols-2 gap-8 mb-8!">
                 <div className="p-6 rounded-3xl bg-gray-50 border border-black/5 hover:border-[var(--primary-teal)]/20 transition-colors group">
                   <div className="text-[var(--primary-teal)] font-black text-sm uppercase tracking-widest mb-3">60 FPS Native</div>
                   <p className="text-gray-500 text-sm font-medium">Bypass the bridge. Direct-to-canvas rendering for zero-latency interactions.</p>
