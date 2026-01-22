@@ -45,7 +45,7 @@ export default function Home() {
       </div>
 
       {/* Text Header Section - Immediately after Navbar */}
-      <section className="pb-12 md:pb-24 bg-white relative overflow-hidden">
+      <section className="pb-3 md:pb-6 bg-white relative overflow-hidden">
         {/* Subtle Background accent */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-30">
           <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[var(--primary-teal)]/10 blur-[120px] rounded-full"></div>
@@ -100,7 +100,7 @@ export default function Home() {
       </section>
 
       {/* Video Showcase Section - With Corner Floating Elements */}
-      <section className="relative px-6 md:px-12 pb-24 md:pb-40 bg-white overflow-visible">
+      <section className="relative px-2 bg-white overflow-visible">
         <div className="max-w-[1700px] mx-auto relative w-full">
 
           {/* Main Container for Video and its framing elements */}
@@ -256,9 +256,9 @@ export default function Home() {
       </section>
 
       {/* Forced 3-Column Grid Section */}
-      <section id="anatomy" className="pt-24 md:pt-32 pb-24 bg-white relative scroll-mt-24">
+      <section id="anatomy" className="bg-white relative scroll-mt-24">
         <div className="content-container">
-          <div className="text-center max-w-5xl mx-auto mb-40 pt-20">
+          <div className="text-center max-w-5xl mx-auto mb-40 pt-20 pb-10">
             <motion.span
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -273,7 +273,7 @@ export default function Home() {
 
           {/* Using display: grid with explicit template columns to override any tailwind/viewport issues */}
           <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 w-full"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full"
           >
             {[
               {
@@ -331,16 +331,16 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1, duration: 0.8 }}
-                className={`premium-card p-10 group flex flex-col items-center text-center bg-gradient-to-br ${feature.gradient} border-2 border-transparent hover:border-[var(--primary-teal)]/20 transition-all duration-700 shadow-2xl shadow-gray-100 h-full`}
+                className={`premium-card p-4 group flex flex-col items-center text-center bg-gradient-to-br ${feature.gradient} border-2 border-transparent hover:border-[var(--primary-teal)]/20 transition-all duration-700 shadow-2xl shadow-gray-100 h-full`}
               >
-                <div className="w-20 h-20 rounded-[30px] bg-white shadow-2xl flex items-center justify-center text-[var(--primary-teal-dark)] mb-8 group-hover:scale-110 group-hover:rotate-[5deg] transition-all duration-500">
+                <div className="w-20 h-20 rounded-[30px] bg-white shadow-2xl flex items-center justify-center text-[var(--primary-teal-dark)] mb-4! group-hover:scale-110 group-hover:rotate-[5deg] transition-all duration-500">
                   {feature.icon}
                 </div>
-                <div className="px-4 py-1.5 rounded-full bg-[var(--primary-teal)]/10 text-[var(--primary-teal)] text-[10px] font-black tracking-widest mb-6">
+                <div className="px-4 py-1.5 rounded-full bg-[var(--primary-teal)]/10 text-[var(--primary-teal)] text-[10px] font-black tracking-widest mb-6!">
                   {feature.tag}
                 </div>
-                <h3 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-6 tracking-[-0.02em]">{feature.title}</h3>
-                <p className="text-gray-500 text-base font-medium leading-relaxed mb-10 max-w-[280px]">
+                <h3 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-1! tracking-[-0.02em]">{feature.title}</h3>
+                <p className="text-gray-500 text-base font-medium leading-relaxed mb-2! max-w-[280px]">
                   {feature.desc}
                 </p>
 
@@ -366,13 +366,13 @@ export default function Home() {
       </section>
 
       {/* DEEP FEATURE SHOWCASE - THE ART OF AI */}
-      <section id="features" className="py-20 bg-[var(--bg-main)] relative overflow-hidden">
+      <section id="features" className="py-10 bg-[var(--bg-main)] relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[var(--primary-teal)]/5 blur-[120px] rounded-full -z-10 translate-x-1/2"></div>
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[var(--accent-blue)]/5 blur-[120px] rounded-full -z-10 -translate-x-1/2"></div>
 
         <div className="content-container">
-          <div className="flex flex-col md:flex-row items-end justify-between mb-24">
+          <div className="flex flex-col md:flex-row justify-between mb-24">
             <div className="max-w-3xl">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -479,7 +479,7 @@ export default function Home() {
       </section>
 
       {/* QUANTUM ENGINE SECTION - FLUTTER POWER */}
-      <section id="engine" className="py-20 bg-white relative overflow-hidden">
+      <section id="engine" className="py-10 bg-white relative overflow-hidden">
         {/* Background Accents */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full -z-10 opacity-40">
           <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[var(--primary-teal)]/5 blur-[120px] rounded-full"></div>
