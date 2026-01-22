@@ -97,7 +97,7 @@ export default function Navbar() {
           </div>
 
           {/* Action Section */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <div className="hidden xl:flex items-center gap-6 mr-6">
               <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal-dark)] opacity-40">
                 <Globe size={14} />
