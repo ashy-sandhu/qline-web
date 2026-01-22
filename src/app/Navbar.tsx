@@ -105,7 +105,7 @@ export default function Navbar() {
               </div>
             </div>
 
-            <button className="btn-primary !py-3 !px-4 sm:!py-3.5 sm:!px-6 md:!py-4 md:!px-8 !text-[10px] sm:!text-xs !rounded-xl sm:!rounded-2xl shadow-xl shadow-[var(--primary-teal)]/20 hover:shadow-[var(--primary-teal)]/40 transition-shadow flex items-center gap-2 sm:gap-3">
+            <button className="btn-primary !py-3 !px-3 sm:!py-3.5 sm:!px-6 md:!py-4 md:!px-8 !text-[10px] sm:!text-xs !rounded-xl sm:!rounded-2xl shadow-xl shadow-[var(--primary-teal)]/20 hover:shadow-[var(--primary-teal)]/40 transition-shadow flex items-center gap-2 sm:gap-3">
               <span className="font-black uppercase tracking-widest whitespace-nowrap">Book Demo</span>
               <div className="hidden sm:flex w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-white/20 items-center justify-center">
                 <ChevronRight size={14} className="sm:size-4" />
