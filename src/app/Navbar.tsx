@@ -54,7 +54,7 @@ export default function Navbar() {
           : 'py-1 bg-white'
           }`}
       >
-        <div className="w-full max-w-[1920px] mx-auto px-[20px] md:px-[40px] lg:px-[40px] flex items-center justify-between">
+        <div className="w-full max-w-[1920px] mx-auto px-[5px] md:px-[40px] lg:px-[40px] flex items-center justify-between">
 
           {/* Enhanced Branding Section */}
           <Link href="/" className="flex items-center gap-2 md:gap-5 group shrink-0">
