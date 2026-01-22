@@ -45,7 +45,7 @@ export default function Home() {
       </div>
 
       {/* Text Header Section - Immediately after Navbar */}
-      <section className="pb-3 md:pb-6 bg-white relative overflow-hidden">
+      <section className="pb-16 md:pb-6 bg-white relative overflow-hidden">
         {/* Subtle Background accent */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-30">
           <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[var(--primary-teal)]/10 blur-[120px] rounded-full"></div>
