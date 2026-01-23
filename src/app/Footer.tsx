@@ -64,15 +64,15 @@ export default function Footer() {
                         <ul className="flex flex-col gap-6 text-white/60 text-sm font-medium">
                             <li className="flex items-start gap-3">
                                 <MapPin size={18} className="text-[var(--primary-teal-light)] shrink-0" />
-                                <span>Sector 12, Tech Park, <br />Islamabad, Pakistan</span>
+                                <span>Vehari Road, <br />Makhdoom Rasheed, Multan</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Phone size={18} className="text-[var(--primary-teal-light)] shrink-0" />
-                                <span>+92 (300) 123-4567</span>
+                                <span>+92 (339) 933-9918</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail size={18} className="text-[var(--primary-teal-light)] shrink-0" />
-                                <span>hello@qlinepos.com</span>
+                                <span>info@qline.com</span>
                             </li>
                         </ul>
                     </div>
