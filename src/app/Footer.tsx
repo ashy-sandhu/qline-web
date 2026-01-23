@@ -1,5 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import { LayoutGrid, Twitter, Linkedin, Facebook, Mail, MapPin, Phone } from 'lucide-react';
+import { Twitter, Linkedin, Facebook, Mail, MapPin, Phone } from 'lucide-react';
 
 export default function Footer() {
     return (
@@ -8,13 +9,22 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
                     {/* Brand Column */}
                     <div className="flex flex-col gap-8">
-                        <Link href="/" className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-2xl bg-[var(--primary-teal)] flex items-center justify-center font-bold text-white shadow-lg shadow-black/20">
-                                <LayoutGrid size={22} />
+                        <Link href="/" className="flex items-center gap-4 group">
+                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-[var(--primary-teal)] to-[var(--primary-teal-dark)] flex items-center justify-center shadow-xl shadow-black/40 overflow-hidden border border-white/10 group-hover:scale-105 transition-transform duration-500">
+                                <Image
+                                    src="/app_logo.png"
+                                    alt="QLINE Logo"
+                                    width={60}
+                                    height={60}
+                                    className="object-contain p-1 invert brightness-0"
+                                />
                             </div>
-                            <span className="text-2xl font-black tracking-tighter">
-                                QLINE <span className="font-light text-[var(--primary-teal-light)]">POS</span>
-                            </span>
+                            <div className="flex flex-col">
+                                <span className="text-2xl font-black tracking-tighter leading-none mb-1">
+                                    QLINE <span className="font-light text-[var(--primary-teal-light)]">POS</span>
+                                </span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal-light)] opacity-40">Evolutionary OS</span>
+                            </div>
                         </Link>
                         <p className="text-white/60 text-sm leading-relaxed max-w-xs">
                             Designing the future of restaurant intelligence. QLINE POS is the evolutionary OS for the modern dining industry.

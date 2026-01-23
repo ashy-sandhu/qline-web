@@ -266,11 +266,11 @@ export default function Home() {
                 loop
                 playsInline
                 animate={{
-                  objectPosition: ["0% 50%", "50% 50%"],
+                  objectPosition: ["0% 20%", "20% 20%"],
                   scale: [1.05, 1]
                 }}
                 transition={{
-                  duration: 20,
+                  duration: 10,
                   repeat: Infinity,
                   ease: "linear",
                   repeatType: "reverse"
@@ -301,14 +301,14 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="absolute bottom-12 right-12 md:bottom-20 md:right-20">
-                <div className="glass-panel !bg-white/10 !backdrop-blur-3xl !border-white/20 px-6 py-4 rounded-2xl flex items-center gap-4 text-white hover:scale-105 transition-transform border">
-                  <div className="w-8 h-8 rounded-full bg-[var(--primary-teal)]/20 flex items-center justify-center border border-white/20">
-                    <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1"></div>
+              <div className="absolute bottom-3 right-3 md:bottom-12 md:right-12">
+                <div className="glass-panel !bg-white/10 !backdrop-blur-3xl !border-white/20 px-2 py-1 md:px-5 md:py-3 rounded-xl md:rounded-2xl flex items-center gap-3 md:gap-4 text-white hover:scale-105 transition-transform border">
+                  <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[var(--primary-teal)]/20 flex items-center justify-center border border-white/20">
+                    <div className="w-0 h-0 border-t-[4px] md:border-t-[5px] border-t-transparent border-l-[7px] md:border-l-[9px] border-l-white border-b-[4px] md:border-b-[5px] border-b-transparent ml-0.5 md:ml-1"></div>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[8px] font-black uppercase tracking-[0.3em] opacity-60">Production Build</span>
-                    <span className="text-xs font-black uppercase tracking-widest">Live Experience</span>
+                    <span className="text-[6px] md:text-[8px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] opacity-60 leading-none mb-0.5 md:mb-1">Production Build</span>
+                    <span className="text-[9px] md:text-xs font-black uppercase tracking-wider md:tracking-widest leading-none">Live Experience</span>
                   </div>
                 </div>
               </div>
@@ -584,17 +584,163 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-10">
-                <div className="flex -space-x-4">
-                  {['Android', 'iOS', 'Win', 'Mac', 'Web'].map((os, idx) => (
-                    <div key={idx} className="w-12 h-12 rounded-full bg-white border-2 border-white shadow-lg flex items-center justify-center text-[8px] font-black text-[var(--text-muted)] z-[idx]">
-                      {os}
-                    </div>
+              <div className="flex flex-wrap items-center gap-8 md:gap-14">
+                <div className="flex -space-x-4 items-center h-20 relative px-4">
+                  {/* Background Scanning Beam */}
+                  <motion.div
+                    animate={{
+                      x: [-100, 300],
+                      opacity: [0, 0.4, 0]
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      repeatDelay: 2
+                    }}
+                    className="absolute inset-y-0 w-24 bg-gradient-to-r from-transparent via-[var(--primary-teal)]/10 to-transparent skew-x-12 -z-10"
+                  />
+
+                  {[
+                    {
+                      name: 'Android',
+                      color: '#3DDC84',
+                      glow: 'rgba(61, 220, 132, 0.4)',
+                      icon: (
+                        <svg viewBox="0 0 24 24" className="w-10 h-10 fill-[#3DDC84] drop-shadow-[0_0_12px_rgba(61,220,132,0.5)]">
+                          <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9997.9993-.9997c.5511 0 .9993.4486.9993.9997s-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9997.9993-.9997c.5511 0 .9993.4486.9993.9997s-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592c.078-.1352.0317-.308-.1034-.3861-.1353-.078-.3081-.0318-.3863.1034l-2.0193 3.4972C14.7314 8.7834 13.4074 8.6046 12 8.6046c-1.4074 0-2.7314.1788-3.3698.4716L6.6108 5.5791c-.0782-.1352-.251-.1814-.3863-.1034-.135.0781-.1813.2509-.1033.3861l1.9973 3.4592C5.3526 10.3707 3.5 12.8211 3.5 15.6987h17c0-2.8776-1.8526-5.328-4.6185-6.3773" />
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'iOS',
+                      color: '#000000',
+                      glow: 'rgba(0, 0, 0, 0.2)',
+                      icon: (
+                        <svg viewBox="0 0 24 24" className="w-10 h-10 fill-black drop-shadow-[0_0_12px_rgba(0,0,0,0.2)]">
+                          <path d="M17.05 20.28c-.96.95-2.04 1.88-3.3 1.9-1.25.02-1.66-.75-3.1-.75s-1.9.73-3.13.77c-1.24.03-2.45-1.03-3.41-2-1.96-1.98-3.47-5.59-1.45-9.1.99-1.74 2.8-2.85 4.77-2.88 1.5-.02 2.9.9 3.8.9s2.05-.72 3.25-.6c.5.02 1.95.2 2.86 1.51-1.07.65-1.61 1.76-1.6 3.1 0 1.63.85 2.5 1.7 3.02-.34 1.34-1.04 2.87-1.89 4.13zM12.03 7.25c-.02-2.23 1.83-4.05 4.07-4.14.22 2.36-1.95 4.47-4.07 4.14z" />
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'Windows',
+                      color: '#00A4EF',
+                      glow: 'rgba(0, 164, 239, 0.4)',
+                      icon: (
+                        <svg viewBox="0 0 24 24" className="w-10 h-10 fill-[#00A4EF] drop-shadow-[0_0_12px_rgba(0,164,239,0.5)]">
+                          <path d="M0 3.449L9.75 2.1v9.451H0V3.449zM0 12.45l9.75 0v9.45l-9.75-1.35V12.45zM10.8 1.95L24 0v11.55l-13.2 0V1.95zM24 12.45v11.55L10.8 22.05v-9.6L24 12.45z" />
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'MacOS',
+                      color: '#64748B',
+                      glow: 'rgba(100, 116, 139, 0.3)',
+                      icon: (
+                        <svg viewBox="0 0 24 24" className="w-10 h-10 fill-slate-500 drop-shadow-[0_0_12px_rgba(100,116,139,0.4)]">
+                          <path d="M20 12v-8h-16v8h16zm1-10c.552 0 1 .448 1 1v10c0 .552-.448 1-1 1h-8v1h3v2h-9v-2h3v-1h-8c-.552 0-1-.448-1-1v-10c0-.552.448-1 1-1h18z" />
+                        </svg>
+                      )
+                    },
+                    {
+                      name: 'Web',
+                      color: '#26A69A',
+                      glow: 'rgba(38, 166, 154, 0.4)',
+                      icon: (
+                        <svg viewBox="0 0 24 24" className="w-10 h-10 fill-[#26A69A] drop-shadow-[0_0_12px_rgba(38,166,154,0.5)]">
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                        </svg>
+                      )
+                    }
+                  ].map((os, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      whileInView={{
+                        opacity: 1,
+                        scale: 1,
+                        transition: {
+                          type: "spring",
+                          stiffness: 260,
+                          damping: 20,
+                          delay: idx * 0.1
+                        }
+                      }}
+                      animate={{
+                        y: [0, -12, 0],
+                        transition: {
+                          duration: 4 + idx * 0.6,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }
+                      }}
+                      whileHover={{
+                        scale: 1.25,
+                        zIndex: 50,
+                        rotate: [0, -5, 5, 0],
+                        transition: { duration: 0.3 }
+                      }}
+                      style={{ zIndex: idx }}
+                      className="relative group pointer-events-auto"
+                    >
+                      {/* Brand Colored Aura Glow */}
+                      <div
+                        className="absolute inset-0 rounded-full blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
+                        style={{ backgroundColor: os.glow }}
+                      ></div>
+
+                      {/* Main 'Liquid Glass' Container */}
+                      <div className="w-16 h-16 md:w-20 md:h-20 rounded-full relative p-[2px] overflow-hidden group-hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.3)] transition-all duration-500">
+                        {/* Crystalline Border (Animated Gradient) */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-white/80 via-white/20 to-white/80 animate-[spin_8s_linear_infinite] opacity-60"></div>
+
+                        {/* Glass Body with Internal Brand Tint */}
+                        <div
+                          className="absolute inset-[3px] rounded-full backdrop-blur-3xl border border-white/40 shadow-inner flex items-center justify-center transition-all duration-500 group-hover:bg-white"
+                          style={{
+                            background: `radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9) 0%, ${os.color}15 100%)`
+                          }}
+                        >
+                          {/* Inner Glossy Highlight */}
+                          <div className="absolute top-[10%] left-[15%] w-[40%] h-[25%] bg-gradient-to-b from-white/60 to-transparent rounded-full blur-[2px] -rotate-12 pointer-events-none"></div>
+
+                          <div className="transform transition-all duration-500 group-hover:scale-110 relative z-10 flex items-center justify-center">
+                            {os.icon}
+                          </div>
+
+                          {/* Status Pulse Ring */}
+                          <div className="absolute inset-0 rounded-full border-2 border-[var(--primary-teal)]/30 animate-ping opacity-0 group-hover:opacity-40" />
+
+                          {/* Hover Tooltip (Inside node context but absolute) */}
+                        </div>
+                      </div>
+
+                      {/* Hover Tooltip Positioned Relative to Node */}
+                      <div className="absolute -top-14 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-[var(--primary-teal-dark)] rounded-full text-[10px] font-black text-white uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 group-hover:-top-16 transition-all duration-300 pointer-events-none shadow-xl z-50">
+                        {os.name}
+                        <div className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-[var(--primary-teal-dark)] rotate-45" />
+                      </div>
+                    </motion.div>
                   ))}
                 </div>
-                <div className="h-10 w-px bg-black/10"></div>
-                <div className="text-xs font-black uppercase tracking-widest text-[var(--primary-teal-dark)]">
-                  Universal Binary Support
+
+                <div className="h-12 w-px bg-gradient-to-b from-transparent via-black/10 to-transparent hidden sm:block"></div>
+
+                <div className="flex flex-col">
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="text-[10px] font-black text-[var(--primary-teal)] uppercase tracking-[0.4em] mb-1"
+                  >
+                    Architecture
+                  </motion.div>
+                  <div className="text-sm md:text-base font-black text-[var(--primary-teal-dark)] uppercase tracking-widest flex items-center gap-3">
+                    Universal Binary Support
+                    <div className="relative flex h-3 w-3">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
