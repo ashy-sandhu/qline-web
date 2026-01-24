@@ -394,7 +394,7 @@ export default function Home() {
             {/* V4.0 Badge */}
             <motion.div
               variants={fadeInUp}
-              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-[var(--primary-teal)]/5 text-[var(--primary-teal)] text-[10px] font-black uppercase tracking-[0.3em] mb-6 border border-[var(--primary-teal)]/10"
+              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-[var(--primary-teal)]/5 text-[var(--primary-teal-dark)] text-[10px] font-black uppercase tracking-[0.3em] mb-6 border border-[var(--primary-teal)]/10"
             >
               <div className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--primary-teal)] opacity-75"></span>
@@ -800,6 +800,7 @@ export default function Home() {
                     src={feature.image}
                     alt={feature.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
@@ -830,9 +831,9 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 mb-5 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal)] bg-white shadow-sm rounded-full border border-[var(--primary-teal)]/10"
+                className="inline-flex items-center gap-2 px-3 py-1.5 mb-5 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal-dark)] bg-white shadow-sm rounded-full border border-[var(--primary-teal)]/10"
               >
-                <Sparkles size={12} />
+                <Sparkles size={12} className="text-[var(--primary-teal)]" />
                 Feature Ecosystem v4.2
               </motion.div>
               <h2 className="text-3xl md:text-6xl font-black text-[var(--primary-teal-dark)] leading-tight tracking-tighter">
@@ -939,9 +940,9 @@ export default function Home() {
                         </div>
 
                         <div className="flex-1">
-                          <h4 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-4 tracking-tighter md:group-hover:text-[var(--primary-teal)] transition-colors">
+                          <h3 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-4 tracking-tighter md:group-hover:text-[var(--primary-teal)] transition-colors">
                             {item.title}
-                          </h4>
+                          </h3>
                           <p className="text-[var(--text-muted)] text-base font-medium leading-relaxed mb-8">
                             {item.desc}
                           </p>
@@ -982,7 +983,7 @@ export default function Home() {
         <div className="content-container relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 items-center mb-16">
             <div className="lg:col-span-7">
-              <h3 className="text-[9px] font-black uppercase tracking-[0.5em] text-[var(--primary-teal)] mb-4">Industrial Logic</h3>
+              <h3 className="text-[9px] font-black uppercase tracking-[0.5em] text-[var(--primary-teal-light)] mb-4">Industrial Logic</h3>
               <h2 className="text-3xl md:text-6xl font-black text-white tracking-tighter leading-[1.1]">
                 Engineering the <br />
                 <span className="text-3d-tech">Power Modules.</span>
@@ -1243,13 +1244,9 @@ export default function Home() {
                 <div className="h-12 w-px bg-gradient-to-b from-transparent via-black/10 to-transparent hidden sm:block"></div>
 
                 <div className="flex flex-col">
-                  <motion.div
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="text-[10px] font-black text-[var(--primary-teal)] uppercase tracking-[0.4em] mb-1"
-                  >
+                  <div className="text-[10px] font-black text-[var(--primary-teal-dark)] uppercase tracking-[0.4em] mb-1">
                     Architecture
-                  </motion.div>
+                  </div>
                   <div className="text-sm md:text-base font-black text-[var(--primary-teal-dark)] uppercase tracking-widest flex items-center gap-3">
                     Universal Binary Support
                     <div className="relative flex h-3 w-3">
@@ -1282,6 +1279,7 @@ export default function Home() {
                       src="/images/responsiveness/desktop.pos.png"
                       alt="Q-Line Desktop Interface"
                       fill
+                      sizes="(max-width: 1200px) 100vw, 80vw"
                       className="object-cover object-center opacity-90 group-hover:opacity-100 transition-opacity"
                     />
                     <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
@@ -1297,6 +1295,7 @@ export default function Home() {
                       src="/images/responsiveness/tablet.pos.png"
                       alt="Q-Line Tablet Interface"
                       fill
+                      sizes="(max-width: 768px) 50vw, 30vw"
                       className="object-cover object-center opacity-90 group-hover:opacity-100 transition-opacity"
                     />
                     <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
@@ -1312,6 +1311,7 @@ export default function Home() {
                       src="/images/responsiveness/mobile.pos.png"
                       alt="Q-Line Mobile Interface"
                       fill
+                      sizes="(max-width: 768px) 40vw, 20vw"
                       className="object-cover object-center opacity-90 group-hover:opacity-100 transition-opacity"
                     />
                     <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
@@ -1431,7 +1431,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                className="inline-flex items-center gap-3 px-3 py-1.5 mb-6 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal)] bg-white shadow-sm rounded-full border border-black/5"
+                className="inline-flex items-center gap-3 px-3 py-1.5 mb-6 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal-dark)] bg-white shadow-sm rounded-full border border-black/5"
               >
                 Operational Ecosystem_4.0
               </motion.div>
@@ -1447,11 +1447,11 @@ export default function Home() {
               </p>
               <div className="grid grid-cols-2 gap-4 border-t border-black/5 pt-8">
                 <div>
-                  <div className="text-[9px] font-black text-[var(--primary-teal)] uppercase mb-1 tracking-widest">Topology</div>
+                  <div className="text-[9px] font-black text-[var(--primary-teal-dark)] uppercase mb-1 tracking-widest">Topology</div>
                   <div className="text-sm font-bold text-[var(--primary-teal-dark)]">Multi-Node Sync</div>
                 </div>
                 <div>
-                  <div className="text-[9px] font-black text-[var(--primary-teal)] uppercase mb-1 tracking-widest">Protocol</div>
+                  <div className="text-[9px] font-black text-[var(--primary-teal-dark)] uppercase mb-1 tracking-widest">Protocol</div>
                   <div className="text-sm font-bold text-[var(--primary-teal-dark)]">Direct-Core V4</div>
                 </div>
               </div>

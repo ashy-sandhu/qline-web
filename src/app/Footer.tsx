@@ -39,7 +39,7 @@ export default function Footer() {
                     {/* Nav Column 1 */}
                     <div>
                         <h3 className="text-lg font-bold mb-8 text-white">Project Resources</h3>
-                        <ul className="flex flex-col gap-4 text-white/80 text-sm font-medium">
+                        <ul className="flex flex-col gap-4 text-white text-sm font-medium">
                             <li><Link href="/features" className="hover:text-[var(--primary-teal-light)] transition-colors">Software Features</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Pricing Models</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Documentation</Link></li>
@@ -50,7 +50,7 @@ export default function Footer() {
                     {/* Nav Column 2 */}
                     <div>
                         <h3 className="text-lg font-bold mb-8 text-white">Company Info</h3>
-                        <ul className="flex flex-col gap-4 text-white/80 text-sm font-medium">
+                        <ul className="flex flex-col gap-4 text-white text-sm font-medium">
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">About Story</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Privacy Policy</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Terms of Service</Link></li>
@@ -61,7 +61,7 @@ export default function Footer() {
                     {/* Contact Column */}
                     <div>
                         <h3 className="text-lg font-bold mb-8 text-white">Get in Touch</h3>
-                        <ul className="flex flex-col gap-6 text-white/80 text-sm font-medium">
+                        <ul className="flex flex-col gap-6 text-white text-sm font-medium">
                             <li className="flex items-start gap-3">
                                 <MapPin size={18} className="text-[var(--primary-teal-light)] shrink-0" />
                                 <span>Vehari Road, <br />Makhdoom Rasheed, Multan</span>

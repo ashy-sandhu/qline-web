@@ -299,7 +299,7 @@ export default function Navbar() {
                 <div className="p-5 rounded-3xl bg-[var(--primary-teal)]/5 border border-[var(--primary-teal)]/10">
                   <div className="flex items-center gap-3 mb-1">
                     <Zap size={16} className="text-[var(--primary-teal)]" />
-                    <span className="text-[9px] font-black uppercase tracking-widest text-[var(--primary-teal)]">System Status</span>
+                    <span className="text-[9px] font-black uppercase tracking-widest text-[var(--primary-teal-dark)]">System Status</span>
                   </div>
                   <div className="text-lg font-black text-[var(--primary-teal-dark)]">Operational 100%</div>
                 </div>
