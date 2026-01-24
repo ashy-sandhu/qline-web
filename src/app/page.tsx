@@ -1,6 +1,7 @@
 'use client';
 
-import { motion, Variants } from 'framer-motion';
+import React from 'react';
+import { motion, Variants, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import {
   Zap,
@@ -15,6 +16,9 @@ import {
   ArrowUpRight,
   Layers,
   Fingerprint,
+  ShieldAlert,
+  Lock,
+  Activity,
   LayoutGrid
 } from 'lucide-react';
 
@@ -34,6 +38,332 @@ const staggerContainer: Variants = {
     transition: { staggerChildren: 0.15 }
   }
 };
+
+// --- NARRATIVE MOTION ICONS ---
+
+const POSNodeAnim = () => (
+  <div className="relative w-12 h-12 flex items-center justify-center">
+    <motion.div
+      animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+      transition={{ duration: 2, repeat: Infinity }}
+      className="absolute w-4 h-4 rounded-full bg-[var(--primary-teal)]"
+    />
+    {[0, 90, 180, 270].map((rot) => (
+      <motion.div
+        key={rot}
+        animate={{ x: [0, rot === 90 || rot === 270 ? 0 : rot === 0 ? 20 : -20], y: [0, rot === 0 || rot === 180 ? 0 : rot === 90 ? 20 : -20], opacity: [0, 1, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity, delay: rot / 360 }}
+        className="absolute w-1.5 h-1.5 rounded-full bg-[var(--primary-teal)]"
+      />
+    ))}
+    <LayoutDashboard size={24} className="relative z-10" />
+  </div>
+);
+
+const LedgerAnim = () => (
+  <div className="relative w-12 h-12 flex items-center justify-center">
+    <motion.div
+      animate={{ y: [-15, 15] }}
+      transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
+      className="absolute w-full h-[2px] bg-amber-400/30 blur-sm"
+    />
+    <motion.div
+      animate={{ opacity: [0.3, 1, 0.3] }}
+      transition={{ duration: 1, repeat: Infinity }}
+      className="text-amber-500"
+    >
+      <Wallet size={32} />
+    </motion.div>
+    <div className="absolute inset-0 flex flex-col justify-around py-2 items-center opacity-20 text-amber-500">
+      {[1, 2, 3].map(i => <div key={i} className="w-6 h-[1px] bg-current" />)}
+    </div>
+  </div>
+);
+
+const AttendanceAnim = () => (
+  <div className="relative w-12 h-12 flex items-center justify-center">
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+      className="absolute inset-0 border-t-2 border-r-2 border-[var(--primary-teal)]/20 rounded-full"
+    />
+    <motion.div
+      animate={{ scale: [1, 1.1, 1] }}
+      transition={{ duration: 2, repeat: Infinity }}
+    >
+      <Fingerprint size={32} />
+    </motion.div>
+    <motion.div
+      animate={{ height: [0, 20, 0] }}
+      transition={{ duration: 1.5, repeat: Infinity }}
+      className="absolute bottom-0 w-[2px] bg-[var(--primary-teal)]"
+    />
+  </div>
+);
+
+const PulseAnim = () => (
+  <div className="relative w-12 h-12 flex items-center justify-center">
+    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 50 50">
+      <motion.path
+        d="M0 25 L15 25 L20 10 L30 40 L35 25 L50 25"
+        fill="transparent"
+        stroke="#0ea5e9"
+        strokeWidth="2"
+        animate={{ pathLength: [0, 1], pathOffset: [0, 1] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+      />
+    </svg>
+    <BarChart3 size={24} className="relative z-10 opacity-40 text-sky-500" />
+  </div>
+);
+
+const AuditAnim = () => (
+  <div className="relative w-12 h-12 flex items-center justify-center">
+    <motion.div
+      animate={{ rotateY: [0, 180, 360] }}
+      transition={{ duration: 4, repeat: Infinity }}
+      className="text-purple-500"
+    >
+      <ShieldCheck size={32} />
+    </motion.div>
+    <motion.div
+      animate={{ opacity: [0, 1, 0], scale: [0.5, 1.5, 0.5] }}
+      transition={{ duration: 2, repeat: Infinity }}
+      className="absolute inset-0 bg-purple-500/10 rounded-full blur-xl"
+    />
+  </div>
+);
+
+const CloudAnim = () => (
+  <div className="relative w-12 h-12 flex items-center justify-center">
+    <motion.div
+      animate={{ scale: [1, 1.3, 1] }}
+      transition={{ duration: 4, repeat: Infinity }}
+      className="absolute inset-0 border border-sky-400/20 rounded-full"
+    />
+    <motion.div
+      animate={{ y: [-2, 2, -2] }}
+      transition={{ duration: 3, repeat: Infinity }}
+      className="text-sky-500"
+    >
+      <MonitorSmartphone size={32} />
+    </motion.div>
+    <motion.div
+      animate={{ opacity: [0, 1, 0] }}
+      transition={{ duration: 1, repeat: Infinity }}
+      className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-sky-500 shadow-[0_0_8px_#0ea5e9]"
+    />
+  </div>
+);
+
+const QuantumPOSAnim = () => (
+  <div className="relative w-8 h-8">
+    {[0, 1, 2].map(i => (
+      <motion.div
+        key={i}
+        animate={{ x: [0, 40], opacity: [0, 1, 0] }}
+        transition={{ duration: 2, repeat: Infinity, delay: i * 0.6 }}
+        className="h-1 bg-[var(--primary-teal)]/40 rounded-full mb-2"
+        style={{ width: i === 1 ? '100%' : '60%' }}
+      />
+    ))}
+    <LayoutDashboard size={20} className="absolute -left-6 top-2 text-[var(--primary-teal)]" />
+  </div>
+);
+
+const BioHRAnim = () => (
+  <div className="relative w-8 h-8 flex items-center justify-center">
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+      className="absolute w-12 h-12 border border-dashed border-[var(--primary-teal)]/30 rounded-full"
+    />
+    <Fingerprint size={24} className="text-[var(--primary-teal)]" />
+    <motion.div
+      animate={{ scale: [1, 1.5, 1], opacity: [0.2, 0.5, 0.2] }}
+      transition={{ duration: 2, repeat: Infinity }}
+      className="absolute w-10 h-10 bg-[var(--primary-teal)] rounded-full blur-md"
+    />
+  </div>
+);
+
+const ForensicLedgerV4Anim = () => (
+  <div className="relative w-8 h-8">
+    <motion.div
+      animate={{ scaleY: [1, 1.2, 1] }}
+      transition={{ duration: 3, repeat: Infinity }}
+      className="text-amber-500"
+    >
+      <ShieldAlert size={28} />
+    </motion.div>
+    <motion.div
+      animate={{ y: [0, 10, 0] }}
+      transition={{ duration: 2, repeat: Infinity }}
+      className="absolute -bottom-2 left-0 right-0 h-0.5 bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
+    />
+  </div>
+);
+
+const ClosureAnim = () => (
+  <div className="relative w-8 h-8 flex items-center justify-center">
+    <motion.div
+      animate={{ rotate: -360 }}
+      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+      className="absolute w-14 h-14 border-b-2 border-l-2 border-amber-400/40 rounded-full"
+    />
+    <Lock size={24} className="text-amber-500" />
+    <motion.div
+      animate={{ scale: [1, 2], opacity: [0.5, 0] }}
+      transition={{ duration: 2, repeat: Infinity }}
+      className="absolute w-6 h-6 border-2 border-amber-500 rounded-full"
+    />
+  </div>
+);
+
+// --- COMMAND CENTER INTELLIGENCE NODES ---
+
+const RevenueVelocityNode = () => (
+  <div className="relative w-full h-full min-h-[160px] flex items-end overflow-hidden rounded-3xl bg-black/5 border border-white/10">
+    <motion.div
+      initial={{ height: "30%" }}
+      animate={{ height: ["40%", "65%", "55%", "80%", "60%"] }}
+      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      className="w-full bg-gradient-to-t from-[var(--primary-teal)] to-[var(--primary-teal-light)] relative"
+    >
+      <div className="absolute top-0 left-0 right-0 h-4 bg-white/30 skew-y-2 blur-sm" />
+      <div className="absolute top-4 left-4 text-white/50 text-[10px] font-black uppercase tracking-widest">Live Flow</div>
+    </motion.div>
+    <div className="absolute inset-x-0 bottom-8 flex justify-center z-10">
+      <div className="px-4 py-2 bg-black/40 backdrop-blur-md rounded-xl border border-white/10 text-white font-black text-2xl tracking-tighter">
+        <motion.span
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 1, repeat: Infinity }}
+        >$</motion.span>
+        8,420
+      </div>
+    </div>
+  </div>
+);
+
+const ForensicStreamNode = () => (
+  <div className="relative w-full h-full min-h-[160px] bg-[var(--primary-teal-dark)] rounded-3xl p-4 overflow-hidden border border-[var(--primary-teal)]/20 shadow-inner">
+    <motion.div
+      animate={{ y: [0, -200] }}
+      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+      className="space-y-4"
+    >
+      {[
+        "BILLING: TABLE 12 SAVED",
+        "INVENTORY: STOCK -1",
+        "AUTH: MANAGER LOGIN",
+        "SYNC: CLOUD VERIFIED",
+        "REVENUE: $140 ADDED",
+        "LEDGER: CR VOUCHER 042",
+        "BILLING: DELIVERY READY",
+        "AUDIT: DAY CLOSING INIT",
+        "BILLING: TABLE 08 PAY",
+        "REVENUE: $42 ADDED",
+        "SYNC: MOBILE LINKED",
+      ].map((log, i) => (
+        <div key={i} className="text-[9px] font-black tracking-widest flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary-teal)] animate-pulse" />
+          <span className="text-white/60 uppercase">{log}</span>
+          <span className="ml-auto text-white/20">0.00{i}ms</span>
+        </div>
+      ))}
+    </motion.div>
+    <div className="absolute inset-0 bg-gradient-to-b from-[var(--primary-teal-dark)] via-transparent to-[var(--primary-teal-dark)] pointer-events-none" />
+  </div>
+);
+
+const NeuralPerformanceNode = () => (
+  <div className="relative w-full h-full min-h-[160px] flex items-center justify-center bg-gray-50 rounded-3xl border border-black/5 overflow-hidden">
+    <div className="absolute inset-0 flex items-center justify-center">
+      {[1, 2, 3].map(i => (
+        <div key={i} className="absolute border border-black/[0.03] rounded-full" style={{ width: i * 60, height: i * 60 }} />
+      ))}
+    </div>
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+      className="absolute w-[200px] h-[200px] bg-gradient-to-r from-[var(--primary-teal)]/10 to-transparent rounded-full origin-center"
+      style={{ clipPath: "polygon(50% 50%, 100% 0, 100% 100%)" }}
+    />
+    <motion.div
+      animate={{ opacity: [0, 1, 0] }}
+      transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+      className="absolute top-12 right-20 w-3 h-3 bg-red-500 rounded-full shadow-[0_0_10px_red]"
+    />
+    <motion.div
+      animate={{ opacity: [0, 1, 0] }}
+      transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
+      className="absolute bottom-16 left-24 w-2 h-2 bg-orange-400 rounded-full shadow-[0_0_10px_orange]"
+    />
+    <Users size={32} className="text-[var(--primary-teal-dark)]/20 relative z-10" />
+  </div>
+);
+
+const InventoryFrictionNode = () => (
+  <div className="relative w-full h-full min-h-[160px] bg-white rounded-3xl p-6 flex flex-col justify-end border border-black/5 shadow-2xl shadow-black/5">
+    <div className="flex gap-1 mb-6 items-end">
+      {[40, 70, 45, 90, 65, 30, 85].map((h, i) => (
+        <motion.div
+          key={i}
+          initial={{ height: 0 }}
+          whileInView={{ height: `${h}%` }}
+          transition={{ duration: 1, delay: i * 0.1 }}
+          className={`flex-1 rounded-t-sm ${i === 3 ? 'bg-red-400' : 'bg-[var(--primary-teal)]/40'}`}
+        />
+      ))}
+    </div>
+    <div className="flex justify-between items-center">
+      <div className="flex flex-col">
+        <span className="text-[8px] font-black uppercase tracking-widest text-gray-400">Stock Velocity</span>
+        <span className="text-xl font-black text-[var(--primary-teal-dark)]">92.4 <span className="text-xs text-emerald-500">%</span></span>
+      </div>
+      <motion.div
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center text-red-500"
+      >
+        <Sparkles size={16} />
+      </motion.div>
+    </div>
+  </div>
+);
+
+// --- OPERATIONAL ECOSYSTEM COMPONENTS ---
+
+const PartnerTile = ({ name, nodeID }: { name: string, nodeID: string }) => (
+  <div className="group relative bg-white/40 backdrop-blur-xl rounded-[40px] border border-black/[0.03] p-10 flex flex-col justify-between transition-all duration-500 hover:shadow-2xl hover:shadow-black/5 hover:-translate-y-1">
+    <div className="flex justify-between items-start">
+      <div className="text-[10px] font-black tracking-[0.3em] text-[var(--primary-teal)]/40 uppercase">NODE_{nodeID}</div>
+      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+    </div>
+    <div className="h-24 flex items-center justify-center py-4 grayscale group-hover:grayscale-0 transition-all duration-700">
+      <span className="text-2xl font-black text-[var(--primary-teal-dark)]/10 group-hover:text-[var(--primary-teal-dark)] transition-colors tracking-tighter uppercase">{name}</span>
+    </div>
+    <div className="text-[9px] font-bold text-gray-400 uppercase tracking-widest border-t border-black/5 pt-4">Operational Center</div>
+  </div>
+);
+
+const MetricTile = ({ label, value, trend }: { label: string, value: string, trend: string }) => (
+  <div className="bg-[var(--primary-teal-dark)] rounded-[40px] p-10 flex flex-col justify-between border border-white/5">
+    <div className="text-[10px] font-black tracking-[0.3em] text-[var(--primary-teal)] uppercase">{label}</div>
+    <div className="my-6">
+      <div className="text-4xl font-black text-white tracking-tighter">{value}</div>
+      <div className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mt-1">{trend}</div>
+    </div>
+    <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+      <motion.div
+        initial={{ width: 0 }}
+        whileInView={{ width: "70%" }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="h-full bg-[var(--primary-teal)]"
+      />
+    </div>
+  </div>
+);
 
 export default function Home() {
   return (
@@ -339,52 +669,52 @@ export default function Home() {
           >
             {[
               {
-                icon: <LayoutDashboard size={40} />,
-                title: "Quantum Terminal",
-                desc: "High-frequency transaction engine. Not just a tablet—a localized mission control for every order.",
-                tag: "ENGINE",
+                icon: <POSNodeAnim />,
+                title: "Intelligent POS Node",
+                desc: "High-frequency mission control. Optimized for Dine-In floor mapping, lightning Takeaway, and real-time Delivery tracking.",
+                tag: "CORE ENGINE",
                 gradient: "from-teal-500/10 via-white to-white",
-                image: "/images/modules/terminal.png"
+                image: "/images/modules/pos_node.png"
               },
               {
-                icon: <Wallet size={40} />,
-                title: "Financial Matrix",
-                desc: "Advanced CP/CR voucher cycles linked to daily reconciliation silos. Absolute financial integrity.",
-                tag: "SECURITY",
+                icon: <LedgerAnim />,
+                title: "Forensic Ledger",
+                desc: "Military-grade CP/CR voucher cycles linked to Debit Recovery protocols for managing credit customer balances.",
+                tag: "ACCOUNTING",
                 gradient: "from-blue-500/10 via-white to-white",
-                image: "/images/modules/financial.png"
+                image: "/images/modules/ledger.png"
               },
               {
-                icon: <Fingerprint size={40} />,
-                title: "Bio HR Core",
-                desc: "Biometric clock-in gates directly feeding automated payroll logic. Efficiency enforced.",
-                tag: "MANAGEMENT",
+                icon: <AttendanceAnim />,
+                title: "Attendance Matrix",
+                desc: "Biometric gates feeding automated salary logic with shift-tolerance, leave-balance, and deduction reconciliation.",
+                tag: "HR_INTELLIGENCE",
                 gradient: "from-emerald-500/10 via-white to-white",
-                image: "/images/modules/hr.png"
+                image: "/images/modules/attendance.png"
               },
               {
-                icon: <BarChart3 size={40} />,
-                title: "Active Intelligence",
-                desc: "Live revenue streams and inventory velocity mapped to 50+ forensic reports.",
+                icon: <PulseAnim />,
+                title: "Revenue Pulse",
+                desc: "Live inventory velocity and sales performance mapped to 50+ forensic reports for zero-leakage management.",
                 tag: "ANALYTICS",
                 gradient: "from-orange-500/10 via-white to-white",
                 image: "/images/modules/analytics.png"
               },
               {
-                icon: <ShieldCheck size={40} />,
-                title: "Guardian Audit",
-                desc: "Manager override locks and role-based encryption shields for total data sovereignty.",
-                tag: "PROTECTION",
+                icon: <AuditAnim />,
+                title: "The Audit Protocol",
+                desc: "Uncompromising Day-Closing mandates and role-based encryption shields to ensure 100% data sovereignty.",
+                tag: "SECURITY",
                 gradient: "from-purple-500/10 via-white to-white",
-                image: "/images/modules/security.png"
+                image: "/images/modules/audit.png"
               },
               {
-                icon: <MonitorSmartphone size={40} />,
-                title: "Ubiquitous Access",
-                desc: "Infinite scalability across cloud, mobile, and on-premise hardware. Your empire, anywhere.",
-                tag: "SCALE",
+                icon: <CloudAnim />,
+                title: "Cloud Sovereignty",
+                desc: "Powered by Google's Flutter engine. A single core delivering native 60FPS performance across Web, Mobile, and Desktop.",
+                tag: "PLATFORM",
                 gradient: "from-sky-500/10 via-white to-white",
-                image: "/images/modules/terminal.png" // Fallback to terminal for the 6th
+                image: "/images/modules/cloud_sovereignty.png"
               }
             ].map((feature, idx) => (
               <motion.div
@@ -395,9 +725,58 @@ export default function Home() {
                 transition={{ delay: idx * 0.1, duration: 0.8 }}
                 className={`premium-card p-4 group flex flex-col items-center text-center bg-gradient-to-br ${feature.gradient} border-2 border-transparent hover:border-[var(--primary-teal)]/20 transition-all duration-700 shadow-2xl shadow-gray-100 h-full`}
               >
-                <div className="w-20 h-20 rounded-[30px] bg-white shadow-2xl flex items-center justify-center text-[var(--primary-teal-dark)] mb-4! group-hover:scale-110 group-hover:rotate-[5deg] transition-all duration-500">
-                  {feature.icon}
-                </div>
+                <motion.div
+                  whileTap={{ scale: 0.95 }}
+                  className="relative w-32 h-32 mb-8 group/icon"
+                >
+                  {/* Outer Tech Ring - Rotating */}
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 rounded-full border-2 border-dashed border-[var(--primary-teal)]/20 md:group-hover/icon:border-[var(--primary-teal)]/50 md:group-hover/icon:duration-5 transition-colors"
+                  />
+
+                  {/* Inner Orbiting Particles/Dots */}
+                  <motion.div
+                    animate={{ rotate: -360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-2"
+                  >
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[var(--primary-teal)] shadow-[0_0_10px_var(--primary-teal)]" />
+                  </motion.div>
+
+                  {/* Glass Base Plate */}
+                  <div className="absolute inset-4 rounded-[28px] bg-white/40 backdrop-blur-xl border border-white/40 shadow-xl flex items-center justify-center md:group-hover/icon:scale-105 md:group-hover/icon:bg-white transition-all duration-500 overflow-hidden">
+                    {/* Energy Pulse Background */}
+                    <motion.div
+                      animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.1, 0.3, 0.1]
+                      }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                      className="absolute inset-0 bg-gradient-to-br from-[var(--primary-teal)] to-[var(--accent-blue)]"
+                    />
+
+                    {/* The Icon */}
+                    <motion.div
+                      whileHover={{ y: -5, scale: 1.1 }}
+                      className="relative z-10 text-[var(--primary-teal-dark)] drop-shadow-[0_2px_10px_rgba(38,166,154,0.3)]"
+                    >
+                      {feature.icon}
+                    </motion.div>
+                  </div>
+
+                  {/* Floating Tech Corners */}
+                  {[0, 90, 180, 270].map((rot) => (
+                    <div
+                      key={rot}
+                      style={{ transform: `rotate(${rot}deg)` }}
+                      className="absolute inset-0 p-1 opacity-20 md:opacity-0 md:group-hover/icon:opacity-100 transition-opacity duration-500"
+                    >
+                      <div className="w-3 h-3 border-t-2 border-l-2 border-[var(--primary-teal)] rounded-tl-md" />
+                    </div>
+                  ))}
+                </motion.div>
                 <div className="px-4 py-1.5 rounded-full bg-[var(--primary-teal)]/10 text-[var(--primary-teal)] text-[10px] font-black tracking-widest mb-6!">
                   {feature.tag}
                 </div>
@@ -445,13 +824,13 @@ export default function Home() {
                 Feature Ecosystem v4.2
               </motion.div>
               <h2 className="text-4xl md:text-7xl font-black text-[var(--primary-teal-dark)] leading-tight tracking-tighter">
-                Built for the <br />
-                <span className="text-teal-gradient">Relentless.</span>
+                The Power <br />
+                <span className="text-teal-gradient">Architecture.</span>
               </h2>
             </div>
             <div className="hidden lg:block text-right pb-4">
               <p className="text-[var(--text-muted)] font-medium max-w-[280px]">
-                Consolidating every operational node into a single, unified quantum baseline.
+                Consolidating every industrial-strength operational node into a single quantum baseline.
               </p>
             </div>
           </div>
@@ -459,38 +838,38 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {[
               {
-                category: "Core Operations",
+                category: "Neural Operations",
                 description: "High-performance modules for floor and kitchen management.",
                 items: [
                   {
-                    icon: <LayoutDashboard className="w-8 h-8" />,
-                    title: "Intelligent POS Terminal",
-                    desc: "Touch-optimized interface for lightning-fast order entry. Support for Dine-In, Takeaway, and Home Delivery.",
-                    tags: ["Order Modifiers", "KDS Sync", "Split Billing"]
+                    icon: <QuantumPOSAnim />,
+                    title: "Quantum POS Terminal",
+                    desc: "State-of-the-art interface with Dine-In floor mapping, lightning Takeaway, and real-time Delivery tracking sync.",
+                    tags: ["Split Billing", "KDS Real-time", "Floor Flow"]
                   },
                   {
-                    icon: <Layers className="w-8 h-8" />,
-                    title: "Floor Evolution",
-                    desc: "Visual representation of your restaurant layout. Track occupancy and waiter assignments in real-time.",
-                    tags: ["Drag-and-drop", "Timed occupancy", "Multi-floor"]
+                    icon: <BioHRAnim />,
+                    title: "Bio HR Ecosystem",
+                    desc: "Advanced staff management with integrated attendance tracking, late-tolerance detection, and biometric reconciliation.",
+                    tags: ["Shift Mgmt", "Attendance Sync", "Leave Logic"]
                   }
                 ]
               },
               {
-                category: "Financial Armor",
+                category: "Ironclad Financials",
                 description: "Deep accounting modules that solve the 'missing cash' mystery.",
                 items: [
                   {
-                    icon: <Wallet className="w-8 h-8" />,
-                    title: "Voucher Cycles",
-                    desc: "Professional Cash Payment (CP) and Cash Receive (CR) vouchers. Track every penny moving in and out.",
-                    tags: ["Bank Integration", "Expense Tracking", "Capital Mgmt"]
+                    icon: <ForensicLedgerV4Anim />,
+                    title: "Forensic Ledger V4",
+                    desc: "Professional Cash Payment (CP) and Cash Receive (CR) vouchers with Debit Recovery protocols for managing credit customer balances.",
+                    tags: ["Ledger Audit", "Debit Recovery", "Bank Recon"]
                   },
                   {
-                    icon: <ShieldCheck className="w-8 h-8" />,
-                    title: "Audit Day Closing",
-                    desc: "Automated end-of-day reconciliation. Cross-reference sales and vouchers to ensure 100% accuracy.",
-                    tags: ["Automatic P&L", "Cash Reconcile", "Closing Summary"]
+                    icon: <ClosureAnim />,
+                    title: "The Closure Protocol",
+                    desc: "Uncompromising Day-Closing engine. System mandates audit completeness, auto-reconciles cash-in-drawer, and performs global sync.",
+                    tags: ["Audit Shield", "Auto Check-out", "P&L Reconcile"]
                   }
                 ]
               }
@@ -508,25 +887,65 @@ export default function Home() {
                   {group.items.map((item, iIdx) => (
                     <motion.div
                       key={iIdx}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: iIdx * 0.1 }}
-                      className="group bg-white p-8 md:p-12 rounded-[40px] border border-black/5 hover:border-[var(--primary-teal)]/20 transition-all duration-500 shadow-sm hover:shadow-2xl hover:shadow-[var(--primary-teal)]/5"
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ delay: iIdx * 0.1, duration: 0.8 }}
+                      className="group relative p-[1px] rounded-[48px] overflow-hidden"
                     >
-                      <div className="flex flex-col md:flex-row md:items-center gap-10">
-                        <div className="w-20 h-20 rounded-3xl bg-[var(--bg-main)] flex items-center justify-center text-[var(--primary-teal)] group-hover:bg-[var(--primary-teal)] group-hover:text-white transition-all duration-500">
-                          {item.icon}
+                      {/* Animated Breathing Border Gradient - Active by default on mobile visibility */}
+                      <motion.div
+                        animate={{
+                          rotate: [0, 360],
+                          opacity: [0.3, 0.6, 0.3]
+                        }}
+                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_150deg,var(--primary-teal)_180deg,transparent_210deg,transparent_360deg)] md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-1000"
+                      />
+
+                      {/* Card Content - Glass Layer */}
+                      <div className="relative bg-white/70 backdrop-blur-3xl p-8 md:p-12 rounded-[48px] h-full flex flex-col md:flex-row md:items-center gap-10 border border-black/5 md:hover:border-transparent transition-colors duration-500">
+                        {/* Mini Cyber Scanner Icon Container */}
+                        <div className="relative w-24 h-24 shrink-0">
+                          <motion.div
+                            animate={{
+                              scale: [1, 1.1, 1],
+                              backgroundColor: ["rgba(38,166,154,0.05)", "rgba(38,166,154,0.15)", "rgba(38,166,154,0.05)"]
+                            }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute inset-0 rounded-3xl border border-[var(--primary-teal)]/20"
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center text-[var(--primary-teal)] md:group-hover:scale-110 md:group-hover:text-white transition-all duration-500 z-10">
+                            {item.icon}
+                          </div>
+                          {/* Inner Glowing Core - Pulses subtly on mobile */}
+                          <motion.div
+                            animate={{ opacity: [0, 0.2, 0] }}
+                            transition={{ duration: 3, repeat: Infinity }}
+                            className="absolute inset-6 rounded-full bg-[var(--primary-teal)] blur-xl md:opacity-0 md:group-hover:opacity-100 transition-all duration-500"
+                          />
                         </div>
+
                         <div className="flex-1">
-                          <h4 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-4">{item.title}</h4>
+                          <h4 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-4 tracking-tighter md:group-hover:text-[var(--primary-teal)] transition-colors">
+                            {item.title}
+                          </h4>
                           <p className="text-[var(--text-muted)] text-base font-medium leading-relaxed mb-8">
                             {item.desc}
                           </p>
                           <div className="flex flex-wrap gap-3">
                             {item.tags.map((tag) => (
-                              <span key={tag} className="px-4 py-1.5 rounded-full bg-[var(--bg-main)] text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal-dark)]/40 group-hover:bg-[var(--primary-teal)]/5 group-hover:text-[var(--primary-teal)] transition-colors">
+                              <motion.span
+                                key={tag}
+                                animate={{
+                                  backgroundColor: gIdx === 0 ? ["rgba(38,166,154,0.05)", "rgba(38,166,154,0.12)", "rgba(38,166,154,0.05)"] : ["rgba(245,158,11,0.05)", "rgba(245,158,11,0.12)", "rgba(245,158,11,0.05)"],
+                                }}
+                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                                whileTap={{ scale: 0.9, backgroundColor: gIdx === 0 ? "var(--primary-teal)" : "#f59e0b", color: "white" }}
+                                className={`px-4 py-1.5 rounded-full border ${gIdx === 0 ? 'border-[var(--primary-teal)]/10 text-[var(--primary-teal)]' : 'border-amber-500/10 text-amber-600'} text-[10px] font-black uppercase tracking-widest md:text-[var(--primary-teal-dark)]/40 md:bg-black/5 md:group-hover:bg-[var(--primary-teal)] md:group-hover:text-white transition-all duration-300 shadow-sm`}
+                              >
                                 {tag}
-                              </span>
+                              </motion.span>
                             ))}
                           </div>
                         </div>
@@ -535,6 +954,91 @@ export default function Home() {
                   ))}
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DETAILED POWER MODULES SECTION */}
+      <section className="py-24 bg-[var(--primary-teal-dark)] relative overflow-hidden">
+        {/* Animated Background Mesh */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_20%,var(--primary-teal)_0%,transparent_50%)]"></div>
+          <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_80%,var(--primary-teal)_0%,transparent_50%)]"></div>
+        </div>
+
+        <div className="content-container relative z-10">
+          <div className="grid lg:grid-cols-12 gap-16 items-center mb-24">
+            <div className="lg:col-span-7">
+              <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-[var(--primary-teal)] mb-6">Industrial Logic</h3>
+              <h2 className="text-4xl md:text-7xl font-black text-white tracking-tighter leading-[1.1]">
+                Engineering the <br />
+                <span className="text-3d-tech">Power Modules.</span>
+              </h2>
+            </div>
+            <div className="lg:col-span-5">
+              <p className="text-lg text-white/50 font-medium leading-relaxed">
+                By studying the Q-Line core architecture, we've distilled the most aggressive management features into modular, scalable nodes.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Salary Automator",
+                desc: "100% accurate payroll calculation using attendance snapshots, shift multipliers, and automated deduction recovery.",
+                stats: "Neural Reconcile",
+                icon: <BioHRAnim />
+              },
+              {
+                title: "Vendor Dynamics",
+                desc: "Industrial-grade supply chain tracking. Procurement ledgers, credit limits, and vendor performance analytics.",
+                stats: "Full Supply Matrix",
+                icon: <LedgerAnim />
+              },
+              {
+                title: "Role Sovereignty",
+                desc: "Military-grade access control. Precisely define who can override billing or audit forensic vouchers.",
+                stats: "Permission Shield",
+                icon: <AuditAnim />
+              }
+            ].map((module, mIdx) => (
+              <motion.div
+                key={mIdx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ delay: mIdx * 0.1 }}
+                className="bg-white/5 backdrop-blur-3xl border border-white/10 p-12 rounded-[48px] md:hover:bg-white/10 transition-all duration-500 group relative overflow-hidden"
+              >
+                {/* Ambient breathing glow for mobile */}
+                <motion.div
+                  animate={{ opacity: [0.1, 0.2, 0.1], scale: [1, 1.1, 1] }}
+                  transition={{ duration: 5, repeat: Infinity }}
+                  className={`absolute inset-0 bg-gradient-to-br ${mIdx === 0 ? 'from-[var(--primary-teal)]/10' : mIdx === 1 ? 'from-amber-500/10' : 'from-purple-500/10'} to-transparent -z-10`}
+                />
+
+                <div className="mb-10 flex justify-between items-start">
+                  <div className="relative">
+                    <motion.div
+                      animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+                      transition={{ duration: 4, repeat: Infinity }}
+                      className={`absolute inset-0 ${mIdx === 0 ? 'bg-[var(--primary-teal)]/20' : mIdx === 1 ? 'bg-amber-500/20' : 'bg-purple-500/20'} blur-xl rounded-full`}
+                    />
+                    <div className={`relative w-16 h-16 rounded-[24px] ${mIdx === 0 ? 'bg-[var(--primary-teal)]/20 text-[var(--primary-teal)]' : mIdx === 1 ? 'bg-amber-500/20 text-amber-500' : 'bg-purple-500/20 text-purple-400'} flex items-center justify-center md:group-hover:scale-110 transition-transform`}>
+                      {module.icon}
+                    </div>
+                  </div>
+                  <span className={`text-[10px] font-black uppercase tracking-widest ${mIdx === 0 ? 'text-[var(--primary-teal)] bg-[var(--primary-teal)]/10' : mIdx === 1 ? 'text-amber-500 bg-amber-500/10' : 'text-purple-400 bg-purple-500/10'} px-4 py-1.5 rounded-full`}>
+                    {module.stats}
+                  </span>
+                </div>
+                <h4 className="text-2xl font-black text-white mb-6 uppercase tracking-tighter">{module.title}</h4>
+                <p className="text-white/40 text-base font-medium leading-relaxed">
+                  {module.desc}
+                </p>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -760,45 +1264,45 @@ export default function Home() {
                   <motion.div
                     animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-0 right-0 w-[85%] h-[70%] bg-[var(--primary-teal-dark)] rounded-[40px] shadow-4xl border-[12px] border-white ring-1 ring-black/5 overflow-hidden flex items-center justify-center p-8"
+                    className="absolute top-0 right-0 w-[85%] h-[70%] bg-[#26a69a] rounded-[40px] shadow-4xl border-[12px] border-white ring-1 ring-black/5 overflow-hidden flex items-center justify-center relative"
                   >
-                    <div className="w-full h-full bg-white/5 rounded-2xl flex flex-col gap-4 p-4">
-                      <div className="w-1/2 h-4 bg-white/10 rounded-full"></div>
-                      <div className="grid grid-cols-3 gap-2 flex-grow">
-                        <div className="bg-white/10 rounded-xl"></div>
-                        <div className="bg-white/10 rounded-xl"></div>
-                        <div className="bg-white/10 rounded-xl"></div>
-                      </div>
-                    </div>
+                    <Image
+                      src="/images/modules/pos_node.png"
+                      alt="Q-Line Desktop Interface"
+                      fill
+                      className="object-cover object-center scale-105"
+                    />
+                    <div className="absolute inset-0 bg-white/5 pointer-events-none" />
                   </motion.div>
 
                   {/* Tablet Frame */}
                   <motion.div
                     animate={{ y: [0, 15, 0] }}
                     transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                    className="absolute bottom-0 left-0 w-[60%] h-[55%] bg-[var(--primary-teal)] rounded-[30px] shadow-4xl border-[10px] border-white ring-1 ring-black/5 overflow-hidden z-20 flex items-center justify-center p-6"
+                    className="absolute bottom-0 left-0 w-[60%] h-[55%] bg-[#26a69a] rounded-[30px] shadow-4xl border-[10px] border-white ring-1 ring-black/5 overflow-hidden z-20 flex items-center justify-center relative"
                   >
-                    <div className="w-full h-full bg-white/10 rounded-xl flex flex-col gap-3">
-                      <div className="w-2/3 h-3 bg-white/20 rounded-full"></div>
-                      <div className="grid grid-cols-2 gap-2 flex-grow">
-                        <div className="bg-white/20 rounded-lg"></div>
-                        <div className="bg-white/20 rounded-lg"></div>
-                      </div>
-                    </div>
+                    <Image
+                      src="/images/modules/pos_node.png"
+                      alt="Q-Line Tablet Interface"
+                      fill
+                      className="object-cover object-left scale-125 translate-x-10"
+                    />
+                    <div className="absolute inset-0 bg-white/10 pointer-events-none" />
                   </motion.div>
 
                   {/* Mobile Frame */}
                   <motion.div
                     animate={{ y: [10, -15, 10] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute bottom-[10%] right-[10%] w-[30%] h-[50%] bg-[var(--accent-blue)] rounded-[35px] shadow-4xl border-[8px] border-white ring-1 ring-black/5 z-30 overflow-hidden flex items-center justify-center p-4 px-2"
+                    className="absolute bottom-[10%] right-[10%] w-[30%] h-[50%] bg-[#26a69a] rounded-[35px] shadow-4xl border-[8px] border-white ring-1 ring-black/5 z-30 overflow-hidden flex items-center justify-center relative"
                   >
-                    <div className="w-full h-full bg-white/15 rounded-2xl flex flex-col items-center gap-4">
-                      <div className="w-8 h-8 rounded-full bg-white/20"></div>
-                      <div className="w-4/5 h-2 bg-white/20 rounded-full"></div>
-                      <div className="w-4/5 h-2 bg-white/20 rounded-full"></div>
-                      <div className="w-4/5 h-2 bg-white/20 rounded-full"></div>
-                    </div>
+                    <Image
+                      src="/images/modules/pos_node.png"
+                      alt="Q-Line Mobile Interface"
+                      fill
+                      className="object-cover object-right scale-[1.7] -translate-x-10"
+                    />
+                    <div className="absolute inset-0 bg-white/15 pointer-events-none" />
                   </motion.div>
 
                   {/* Connectivity Lines / Arcs */}
@@ -818,6 +1322,155 @@ export default function Home() {
               </div>
             </div>
 
+          </div>
+        </div>
+      </section>
+
+      {/* EXECUTIVE COMMAND CENTER - DIGITAL TWIN */}
+      <section className="py-24 bg-[var(--bg-main)] relative overflow-hidden">
+        {/* Animated HUD Grid Lines */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--primary-teal) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+
+        <div className="content-container relative z-10">
+          <div className="flex flex-col lg:flex-row justify-between gap-12 mb-20">
+            <div className="max-w-2xl">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="inline-flex items-center gap-3 px-4 py-1.5 mb-6 text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal)] bg-white shadow-sm rounded-full border border-[var(--primary-teal)]/10"
+              >
+                <div className="w-2 h-2 rounded-full bg-[var(--primary-teal)] animate-ping" />
+                Live Command v9.2
+              </motion.div>
+              <h2 className="text-4xl md:text-7xl font-black text-[var(--primary-teal-dark)] leading-tight tracking-tighter">
+                Executive <br />
+                <span className="text-3d-tech">Intelligence Hub.</span>
+              </h2>
+            </div>
+            <div className="pb-4">
+              <p className="text-lg text-[var(--text-muted)] font-medium max-w-[320px] lg:text-right leading-relaxed">
+                A military-grade digital twin of your entire workspace, providing <span className="text-[var(--primary-teal-dark)] font-black">Zero-Leakage Visibility</span> across every node.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { component: <RevenueVelocityNode />, title: "Revenue Velocity", category: "FINANCIAL", icon: <Activity size={12} /> },
+              { component: <ForensicStreamNode />, title: "Forensic Stream", category: "SECURITY", icon: <Lock size={12} /> },
+              { component: <NeuralPerformanceNode />, title: "Neural Radar", category: "OPERATIONS", icon: <Users size={12} /> },
+              { component: <InventoryFrictionNode />, title: "Stock Dynamics", category: "LOGISTICS", icon: <Layers size={12} /> }
+            ].map((cluster, cIdx) => (
+              <motion.div
+                key={cIdx}
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ delay: cIdx * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="group relative"
+              >
+                {/* Visual Connector Line */}
+                {cIdx < 3 && (
+                  <div className="hidden lg:block absolute -right-4 top-1/2 w-8 h-px bg-gradient-to-r from-[var(--primary-teal)]/20 to-transparent z-40" />
+                )}
+
+                <div className="mb-4 flex items-center justify-between px-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[var(--primary-teal)]">{cluster.icon}</span>
+                    <span className="text-[9px] font-black uppercase tracking-widest text-[var(--primary-teal)]/40">{cluster.category}</span>
+                  </div>
+                  <div className="flex gap-1">
+                    <div className="w-1 h-1 rounded-full bg-[var(--primary-teal)] animate-pulse" />
+                    <div className="w-1 h-1 rounded-full bg-[var(--primary-teal)]/50" />
+                  </div>
+                </div>
+
+                <div className="relative p-2 rounded-[40px] bg-white shadow-2xl shadow-black/[0.03] border border-black/[0.02] group-hover:scale-[1.02] transition-transform duration-500">
+                  <div className="h-[220px]">
+                    {cluster.component}
+                  </div>
+                </div>
+
+                <div className="mt-6 px-4">
+                  <h4 className="text-lg font-black text-[var(--primary-teal-dark)] mb-1 uppercase tracking-tighter">{cluster.title}</h4>
+                  <div className="h-0.5 w-8 bg-[var(--primary-teal)]/20 transition-all duration-500 group-hover:w-full" />
+                </div>
+
+                {/* Cyber Corner HUD */}
+                <div className="absolute top-[34px] left-0 -ml-2 w-4 h-4 border-t-2 border-l-2 border-[var(--primary-teal)]/20 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                <div className="absolute top-[34px] right-0 -mr-2 w-4 h-4 border-t-2 border-r-2 border-[var(--primary-teal)]/20 rounded-tr-lg opacity-0 group-hover:opacity-100 transition-all duration-500" />
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Bottom Abstract Flow Graphic */}
+          <div className="mt-32 relative h-1 bg-black/5 rounded-full overflow-hidden">
+            <motion.div
+              animate={{ x: ["-100%", "100%"] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-[var(--primary-teal)] to-transparent opacity-40"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* OPERATIONAL ECOSYSTEM - BENTO WORKSPACE */}
+      <section className="py-24 md:py-40 bg-[var(--bg-main)] relative overflow-hidden">
+        <div className="content-container">
+          <div className="grid lg:grid-cols-12 gap-16 items-start mb-24 px-4">
+            <div className="lg:col-span-12 xl:col-span-8">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="inline-flex items-center gap-3 px-4 py-1.5 mb-8 text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal)] bg-white shadow-sm rounded-full border border-black/5"
+              >
+                Operational Ecosystem_4.0
+              </motion.div>
+              <h2 className="text-4xl md:text-5xl lg:text-5xl font-[900] text-[var(--primary-teal-dark)] leading-[1.1] tracking-tighter mb-10">
+                A Unified Network of <br />
+                <span className="text-3d-tech">Validated Efficiency.</span>
+              </h2>
+            </div>
+
+            <div className="lg:col-span-12 xl:col-span-4 lg:grid lg:grid-cols-2 lg:gap-8 xl:block xl:space-y-0">
+              <p className="text-base text-[var(--text-muted)] font-medium leading-relaxed mb-6">
+                We don't just deploy software; we architect the digital nervous system for the world's most aggressive hospitality hubs.
+              </p>
+              <div className="grid grid-cols-2 gap-4 border-t border-black/5 pt-8">
+                <div>
+                  <div className="text-[9px] font-black text-[var(--primary-teal)] uppercase mb-1 tracking-widest">Topology</div>
+                  <div className="text-sm font-bold text-[var(--primary-teal-dark)]">Multi-Node Sync</div>
+                </div>
+                <div>
+                  <div className="text-[9px] font-black text-[var(--primary-teal)] uppercase mb-1 tracking-widest">Protocol</div>
+                  <div className="text-sm font-bold text-[var(--primary-teal-dark)]">Direct-Core V4</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="lg:col-span-2 grid md:grid-cols-2 gap-6"
+            >
+              <PartnerTile name="ELITE DHABA" nodeID="241" />
+              <PartnerTile name="QUANTUM CAFE" nodeID="108" />
+              <PartnerTile name="LEGEND DINING" nodeID="092" />
+              <PartnerTile name="METRO HUB" nodeID="315" />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="space-y-6"
+            >
+              <MetricTile label="Network Load" value="100%" trend="+ CIVILIAN STABILITY" />
+              <MetricTile label="Sync Latency" value="0.04ms" trend="ZERO BRIDGE DELAY" />
+            </motion.div>
           </div>
         </div>
       </section>

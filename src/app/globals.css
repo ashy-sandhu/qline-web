@@ -117,6 +117,20 @@ h4 {
   -webkit-text-fill-color: transparent;
 }
 
+.text-3d-tech {
+  background: linear-gradient(to bottom, 
+    var(--primary-teal-light) 0%, 
+    var(--primary-teal-dark) 50%, 
+    var(--primary-teal-light) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 0 rgba(255,255,255,0.1))
+          drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+  position: relative;
+}
+
 /* Premium Card Utility */
 .premium-card {
   background: var(--bg-card);
