@@ -49,14 +49,11 @@ const POSNodeAnim = () => (
       transition={{ duration: 2, repeat: Infinity }}
       className="absolute w-4 h-4 rounded-full bg-[var(--primary-teal)]"
     />
-    {[0, 90, 180, 270].map((rot) => (
-      <motion.div
-        key={rot}
-        animate={{ x: [0, rot === 90 || rot === 270 ? 0 : rot === 0 ? 20 : -20], y: [0, rot === 0 || rot === 180 ? 0 : rot === 90 ? 20 : -20], opacity: [0, 1, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity, delay: rot / 360 }}
-        className="absolute w-1.5 h-1.5 rounded-full bg-[var(--primary-teal)]"
-      />
-    ))}
+    <motion.div
+      animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+      transition={{ duration: 2, repeat: Infinity }}
+      className="absolute w-4 h-4 rounded-full bg-[var(--primary-teal)]"
+    />
     <LayoutDashboard size={24} className="relative z-10" />
   </div>
 );
@@ -597,6 +594,7 @@ export default function Home() {
                 muted
                 loop
                 playsInline
+                preload="metadata"
                 animate={{
                   objectPosition: ["0% 20%", "20% 20%"],
                   scale: [1.05, 1]
@@ -609,7 +607,7 @@ export default function Home() {
                 }}
                 className="w-full h-full object-cover transition-transform duration-[15s] ease-out"
               >
-                <source src="/video/hero-section-video.mp4" type="video/mp4" />
+                <source src="/video/hero-v2.mp4" type="video/mp4" />
                 <track kind="captions" label="English" />
               </motion.video>
 
@@ -1507,6 +1505,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </main>
+    </main >
   );
 }

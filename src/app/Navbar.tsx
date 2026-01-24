@@ -96,10 +96,11 @@ export default function Navbar() {
               <Image
                 src="/app_logo.png"
                 alt="QLINE Logo"
-                width={80}
-                height={80}
+                width={60}
+                height={60}
                 className="object-contain p-1 md:p-2"
                 priority
+                sizes="60px"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
