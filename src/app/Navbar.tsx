@@ -99,6 +99,7 @@ export default function Navbar() {
                 width={80}
                 height={80}
                 className="object-contain p-1 md:p-2"
+                priority
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
@@ -108,10 +109,10 @@ export default function Navbar() {
                 QLINE <span className="text-[var(--primary-teal)]">POS</span>
               </span>
               <div className="flex items-center gap-2">
-                <span className="text-[7px] md:text-[11px] font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-[var(--primary-teal)] opacity-80 whitespace-nowrap">
+                <span className="text-[7px] md:text-[11px] font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-[var(--primary-teal-dark)] whitespace-nowrap">
                   Evolutionary Intelligence
                 </span>
-                <div className="h-[1px] w-8 bg-[var(--primary-teal)]/30 hidden sm:block"></div>
+                <div className="h-[1px] w-8 bg-[var(--primary-teal)]/50 hidden sm:block"></div>
               </div>
             </div>
           </Link>
@@ -173,7 +174,7 @@ export default function Navbar() {
           {/* Action Section */}
           <div className="flex items-center gap-2">
             <div className="hidden xl:flex items-center gap-6 mr-6">
-              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal-dark)] opacity-40">
+              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal-dark)]">
                 <Globe size={14} />
                 <span>Global V4.0</span>
               </div>
@@ -190,6 +191,7 @@ export default function Navbar() {
             <button
               className="lg:hidden p-3 text-[var(--primary-teal-dark)] bg-white/40 backdrop-blur-md rounded-2xl border border-white/40 hover:bg-white/60 transition-colors"
               onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open Mobile Menu"
             >
               <Menu size={24} />
             </button>
@@ -222,7 +224,7 @@ export default function Navbar() {
                     <span className="text-xl font-[900] tracking-[-0.05em] text-[var(--primary-teal-dark)] leading-none">
                       QLINE <span className="text-[var(--primary-teal)]">POS</span>
                     </span>
-                    <span className="text-[8px] font-black uppercase tracking-[0.2em] text-[var(--primary-teal)] opacity-80">
+                    <span className="text-[8px] font-black uppercase tracking-[0.2em] text-[var(--primary-teal-dark)]">
                       Evolutionary Intelligence
                     </span>
                   </div>
@@ -230,6 +232,7 @@ export default function Navbar() {
                 <button
                   onClick={() => setMobileMenuOpen(false)}
                   className="p-3 bg-[var(--primary-teal)]/5 rounded-2xl text-[var(--primary-teal-dark)] hover:bg-[var(--primary-teal)]/10 transition-colors"
+                  aria-label="Close Mobile Menu"
                 >
                   <X size={24} />
                 </button>

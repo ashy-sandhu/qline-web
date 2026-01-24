@@ -23,23 +23,23 @@ export default function Footer() {
                                 <span className="text-2xl font-black tracking-tighter leading-none mb-1">
                                     QLINE <span className="font-light text-[var(--primary-teal-light)]">POS</span>
                                 </span>
-                                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal-light)] opacity-40">Evolutionary OS</span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal-light)]">Evolutionary OS</span>
                             </div>
                         </Link>
-                        <p className="text-white/60 text-sm leading-relaxed max-w-xs">
+                        <p className="text-white text-sm leading-relaxed max-w-xs">
                             Designing the future of restaurant intelligence. QLINE POS is the evolutionary OS for the modern dining industry.
                         </p>
                         <div className="flex items-center gap-4">
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--primary-teal)] transition-colors"><Twitter size={18} /></a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--primary-teal)] transition-colors"><Linkedin size={18} /></a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--primary-teal)] transition-colors"><Facebook size={18} /></a>
+                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--primary-teal)] transition-colors" aria-label="Follow us on Twitter"><Twitter size={18} /></a>
+                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--primary-teal)] transition-colors" aria-label="Follow us on LinkedIn"><Linkedin size={18} /></a>
+                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--primary-teal)] transition-colors" aria-label="Follow us on Facebook"><Facebook size={18} /></a>
                         </div>
                     </div>
 
                     {/* Nav Column 1 */}
                     <div>
-                        <h4 className="text-lg font-bold mb-8 text-white">Project</h4>
-                        <ul className="flex flex-col gap-4 text-white/60 text-sm font-medium">
+                        <h3 className="text-lg font-bold mb-8 text-white">Project Resources</h3>
+                        <ul className="flex flex-col gap-4 text-white/80 text-sm font-medium">
                             <li><Link href="/features" className="hover:text-[var(--primary-teal-light)] transition-colors">Software Features</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Pricing Models</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Documentation</Link></li>
@@ -49,8 +49,8 @@ export default function Footer() {
 
                     {/* Nav Column 2 */}
                     <div>
-                        <h4 className="text-lg font-bold mb-8 text-white">Company</h4>
-                        <ul className="flex flex-col gap-4 text-white/60 text-sm font-medium">
+                        <h3 className="text-lg font-bold mb-8 text-white">Company Info</h3>
+                        <ul className="flex flex-col gap-4 text-white/80 text-sm font-medium">
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">About Story</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Privacy Policy</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Terms of Service</Link></li>
@@ -60,8 +60,8 @@ export default function Footer() {
 
                     {/* Contact Column */}
                     <div>
-                        <h4 className="text-lg font-bold mb-8 text-white">Get in Touch</h4>
-                        <ul className="flex flex-col gap-6 text-white/60 text-sm font-medium">
+                        <h3 className="text-lg font-bold mb-8 text-white">Get in Touch</h3>
+                        <ul className="flex flex-col gap-6 text-white/80 text-sm font-medium">
                             <li className="flex items-start gap-3">
                                 <MapPin size={18} className="text-[var(--primary-teal-light)] shrink-0" />
                                 <span>Vehari Road, <br />Makhdoom Rasheed, Multan</span>
@@ -79,10 +79,10 @@ export default function Footer() {
                 </div>
 
                 <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
-                    <p className="text-white/40 text-xs font-bold uppercase tracking-widest">
+                    <p className="text-white/80 text-xs font-bold uppercase tracking-widest">
                         &copy; {new Date().getFullYear()} Q-LINE POS System. All Evolutionary Rights Reserved.
                     </p>
-                    <div className="flex items-center gap-8 text-[10px] font-black uppercase tracking-widest text-white/20">
+                    <div className="flex items-center gap-8 text-[10px] font-black uppercase tracking-widest text-white/60">
                         <span>Security Audited</span>
                         <span>GDPR Compliant</span>
                         <span>Desktop Native</span>

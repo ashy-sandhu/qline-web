@@ -226,10 +226,10 @@ const ClosureAnim = () => (
 const RevenueVelocityNode = () => (
   <div className="relative w-full h-full min-h-[160px] flex items-end overflow-hidden rounded-3xl bg-black/5 border border-white/10">
     <motion.div
-      initial={{ height: "30%" }}
-      animate={{ height: ["40%", "65%", "55%", "80%", "60%"] }}
+      initial={{ scaleY: 0.3 }}
+      animate={{ scaleY: [0.4, 0.65, 0.55, 0.8, 0.6] }}
       transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      className="w-full bg-gradient-to-t from-[var(--primary-teal)] to-[var(--primary-teal-light)] relative"
+      className="w-full bg-gradient-to-t from-[var(--primary-teal)] to-[var(--primary-teal-light)] relative origin-bottom"
     >
       <div className="absolute top-0 left-0 right-0 h-4 bg-white/30 skew-y-2 blur-sm" />
       <div className="absolute top-4 left-4 text-white/50 text-[10px] font-black uppercase tracking-widest">Live Flow</div>
@@ -310,10 +310,11 @@ const InventoryFrictionNode = () => (
       {[40, 70, 45, 90, 65, 30, 85].map((h, i) => (
         <motion.div
           key={i}
-          initial={{ height: 0 }}
-          whileInView={{ height: `${h}%` }}
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: h / 100 }}
           transition={{ duration: 1, delay: i * 0.1 }}
-          className={`flex-1 rounded-t-sm ${i === 3 ? 'bg-red-400' : 'bg-[var(--primary-teal)]/40'}`}
+          className={`flex-1 rounded-t-sm origin-bottom ${i === 3 ? 'bg-red-400' : 'bg-[var(--primary-teal)]/40'}`}
+          style={{ height: '100%' }}
         />
       ))}
     </div>
@@ -461,7 +462,7 @@ export default function Home() {
                   <Zap size={18} className="fill-[var(--primary-teal)] md:w-5 md:h-5 drop-shadow-[0_0_8px_var(--primary-teal)]" />
                 </div>
                 <div className="text-left">
-                  <div className="text-[6px] md:text-[9px] font-[900] uppercase text-white/40 tracking-[0.25em] mb-0.5 leading-none">Latency</div>
+                  <div className="text-[6px] md:text-[9px] font-[900] uppercase text-white/70 tracking-[0.25em] mb-0.5 leading-none">Latency</div>
                   <div className="text-xs md:text-xl font-black text-white leading-none tabular-nums">0.1ms</div>
                 </div>
               </motion.div>
@@ -490,7 +491,7 @@ export default function Home() {
                   <ShieldCheck size={18} className="md:w-5 md:h-5 text-[var(--accent-blue)] drop-shadow-[0_0_8px_var(--accent-blue)]" />
                 </div>
                 <div className="text-left">
-                  <div className="text-[6px] md:text-[9px] font-[900] uppercase text-white/40 tracking-[0.25em] mb-0.5 leading-none">Uptime</div>
+                  <div className="text-[6px] md:text-[9px] font-[900] uppercase text-white/70 tracking-[0.25em] mb-0.5 leading-none">Uptime</div>
                   <div className="text-xs md:text-xl font-black text-white leading-none tabular-nums">99.9%</div>
                 </div>
               </motion.div>
@@ -519,7 +520,7 @@ export default function Home() {
                   <LayoutGrid size={18} className="md:w-5 md:h-5 text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,1)]" />
                 </div>
                 <div className="text-left">
-                  <div className="text-[6px] md:text-[9px] font-[900] uppercase text-white/40 tracking-[0.25em] mb-0.5 leading-none">Global</div>
+                  <div className="text-[6px] md:text-[9px] font-[900] uppercase text-white/70 tracking-[0.25em] mb-0.5 leading-none">Global</div>
                   <div className="text-xs md:text-lg font-black text-white leading-none tracking-tight">SYNC</div>
                 </div>
               </motion.div>
@@ -548,7 +549,7 @@ export default function Home() {
                   <BarChart3 size={18} className="md:w-5 md:h-5 text-purple-400 drop-shadow-[0_0_8px_rgba(168,85,247,1)]" />
                 </div>
                 <div className="text-left">
-                  <div className="text-[6px] md:text-[9px] font-[900] uppercase text-white/40 tracking-[0.25em] mb-0.5 leading-none">Audit</div>
+                  <div className="text-[6px] md:text-[9px] font-[900] uppercase text-white/70 tracking-[0.25em] mb-0.5 leading-none">Audit</div>
                   <div className="text-xs md:text-lg font-black text-white leading-none">L5 AI</div>
                 </div>
               </motion.div>
@@ -609,6 +610,7 @@ export default function Home() {
                 className="w-full h-full object-cover transition-transform duration-[15s] ease-out"
               >
                 <source src="/video/hero-section-video.mp4" type="video/mp4" />
+                <track kind="captions" label="English" />
               </motion.video>
 
               {/* Glass Overlays */}
@@ -806,7 +808,7 @@ export default function Home() {
                       href={`/modules/${feature.slug}`}
                       className="relative z-[60] inline-block text-[10px] font-black text-white tracking-[0.2em] uppercase bg-black/40 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20 hover:bg-[var(--primary-teal)] transition-all duration-300 cursor-pointer"
                     >
-                      View Interface
+                      View {feature.title}
                     </Link>
                   </div>
                 </div>
@@ -887,7 +889,7 @@ export default function Home() {
               <div key={gIdx} className="space-y-12">
                 <div className="flex items-center gap-6">
                   <div className="h-px flex-1 bg-black/5"></div>
-                  <h3 className="text-xs font-black uppercase tracking-[0.5em] text-[var(--primary-teal)]/40 whitespace-nowrap">
+                  <h3 className="text-xs font-black uppercase tracking-[0.5em] text-[var(--primary-teal-dark)] whitespace-nowrap">
                     {group.category}
                   </h3>
                   <div className="h-px flex-1 bg-black/5"></div>
@@ -952,7 +954,7 @@ export default function Home() {
                                 }}
                                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                                 whileTap={{ scale: 0.9, backgroundColor: gIdx === 0 ? "var(--primary-teal)" : "#f59e0b", color: "white" }}
-                                className={`px-4 py-1.5 rounded-full border ${gIdx === 0 ? 'border-[var(--primary-teal)]/10 text-[var(--primary-teal)]' : 'border-amber-500/10 text-amber-600'} text-[10px] font-black uppercase tracking-widest md:text-[var(--primary-teal-dark)]/40 md:bg-black/5 md:group-hover:bg-[var(--primary-teal)] md:group-hover:text-white transition-all duration-300 shadow-sm`}
+                                className={`px-4 py-1.5 rounded-full border ${gIdx === 0 ? 'border-[var(--primary-teal)]/10 text-[var(--primary-teal-dark)]' : 'border-amber-500/10 text-amber-700'} text-[10px] font-black uppercase tracking-widest md:text-[var(--primary-teal-dark)] md:bg-black/5 md:group-hover:bg-[var(--primary-teal)] md:group-hover:text-white transition-all duration-300 shadow-sm`}
                               >
                                 {tag}
                               </motion.span>
@@ -1044,8 +1046,8 @@ export default function Home() {
                     {module.stats}
                   </span>
                 </div>
-                <h4 className="text-xl font-black text-white mb-4 uppercase tracking-tighter">{module.title}</h4>
-                <p className="text-white/40 text-sm font-medium leading-relaxed">
+                <h3 className="text-xl font-black text-white mb-4 uppercase tracking-tighter">{module.title}</h3>
+                <p className="text-white/70 text-sm font-medium leading-relaxed">
                   {module.desc}
                 </p>
               </motion.div>
@@ -1399,7 +1401,7 @@ export default function Home() {
                 </div>
 
                 <div className="mt-6 px-4">
-                  <h4 className="text-lg font-black text-[var(--primary-teal-dark)] mb-1 uppercase tracking-tighter">{cluster.title}</h4>
+                  <h3 className="text-lg font-black text-[var(--primary-teal-dark)] mb-1 uppercase tracking-tighter">{cluster.title}</h3>
                   <div className="h-0.5 w-8 bg-[var(--primary-teal)]/20 transition-all duration-500 group-hover:w-full" />
                 </div>
 
@@ -1440,7 +1442,7 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-12 xl:col-span-4 lg:grid lg:grid-cols-2 lg:gap-8 xl:block xl:space-y-0">
-              <p className="text-base text-[var(--text-muted)] font-medium leading-relaxed mb-6">
+              <p className="text-base text-gray-700 font-medium leading-relaxed mb-6">
                 We don't just deploy software; we architect the digital nervous system for the world's most aggressive hospitality hubs.
               </p>
               <div className="grid grid-cols-2 gap-4 border-t border-black/5 pt-8">
