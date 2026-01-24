@@ -564,7 +564,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative h-[400px] md:h-[70vh] w-full rounded-[30px] md:rounded-[60px] overflow-hidden shadow-[0_40px_100px_-20px_rgba(38,166,154,0.2)] border-[4px] md:border-[12px] border-white ring-1 ring-black/5 group z-10"
+              className="relative h-[500px] md:h-[85vh] w-full rounded-[30px] md:rounded-[60px] overflow-hidden shadow-[0_40px_100px_-20px_rgba(38,166,154,0.2)] border-[4px] md:border-[12px] border-white ring-1 ring-black/5 group z-10"
             >
               {/* HUD Element: Engine Badge (Top Center Inside Frame) */}
               <motion.div
@@ -1334,7 +1334,7 @@ export default function Home() {
       </section>
 
       {/* EXECUTIVE COMMAND CENTER - DIGITAL TWIN */}
-      <section className="py-24 bg-[var(--bg-main)] relative overflow-hidden">
+      <section id="executive-hub" className="py-24 bg-[var(--bg-main)] relative overflow-hidden">
         {/* Animated HUD Grid Lines */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--primary-teal) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
 
@@ -1422,7 +1422,7 @@ export default function Home() {
       </section>
 
       {/* OPERATIONAL ECOSYSTEM - BENTO WORKSPACE */}
-      <section className="py-20 md:py-24 bg-[var(--bg-main)] relative overflow-hidden">
+      <section id="operational-ecosystem" className="py-20 md:py-24 bg-[var(--bg-main)] relative overflow-hidden">
         <div className="content-container">
           <div className="grid lg:grid-cols-12 gap-12 items-start mb-16 px-4">
             <div className="lg:col-span-12 xl:col-span-8">

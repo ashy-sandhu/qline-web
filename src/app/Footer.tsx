@@ -16,7 +16,7 @@ export default function Footer() {
                                     alt="QLINE Logo"
                                     width={80}
                                     height={80}
-                                    className="object-contain p-2"
+                                    className="object-contain p-1 md:p-2"
                                 />
                             </div>
                             <div className="flex flex-col">

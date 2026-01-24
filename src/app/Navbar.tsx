@@ -4,13 +4,16 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronRight, Globe, Zap } from 'lucide-react';
+import { Menu, X, ChevronRight, Globe, Zap, ChevronDown, LayoutGrid, Wallet, Fingerprint, BarChart3, ShieldCheck, Cloud, MonitorSmartphone } from 'lucide-react';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
   const lastYRef = useRef(0);
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,12 +36,43 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'Anatomy', href: '#anatomy' },
-    { name: 'Features', href: '#features' },
-    { name: 'Engine', href: '#engine' },
-    { name: 'Download', href: '#download' },
+    { name: 'Home', href: '/' },
+    {
+      name: 'Modules',
+      href: '/#anatomy',
+      dropdown: [
+        { name: 'POS Node', href: '/modules/pos-node', icon: <LayoutGrid size={16} /> },
+        { name: 'Forensic Ledger', href: '/modules/ledger', icon: <Wallet size={16} /> },
+        { name: 'Attendance Matrix', href: '/modules/attendance', icon: <Fingerprint size={16} /> },
+        { name: 'Revenue Pulse', href: '/modules/analytics', icon: <BarChart3 size={16} /> },
+        { name: 'Audit Protocol', href: '/modules/audit', icon: <ShieldCheck size={16} /> },
+        { name: 'Cloud Sovereignty', href: '/modules/cloud', icon: <Cloud size={16} /> },
+      ]
+    },
+    {
+      name: 'Features',
+      href: '/#features',
+      dropdown: [
+        { name: 'System Anatomy', href: '/#anatomy', icon: <LayoutGrid size={16} /> },
+        { name: 'Universal Display', href: '/#engine', icon: <MonitorSmartphone size={16} /> },
+        { name: 'Executive Hub', href: '/#executive-hub', icon: <Zap size={16} /> },
+        { name: 'Performance Ecosystem', href: '/#operational-ecosystem', icon: <BarChart3 size={16} /> },
+      ]
+    },
+    { name: 'Engine', href: '/#engine' },
+    { name: 'Download', href: '/#download' },
   ];
+
+  const handleMouseEnter = (name: string) => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setActiveDropdown(name);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
+  };
 
   return (
     <>
@@ -64,7 +98,7 @@ export default function Navbar() {
                 alt="QLINE Logo"
                 width={80}
                 height={80}
-                className="object-contain p-2"
+                className="object-contain p-1 md:p-2"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
@@ -82,17 +116,57 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* High-Class Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-2 bg-white/30 backdrop-blur-md border border-white/40 rounded-full shadow-sm">
             {navLinks.map((link) => (
-              <Link
+              <div
                 key={link.name}
-                href={link.href}
-                className="relative px-[24px] py-[10px] text-[13px] font-black uppercase tracking-widest text-[var(--primary-teal-dark)]/70 hover:text-[var(--primary-teal)] transition-all duration-300 group"
+                className="relative"
+                onMouseEnter={() => link.dropdown && handleMouseEnter(link.name)}
+                onMouseLeave={() => link.dropdown && handleMouseLeave()}
               >
-                <span className="relative z-10">{link.name}</span>
-                <span className="absolute inset-0 bg-[var(--primary-teal)]/5 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></span>
-              </Link>
+                <Link
+                  href={link.href}
+                  className="relative px-[24px] py-[10px] text-[13px] font-black uppercase tracking-widest text-[var(--primary-teal-dark)]/70 hover:text-[var(--primary-teal)] transition-all duration-300 group flex items-center gap-2"
+                >
+                  <span className="relative z-10">{link.name}</span>
+                  {link.dropdown && <ChevronDown size={14} className={`transition-transform duration-300 ${activeDropdown === link.name ? 'rotate-180' : ''}`} />}
+                  <span className="absolute inset-0 bg-[var(--primary-teal)]/5 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></span>
+                </Link>
+
+                {/* Dropdown Menu */}
+                {link.dropdown && (
+                  <AnimatePresence>
+                    {activeDropdown === link.name && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-64 z-[110]"
+                      >
+                        <div className="bg-white rounded-3xl shadow-2xl border border-black/5 p-4 overflow-hidden">
+                          <div className="grid gap-2">
+                            {link.dropdown.map((subItem) => (
+                              <Link
+                                key={subItem.name}
+                                href={subItem.href}
+                                className="flex items-center gap-4 p-3 rounded-2xl hover:bg-[var(--primary-teal)]/5 group/sub transition-colors"
+                              >
+                                <div className="w-8 h-8 rounded-xl bg-[var(--primary-teal)]/10 text-[var(--primary-teal)] flex items-center justify-center group-hover/sub:bg-[var(--primary-teal)] group-hover/sub:text-white transition-all">
+                                  {subItem.icon}
+                                </div>
+                                <span className="text-xs font-black uppercase tracking-widest text-[var(--primary-teal-dark)]/80 group-hover/sub:text-[var(--primary-teal)] transition-colors">
+                                  {subItem.name}
+                                </span>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                )}
+              </div>
             ))}
           </div>
 
@@ -136,53 +210,98 @@ export default function Navbar() {
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-md bg-white shadow-[-20px_0_80px_rgba(0,0,0,0.1)] p-10 flex flex-col"
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-md bg-white shadow-[-20px_0_80px_rgba(0,0,0,0.1)] p-8 md:p-12 flex flex-col border-l border-black/5"
             >
-              <div className="flex justify-between items-center mb-16">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#001f1c] rounded-xl flex items-center justify-center p-3 shadow-lg shadow-black/20 border border-white/5">
-                    <Image src="/app_logo.png" alt="Logo" width={32} height={32} className="object-contain" />
+              <div className="flex justify-between items-center mb-12">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-[#001f1c] rounded-xl flex items-center justify-center p-2 shadow-lg shadow-black/20 border border-white/5">
+                    <Image src="/app_logo.png" alt="Logo" width={28} height={28} className="object-contain" />
                   </div>
-                  <span className="text-2xl font-black tracking-tighter text-[var(--primary-teal-dark)]">QLINE</span>
+                  <div className="flex flex-col">
+                    <span className="text-xl font-[900] tracking-[-0.05em] text-[var(--primary-teal-dark)] leading-none">
+                      QLINE <span className="text-[var(--primary-teal)]">POS</span>
+                    </span>
+                    <span className="text-[8px] font-black uppercase tracking-[0.2em] text-[var(--primary-teal)] opacity-80">
+                      Evolutionary Intelligence
+                    </span>
+                  </div>
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-3 bg-black/5 rounded-2xl text-[var(--primary-teal-dark)] hover:bg-black/10 transition-colors"
+                  className="p-3 bg-[var(--primary-teal)]/5 rounded-2xl text-[var(--primary-teal-dark)] hover:bg-[var(--primary-teal)]/10 transition-colors"
                 >
                   <X size={24} />
                 </button>
               </div>
 
-              <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-4 overflow-y-auto pr-2 custom-scrollbar">
                 {navLinks.map((link, idx) => (
                   <motion.div
                     key={link.name}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.1 }}
+                    transition={{ delay: idx * 0.05 }}
                   >
-                    <Link
-                      href={link.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="text-3xl font-black text-[var(--primary-teal-dark)]/20 hover:text-[var(--primary-teal)] transition-all duration-300 block"
-                    >
-                      {link.name}
-                    </Link>
+                    {!link.dropdown ? (
+                      <Link
+                        href={link.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-2xl font-black uppercase tracking-widest text-[var(--primary-teal-dark)]/80 hover:text-[var(--primary-teal)] transition-all duration-300 block py-2"
+                      >
+                        {link.name}
+                      </Link>
+                    ) : (
+                      <div className="flex flex-col gap-2">
+                        <button
+                          onClick={() => setOpenMobileDropdown(openMobileDropdown === link.name ? null : link.name)}
+                          className="flex items-center justify-between w-full text-2xl font-black uppercase tracking-widest text-[var(--primary-teal-dark)]/80 hover:text-[var(--primary-teal)] transition-all duration-300 py-2"
+                        >
+                          <span>{link.name}</span>
+                          <ChevronDown size={24} className={`transition-transform duration-300 ${openMobileDropdown === link.name ? 'rotate-180 text-[var(--primary-teal)]' : 'opacity-40'}`} />
+                        </button>
+                        <AnimatePresence>
+                          {openMobileDropdown === link.name && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              className="overflow-hidden flex flex-col gap-2 pl-4 border-l-2 border-[var(--primary-teal)]/10 ml-2 mb-4"
+                            >
+                              {link.dropdown.map((subItem) => (
+                                <Link
+                                  key={subItem.name}
+                                  href={subItem.href}
+                                  onClick={() => setMobileMenuOpen(false)}
+                                  className="flex items-center gap-4 p-3 rounded-2xl hover:bg-[var(--primary-teal)]/5 group/sub transition-colors"
+                                >
+                                  <div className="w-8 h-8 rounded-xl bg-[var(--primary-teal)]/10 text-[var(--primary-teal)] flex items-center justify-center group-hover/sub:bg-[var(--primary-teal)] group-hover/sub:text-white transition-all">
+                                    {subItem.icon}
+                                  </div>
+                                  <span className="text-[11px] font-black uppercase tracking-widest text-[var(--primary-teal-dark)]/60 group-hover/sub:text-[var(--primary-teal)] transition-colors">
+                                    {subItem.name}
+                                  </span>
+                                </Link>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    )}
                   </motion.div>
                 ))}
               </div>
 
-              <div className="mt-auto space-y-6">
-                <div className="p-6 rounded-3xl bg-[var(--primary-teal)]/5 border border-[var(--primary-teal)]/10">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Zap size={18} className="text-[var(--primary-teal)]" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal)]">System Status</span>
+              <div className="mt-auto pt-8 space-y-4">
+                <div className="p-5 rounded-3xl bg-[var(--primary-teal)]/5 border border-[var(--primary-teal)]/10">
+                  <div className="flex items-center gap-3 mb-1">
+                    <Zap size={16} className="text-[var(--primary-teal)]" />
+                    <span className="text-[9px] font-black uppercase tracking-widest text-[var(--primary-teal)]">System Status</span>
                   </div>
-                  <div className="text-xl font-black text-[var(--primary-teal-dark)]">Operational 100%</div>
+                  <div className="text-lg font-black text-[var(--primary-teal-dark)]">Operational 100%</div>
                 </div>
 
-                <button className="w-full btn-primary py-6 rounded-3xl text-lg font-black uppercase tracking-widest shadow-2xl shadow-[var(--primary-teal)]/20">
+                <button className="w-full btn-primary py-5 rounded-2xl text-[11px] font-black uppercase tracking-widest shadow-xl shadow-[var(--primary-teal)]/20">
                   Book a Demo
                 </button>
               </div>

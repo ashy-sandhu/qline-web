@@ -200,3 +200,17 @@ h4 {
   background: var(--primary-teal);
   color: white;
 }
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--primary-teal) !important;
+  border-radius: 10px;
+}
