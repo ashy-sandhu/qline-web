@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion, Variants, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   Zap,
   BarChart3,
@@ -335,23 +336,23 @@ const InventoryFrictionNode = () => (
 // --- OPERATIONAL ECOSYSTEM COMPONENTS ---
 
 const PartnerTile = ({ name, nodeID }: { name: string, nodeID: string }) => (
-  <div className="group relative bg-white/40 backdrop-blur-xl rounded-[40px] border border-black/[0.03] p-10 flex flex-col justify-between transition-all duration-500 hover:shadow-2xl hover:shadow-black/5 hover:-translate-y-1">
+  <div className="group relative bg-white/40 backdrop-blur-xl rounded-[32px] border border-black/[0.03] p-8 flex flex-col justify-between transition-all duration-500 hover:shadow-2xl hover:shadow-black/5 hover:-translate-y-1">
     <div className="flex justify-between items-start">
       <div className="text-[10px] font-black tracking-[0.3em] text-[var(--primary-teal)]/40 uppercase">NODE_{nodeID}</div>
       <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
     </div>
-    <div className="h-24 flex items-center justify-center py-4 grayscale group-hover:grayscale-0 transition-all duration-700">
-      <span className="text-2xl font-black text-[var(--primary-teal-dark)]/10 group-hover:text-[var(--primary-teal-dark)] transition-colors tracking-tighter uppercase">{name}</span>
+    <div className="h-20 flex items-center justify-center py-3 grayscale group-hover:grayscale-0 transition-all duration-700">
+      <span className="text-xl font-black text-[var(--primary-teal-dark)]/10 group-hover:text-[var(--primary-teal-dark)] transition-colors tracking-tighter uppercase">{name}</span>
     </div>
-    <div className="text-[9px] font-bold text-gray-400 uppercase tracking-widest border-t border-black/5 pt-4">Operational Center</div>
+    <div className="text-[9px] font-bold text-gray-400 uppercase tracking-widest border-t border-black/5 pt-3">Operational Center</div>
   </div>
 );
 
 const MetricTile = ({ label, value, trend }: { label: string, value: string, trend: string }) => (
-  <div className="bg-[var(--primary-teal-dark)] rounded-[40px] p-10 flex flex-col justify-between border border-white/5">
+  <div className="bg-[var(--primary-teal-dark)] rounded-[32px] p-8 flex flex-col justify-between border border-white/5">
     <div className="text-[10px] font-black tracking-[0.3em] text-[var(--primary-teal)] uppercase">{label}</div>
-    <div className="my-6">
-      <div className="text-4xl font-black text-white tracking-tighter">{value}</div>
+    <div className="my-5">
+      <div className="text-3xl font-black text-white tracking-tighter">{value}</div>
       <div className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mt-1">{trend}</div>
     </div>
     <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
@@ -392,7 +393,7 @@ export default function Home() {
             {/* V4.0 Badge */}
             <motion.div
               variants={fadeInUp}
-              className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-[var(--primary-teal)]/5 text-[var(--primary-teal)] text-[10px] font-black uppercase tracking-[0.3em] mb-10 border border-[var(--primary-teal)]/10"
+              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-[var(--primary-teal)]/5 text-[var(--primary-teal)] text-[10px] font-black uppercase tracking-[0.3em] mb-6 border border-[var(--primary-teal)]/10"
             >
               <div className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--primary-teal)] opacity-75"></span>
@@ -403,7 +404,7 @@ export default function Home() {
 
             <motion.h1
               variants={fadeInUp}
-              className="text-4xl md:text-6xl xl:text-7xl font-[900] text-[var(--primary-teal-dark)] leading-[1.1] tracking-[-0.04em] mb-8"
+              className="text-4xl md:text-5xl lg:text-6xl font-[900] text-[var(--primary-teal-dark)] leading-[1.15] tracking-[-0.04em] mb-6"
             >
               The OS for <br />
               <span className="text-teal-gradient">Dominating</span> the Floor.
@@ -411,7 +412,7 @@ export default function Home() {
 
             <motion.p
               variants={fadeInUp}
-              className="text-lg md:text-xl text-[var(--text-muted)] max-w-3xl mb-12 leading-relaxed font-medium opacity-90"
+              className="text-base md:text-lg text-[var(--text-muted)] max-w-2xl mb-8 leading-relaxed font-medium opacity-90"
             >
               Precision-engineered for high-pressure dining. Zero lag, military-grade financial auditing, and biometric staff sync.
             </motion.p>
@@ -563,7 +564,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative h-[500px] md:h-[90vh] w-full rounded-[40px] md:rounded-[100px] overflow-hidden shadow-[0_80px_160px_-40px_rgba(38,166,154,0.3)] border-[8px] md:border-[20px] border-white ring-1 ring-black/5 group z-10"
+              className="relative h-[400px] md:h-[70vh] w-full rounded-[30px] md:rounded-[60px] overflow-hidden shadow-[0_40px_100px_-20px_rgba(38,166,154,0.2)] border-[4px] md:border-[12px] border-white ring-1 ring-black/5 group z-10"
             >
               {/* HUD Element: Engine Badge (Top Center Inside Frame) */}
               <motion.div
@@ -650,15 +651,15 @@ export default function Home() {
       {/* Forced 3-Column Grid Section */}
       <section id="anatomy" className="bg-white relative scroll-mt-24">
         <div className="content-container">
-          <div className="text-center max-w-5xl mx-auto mb-40 pt-20 pb-10">
+          <div className="text-center max-w-5xl mx-auto mb-20 pt-16 pb-8">
             <motion.span
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              className="text-[var(--primary-teal)] font-black uppercase tracking-[0.8em] text-sm mb-10 block"
+              className="text-[var(--primary-teal)] font-black uppercase tracking-[0.8em] text-xs mb-6 block"
             >
               System Hierarchy
             </motion.span>
-            <h2 className="text-4xl md:text-6xl font-black text-[var(--primary-teal-dark)] mb-8 tracking-[-0.03em]">
+            <h2 className="text-3xl md:text-5xl font-black text-[var(--primary-teal-dark)] mb-6 tracking-[-0.03em]">
               The <span className="text-teal-gradient underline decoration-[var(--primary-teal)]/20 underline-offset-[8px]">Anatomy</span> of Power.
             </h2>
           </div>
@@ -674,7 +675,8 @@ export default function Home() {
                 desc: "High-frequency mission control. Optimized for Dine-In floor mapping, lightning Takeaway, and real-time Delivery tracking.",
                 tag: "CORE ENGINE",
                 gradient: "from-teal-500/10 via-white to-white",
-                image: "/images/modules/pos_node.png"
+                image: "/images/modules/pos_node.png",
+                slug: "pos-node"
               },
               {
                 icon: <LedgerAnim />,
@@ -682,7 +684,8 @@ export default function Home() {
                 desc: "Military-grade CP/CR voucher cycles linked to Debit Recovery protocols for managing credit customer balances.",
                 tag: "ACCOUNTING",
                 gradient: "from-blue-500/10 via-white to-white",
-                image: "/images/modules/ledger.png"
+                image: "/images/modules/ledger.png",
+                slug: "ledger"
               },
               {
                 icon: <AttendanceAnim />,
@@ -690,7 +693,8 @@ export default function Home() {
                 desc: "Biometric gates feeding automated salary logic with shift-tolerance, leave-balance, and deduction reconciliation.",
                 tag: "HR_INTELLIGENCE",
                 gradient: "from-emerald-500/10 via-white to-white",
-                image: "/images/modules/attendance.png"
+                image: "/images/modules/attendance.png",
+                slug: "attendance"
               },
               {
                 icon: <PulseAnim />,
@@ -698,7 +702,8 @@ export default function Home() {
                 desc: "Live inventory velocity and sales performance mapped to 50+ forensic reports for zero-leakage management.",
                 tag: "ANALYTICS",
                 gradient: "from-orange-500/10 via-white to-white",
-                image: "/images/modules/analytics.png"
+                image: "/images/modules/analytics.png",
+                slug: "analytics"
               },
               {
                 icon: <AuditAnim />,
@@ -706,7 +711,8 @@ export default function Home() {
                 desc: "Uncompromising Day-Closing mandates and role-based encryption shields to ensure 100% data sovereignty.",
                 tag: "SECURITY",
                 gradient: "from-purple-500/10 via-white to-white",
-                image: "/images/modules/audit.png"
+                image: "/images/modules/audit.png",
+                slug: "audit"
               },
               {
                 icon: <CloudAnim />,
@@ -714,7 +720,8 @@ export default function Home() {
                 desc: "Powered by Google's Flutter engine. A single core delivering native 60FPS performance across Web, Mobile, and Desktop.",
                 tag: "PLATFORM",
                 gradient: "from-sky-500/10 via-white to-white",
-                image: "/images/modules/cloud_sovereignty.png"
+                image: "/images/modules/cloud_sovereignty.png",
+                slug: "cloud"
               }
             ].map((feature, idx) => (
               <motion.div
@@ -793,11 +800,14 @@ export default function Home() {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                  <div className="absolute bottom-4 left-0 right-0 flex justify-center">
-                    <span className="text-[10px] font-black text-white tracking-[0.2em] uppercase bg-black/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+                  <div className="absolute bottom-4 left-0 right-0 flex justify-center z-[50]">
+                    <Link
+                      href={`/modules/${feature.slug}`}
+                      className="relative z-[60] inline-block text-[10px] font-black text-white tracking-[0.2em] uppercase bg-black/40 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20 hover:bg-[var(--primary-teal)] transition-all duration-300 cursor-pointer"
+                    >
                       View Interface
-                    </span>
+                    </Link>
                   </div>
                 </div>
               </motion.div>
@@ -813,23 +823,23 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[var(--accent-blue)]/5 blur-[120px] rounded-full -z-10 -translate-x-1/2"></div>
 
         <div className="content-container">
-          <div className="flex flex-col md:flex-row justify-between mb-24">
+          <div className="flex flex-col md:flex-row justify-between mb-16">
             <div className="max-w-3xl">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal)] bg-white shadow-sm rounded-full border border-[var(--primary-teal)]/10"
+                className="inline-flex items-center gap-2 px-3 py-1.5 mb-5 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal)] bg-white shadow-sm rounded-full border border-[var(--primary-teal)]/10"
               >
                 <Sparkles size={12} />
                 Feature Ecosystem v4.2
               </motion.div>
-              <h2 className="text-4xl md:text-7xl font-black text-[var(--primary-teal-dark)] leading-tight tracking-tighter">
+              <h2 className="text-3xl md:text-6xl font-black text-[var(--primary-teal-dark)] leading-tight tracking-tighter">
                 The Power <br />
                 <span className="text-teal-gradient">Architecture.</span>
               </h2>
             </div>
             <div className="hidden lg:block text-right pb-4">
-              <p className="text-[var(--text-muted)] font-medium max-w-[280px]">
+              <p className="text-[var(--text-muted)] font-medium max-w-[240px] text-sm">
                 Consolidating every industrial-strength operational node into a single quantum baseline.
               </p>
             </div>
@@ -968,16 +978,16 @@ export default function Home() {
         </div>
 
         <div className="content-container relative z-10">
-          <div className="grid lg:grid-cols-12 gap-16 items-center mb-24">
+          <div className="grid lg:grid-cols-12 gap-12 items-center mb-16">
             <div className="lg:col-span-7">
-              <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-[var(--primary-teal)] mb-6">Industrial Logic</h3>
-              <h2 className="text-4xl md:text-7xl font-black text-white tracking-tighter leading-[1.1]">
+              <h3 className="text-[9px] font-black uppercase tracking-[0.5em] text-[var(--primary-teal)] mb-4">Industrial Logic</h3>
+              <h2 className="text-3xl md:text-6xl font-black text-white tracking-tighter leading-[1.1]">
                 Engineering the <br />
                 <span className="text-3d-tech">Power Modules.</span>
               </h2>
             </div>
             <div className="lg:col-span-5">
-              <p className="text-lg text-white/50 font-medium leading-relaxed">
+              <p className="text-base text-white/50 font-medium leading-relaxed">
                 By studying the Q-Line core architecture, we've distilled the most aggressive management features into modular, scalable nodes.
               </p>
             </div>
@@ -1010,7 +1020,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ delay: mIdx * 0.1 }}
-                className="bg-white/5 backdrop-blur-3xl border border-white/10 p-12 rounded-[48px] md:hover:bg-white/10 transition-all duration-500 group relative overflow-hidden"
+                className="bg-white/5 backdrop-blur-3xl border border-white/10 p-8 md:p-10 rounded-[40px] md:hover:bg-white/10 transition-all duration-500 group relative overflow-hidden"
               >
                 {/* Ambient breathing glow for mobile */}
                 <motion.div
@@ -1019,23 +1029,23 @@ export default function Home() {
                   className={`absolute inset-0 bg-gradient-to-br ${mIdx === 0 ? 'from-[var(--primary-teal)]/10' : mIdx === 1 ? 'from-amber-500/10' : 'from-purple-500/10'} to-transparent -z-10`}
                 />
 
-                <div className="mb-10 flex justify-between items-start">
+                <div className="mb-8 flex justify-between items-start">
                   <div className="relative">
                     <motion.div
                       animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
                       transition={{ duration: 4, repeat: Infinity }}
                       className={`absolute inset-0 ${mIdx === 0 ? 'bg-[var(--primary-teal)]/20' : mIdx === 1 ? 'bg-amber-500/20' : 'bg-purple-500/20'} blur-xl rounded-full`}
                     />
-                    <div className={`relative w-16 h-16 rounded-[24px] ${mIdx === 0 ? 'bg-[var(--primary-teal)]/20 text-[var(--primary-teal)]' : mIdx === 1 ? 'bg-amber-500/20 text-amber-500' : 'bg-purple-500/20 text-purple-400'} flex items-center justify-center md:group-hover:scale-110 transition-transform`}>
+                    <div className={`relative w-14 h-14 rounded-[20px] ${mIdx === 0 ? 'bg-[var(--primary-teal)]/20 text-[var(--primary-teal)]' : mIdx === 1 ? 'bg-amber-500/20 text-amber-500' : 'bg-purple-500/20 text-purple-400'} flex items-center justify-center md:group-hover:scale-110 transition-transform`}>
                       {module.icon}
                     </div>
                   </div>
-                  <span className={`text-[10px] font-black uppercase tracking-widest ${mIdx === 0 ? 'text-[var(--primary-teal)] bg-[var(--primary-teal)]/10' : mIdx === 1 ? 'text-amber-500 bg-amber-500/10' : 'text-purple-400 bg-purple-500/10'} px-4 py-1.5 rounded-full`}>
+                  <span className={`text-[9px] font-black uppercase tracking-widest ${mIdx === 0 ? 'text-[var(--primary-teal)] bg-[var(--primary-teal)]/10' : mIdx === 1 ? 'text-amber-500 bg-amber-500/10' : 'text-purple-400 bg-purple-500/10'} px-3 py-1.5 rounded-full`}>
                     {module.stats}
                   </span>
                 </div>
-                <h4 className="text-2xl font-black text-white mb-6 uppercase tracking-tighter">{module.title}</h4>
-                <p className="text-white/40 text-base font-medium leading-relaxed">
+                <h4 className="text-xl font-black text-white mb-4 uppercase tracking-tighter">{module.title}</h4>
+                <p className="text-white/40 text-sm font-medium leading-relaxed">
                   {module.desc}
                 </p>
               </motion.div>
@@ -1067,7 +1077,7 @@ export default function Home() {
                 Powered by Google Flutter
               </div>
 
-              <h2 className="text-5xl md:text-8xl font-black text-[var(--primary-teal-dark)] leading-[1.1] tracking-tighter mb-8!">
+              <h2 className="text-4xl md:text-6xl font-black text-[var(--primary-teal-dark)] leading-[1.1] tracking-tighter mb-8!">
                 Unified Core. <br />
                 <span className="text-teal-gradient">Infinite Display.</span>
               </h2>
@@ -1329,17 +1339,17 @@ export default function Home() {
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--primary-teal) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
 
         <div className="content-container relative z-10">
-          <div className="flex flex-col lg:flex-row justify-between gap-12 mb-20">
+          <div className="flex flex-col lg:flex-row justify-between gap-8 mb-16">
             <div className="max-w-2xl">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                className="inline-flex items-center gap-3 px-4 py-1.5 mb-6 text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal)] bg-white shadow-sm rounded-full border border-[var(--primary-teal)]/10"
+                className="inline-flex items-center gap-2 px-3 py-1.5 mb-5 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal)] bg-white shadow-sm rounded-full border border-[var(--primary-teal)]/10"
               >
                 <div className="w-2 h-2 rounded-full bg-[var(--primary-teal)] animate-ping" />
                 Live Command v9.2
               </motion.div>
-              <h2 className="text-4xl md:text-7xl font-black text-[var(--primary-teal-dark)] leading-tight tracking-tighter">
+              <h2 className="text-3xl md:text-6xl font-black text-[var(--primary-teal-dark)] leading-tight tracking-tighter">
                 Executive <br />
                 <span className="text-3d-tech">Intelligence Hub.</span>
               </h2>
@@ -1412,18 +1422,18 @@ export default function Home() {
       </section>
 
       {/* OPERATIONAL ECOSYSTEM - BENTO WORKSPACE */}
-      <section className="py-24 md:py-40 bg-[var(--bg-main)] relative overflow-hidden">
+      <section className="py-20 md:py-24 bg-[var(--bg-main)] relative overflow-hidden">
         <div className="content-container">
-          <div className="grid lg:grid-cols-12 gap-16 items-start mb-24 px-4">
+          <div className="grid lg:grid-cols-12 gap-12 items-start mb-16 px-4">
             <div className="lg:col-span-12 xl:col-span-8">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                className="inline-flex items-center gap-3 px-4 py-1.5 mb-8 text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal)] bg-white shadow-sm rounded-full border border-black/5"
+                className="inline-flex items-center gap-3 px-3 py-1.5 mb-6 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal)] bg-white shadow-sm rounded-full border border-black/5"
               >
                 Operational Ecosystem_4.0
               </motion.div>
-              <h2 className="text-4xl md:text-5xl lg:text-5xl font-[900] text-[var(--primary-teal-dark)] leading-[1.1] tracking-tighter mb-10">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-[900] text-[var(--primary-teal-dark)] leading-[1.1] tracking-tighter mb-8">
                 A Unified Network of <br />
                 <span className="text-3d-tech">Validated Efficiency.</span>
               </h2>
@@ -1473,12 +1483,12 @@ export default function Home() {
       </section>
 
       {/* CTA SECTION - ULTRA HIGH WEIGHT */}
-      <section id="download" className="py-40">
+      <section id="download" className="py-24">
         <div className="content-container !max-w-[1400px]">
-          <div className="bg-[var(--primary-teal-dark)] rounded-[90px] p-24 md:p-40 text-center relative overflow-hidden group">
+          <div className="bg-[var(--primary-teal-dark)] rounded-[60px] p-16 md:p-24 text-center relative overflow-hidden group">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--primary-teal)_0%,transparent_70%)] opacity-20"></div>
-            <div className="relative z-10 max-w-5xl mx-auto">
-              <h2 className="text-4xl md:text-7xl font-black text-white mb-12 tracking-tighter leading-tight">
+            <div className="relative z-10 max-w-4xl mx-auto">
+              <h2 className="text-3xl md:text-6xl font-black text-white mb-10 tracking-tighter leading-tight">
                 Future-Proof <br />
                 <span className="text-teal-gradient animate-pulse">Your Revenue.</span>
               </h2>

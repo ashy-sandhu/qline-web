@@ -58,19 +58,19 @@ export default function Navbar() {
 
           {/* Enhanced Branding Section */}
           <Link href="/" className="flex items-center gap-2 md:gap-5 group shrink-0">
-            <div className="relative w-10 h-10 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-[var(--primary-teal)] to-[var(--primary-teal-dark)] flex items-center justify-center shadow-xl shadow-[var(--primary-teal)]/20 group-hover:scale-105 transition-all duration-500 border border-white/20 overflow-hidden">
+            <div className="relative w-10 h-10 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-[#001f1c] flex items-center justify-center shadow-2xl shadow-black/20 group-hover:scale-105 transition-all duration-500 border border-white/5 overflow-hidden">
               <Image
                 src="/app_logo.png"
                 alt="QLINE Logo"
-                width={60}
-                height={60}
-                className="object-contain p-1.5 md:p-2.5 brightness-0 invert"
+                width={80}
+                height={80}
+                className="object-contain p-2"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
 
             <div className="flex flex-col justify-center">
-              <span className="text-lg md:text-3xl font-[900] tracking-[-0.05em] text-[var(--primary-teal-dark)] leading-none mb-0.5 md:mb-1">
+              <span className="text-lg md:text-2xl font-[900] tracking-[-0.05em] text-[var(--primary-teal-dark)] leading-none mb-0.5 md:mb-1">
                 QLINE <span className="text-[var(--primary-teal)]">POS</span>
               </span>
               <div className="flex items-center gap-2">
@@ -141,8 +141,8 @@ export default function Navbar() {
             >
               <div className="flex justify-between items-center mb-16">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[var(--primary-teal)] rounded-xl flex items-center justify-center p-2.5 shadow-lg shadow-[var(--primary-teal)]/20">
-                    <Image src="/app_logo.png" alt="Logo" width={32} height={32} className="invert brightness-0" />
+                  <div className="w-12 h-12 bg-[#001f1c] rounded-xl flex items-center justify-center p-3 shadow-lg shadow-black/20 border border-white/5">
+                    <Image src="/app_logo.png" alt="Logo" width={32} height={32} className="object-contain" />
                   </div>
                   <span className="text-2xl font-black tracking-tighter text-[var(--primary-teal-dark)]">QLINE</span>
                 </div>
@@ -165,7 +165,7 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="text-5xl font-black text-[var(--primary-teal-dark)]/20 hover:text-[var(--primary-teal)] transition-all duration-300 block"
+                      className="text-3xl font-black text-[var(--primary-teal-dark)]/20 hover:text-[var(--primary-teal)] transition-all duration-300 block"
                     >
                       {link.name}
                     </Link>

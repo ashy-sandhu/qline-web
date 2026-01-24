@@ -6,17 +6,17 @@ export default function Footer() {
     return (
         <footer className="bg-[var(--primary-teal-dark)] text-white pt-12 pb-6">
             <div className="content-container">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                     {/* Brand Column */}
                     <div className="flex flex-col gap-8">
                         <Link href="/" className="flex items-center gap-4 group">
-                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-[var(--primary-teal)] to-[var(--primary-teal-dark)] flex items-center justify-center shadow-xl shadow-black/40 overflow-hidden border border-white/10 group-hover:scale-105 transition-transform duration-500">
+                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-[#001f1c] flex items-center justify-center shadow-2xl shadow-black/40 overflow-hidden border border-white/5 group-hover:scale-105 transition-transform duration-500">
                                 <Image
                                     src="/app_logo.png"
                                     alt="QLINE Logo"
-                                    width={60}
-                                    height={60}
-                                    className="object-contain p-1 invert brightness-0"
+                                    width={80}
+                                    height={80}
+                                    className="object-contain p-2"
                                 />
                             </div>
                             <div className="flex flex-col">

@@ -17,7 +17,7 @@
   --accent-blue: #0ea5e9;
   --accent-gold: #fbbf24;
 
-  --radius-premium: 24px;
+  --radius-premium: 20px;
 }
 
 * {
@@ -118,16 +118,14 @@ h4 {
 }
 
 .text-3d-tech {
-  background: linear-gradient(to bottom, 
-    var(--primary-teal-light) 0%, 
-    var(--primary-teal-dark) 50%, 
-    var(--primary-teal-light) 100%
-  );
+  background: linear-gradient(to bottom,
+      var(--primary-teal-light) 0%,
+      var(--primary-teal-dark) 50%,
+      var(--primary-teal-light) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 0 rgba(255,255,255,0.1))
-          drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 2px 0 rgba(255, 255, 255, 0.1)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
   position: relative;
 }
 
@@ -157,6 +155,7 @@ h4 {
   background: linear-gradient(135deg, transparent 0%, rgba(38, 166, 154, 0.05) 100%);
   opacity: 0;
   transition: opacity 0.4s;
+  pointer-events: none;
 }
 
 .premium-card:hover::after {
