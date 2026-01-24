@@ -1258,58 +1258,55 @@ export default function Home() {
                 transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 className="relative z-10"
               >
-                {/* Visual representation of devices */}
-                <div className="relative aspect-square max-w-[500px] mx-auto">
-                  {/* Main Desktop Frame */}
+                {/* Visual representation of devices - Consolidated Central Layout */}
+                <div className="relative w-full max-w-[800px] aspect-[4/3] mx-auto">
+                  {/* Main Desktop Frame - Center Back */}
                   <motion.div
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-0 right-0 w-[85%] h-[70%] bg-[#26a69a] rounded-[40px] shadow-4xl border-[12px] border-white ring-1 ring-black/5 overflow-hidden flex items-center justify-center relative"
+                    animate={{ y: [0, -15, 0] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-0 left-1/2 -translate-x-1/2 w-[90%] h-[75%] bg-[#1a1a1a] rounded-[40px] shadow-4xl border-[12px] border-[#2a2a2a] ring-1 ring-black/20 overflow-hidden flex items-center justify-center z-10"
                   >
                     <Image
-                      src="/images/modules/pos_node.png"
+                      src="/images/responsiveness/desktop.pos.png"
                       alt="Q-Line Desktop Interface"
                       fill
-                      className="object-cover object-center scale-105"
+                      className="object-cover object-center opacity-90 group-hover:opacity-100 transition-opacity"
                     />
-                    <div className="absolute inset-0 bg-white/5 pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
                   </motion.div>
 
-                  {/* Tablet Frame */}
+                  {/* Tablet Frame - Bottom Left Overlap */}
                   <motion.div
-                    animate={{ y: [0, 15, 0] }}
-                    transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                    className="absolute bottom-0 left-0 w-[60%] h-[55%] bg-[#26a69a] rounded-[30px] shadow-4xl border-[10px] border-white ring-1 ring-black/5 overflow-hidden z-20 flex items-center justify-center relative"
+                    animate={{ y: [10, -10, 10], x: [0, 5, 0] }}
+                    transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                    className="absolute bottom-[5%] left-0 w-[55%] h-[50%] bg-[#1a1a1a] rounded-[30px] shadow-5xl border-[10px] border-[#2a2a2a] ring-1 ring-black/20 overflow-hidden z-30 flex items-center justify-center"
                   >
                     <Image
-                      src="/images/modules/pos_node.png"
+                      src="/images/responsiveness/tablet.pos.png"
                       alt="Q-Line Tablet Interface"
                       fill
-                      className="object-cover object-left scale-125 translate-x-10"
+                      className="object-cover object-center opacity-90 group-hover:opacity-100 transition-opacity"
                     />
-                    <div className="absolute inset-0 bg-white/10 pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
                   </motion.div>
 
-                  {/* Mobile Frame */}
+                  {/* Mobile Frame - Bottom Right Overlap */}
                   <motion.div
-                    animate={{ y: [10, -15, 10] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute bottom-[10%] right-[10%] w-[30%] h-[50%] bg-[#26a69a] rounded-[35px] shadow-4xl border-[8px] border-white ring-1 ring-black/5 z-30 overflow-hidden flex items-center justify-center relative"
+                    animate={{ y: [-10, 15, -10], x: [0, -5, 0] }}
+                    transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    className="absolute bottom-[2%] right-[5%] w-[30%] h-[55%] bg-[#1a1a1a] rounded-[35px] shadow-5xl border-[8px] border-[#2a2a2a] ring-1 ring-black/20 z-40 overflow-hidden flex items-center justify-center"
                   >
                     <Image
-                      src="/images/modules/pos_node.png"
+                      src="/images/responsiveness/mobile.pos.png"
                       alt="Q-Line Mobile Interface"
                       fill
-                      className="object-cover object-right scale-[1.7] -translate-x-10"
+                      className="object-cover object-center opacity-90 group-hover:opacity-100 transition-opacity"
                     />
-                    <div className="absolute inset-0 bg-white/15 pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
                   </motion.div>
 
-                  {/* Connectivity Lines / Arcs */}
-                  <svg className="absolute inset-0 w-full h-full -z-10 pointer-events-none opacity-20" viewBox="0 0 100 100">
-                    <path d="M70,30 Q90,50 70,80" fill="none" stroke="var(--primary-teal)" strokeWidth="0.5" strokeDasharray="2 2" />
-                    <path d="M30,80 Q50,50 70,30" fill="none" stroke="var(--accent-blue)" strokeWidth="0.5" strokeDasharray="2 2" />
-                  </svg>
+                  {/* Ambient Glow for the whole group */}
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[var(--primary-teal)]/10 blur-[100px] -z-10 rounded-full" />
                 </div>
               </motion.div>
 
