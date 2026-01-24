@@ -6,11 +6,6 @@ import Footer from "./Footer";
 export const metadata: Metadata = {
   title: "Q-Line POS | Professional Restaurant Management System",
   description: "Experience the next generation of restaurant management. Fast, reliable, and beautiful POS software.",
-  icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/favicon.png",
-  },
 };
 
 export default function RootLayout({
