@@ -20,8 +20,16 @@ import {
   ShieldAlert,
   Lock,
   Activity,
-  LayoutGrid
+  LayoutGrid,
+  FileText,
+  FileSpreadsheet,
+  Search,
+  TrendingUp,
+  UserPlus,
+  Printer,
+  ScrollText
 } from 'lucide-react';
+import OrganicFlowBackground from './components/OrganicFlowBackground';
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 60 },
@@ -817,240 +825,101 @@ export default function Home() {
         </div>
       </section>
 
-      {/* DEEP FEATURE SHOWCASE - THE ART OF AI */}
-      <section id="features" className="py-10 bg-[var(--bg-main)] relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[var(--primary-teal)]/5 blur-[120px] rounded-full -z-10 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[var(--accent-blue)]/5 blur-[120px] rounded-full -z-10 -translate-x-1/2"></div>
 
-        <div className="content-container">
-          <div className="flex flex-col md:flex-row justify-between mb-16">
-            <div className="max-w-3xl">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 mb-5 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal-dark)] bg-white shadow-sm rounded-full border border-[var(--primary-teal)]/10"
-              >
-                <Sparkles size={12} className="text-[var(--primary-teal)]" />
-                Feature Ecosystem v4.2
-              </motion.div>
-              <h2 className="text-3xl md:text-6xl font-black text-[var(--primary-teal-dark)] leading-tight tracking-tighter">
-                The Power <br />
-                <span className="text-teal-gradient">Architecture.</span>
-              </h2>
-            </div>
-            <div className="hidden lg:block text-right pb-4">
-              <p className="text-[var(--text-muted)] font-medium max-w-[240px] text-sm">
-                Consolidating every industrial-strength operational node into a single quantum baseline.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {[
-              {
-                category: "Neural Operations",
-                description: "High-performance modules for floor and kitchen management.",
-                items: [
-                  {
-                    icon: <QuantumPOSAnim />,
-                    title: "Quantum POS Terminal",
-                    desc: "State-of-the-art interface with Dine-In floor mapping, lightning Takeaway, and real-time Delivery tracking sync.",
-                    tags: ["Split Billing", "KDS Real-time", "Floor Flow"]
-                  },
-                  {
-                    icon: <BioHRAnim />,
-                    title: "Bio HR Ecosystem",
-                    desc: "Advanced staff management with integrated attendance tracking, late-tolerance detection, and biometric reconciliation.",
-                    tags: ["Shift Mgmt", "Attendance Sync", "Leave Logic"]
-                  }
-                ]
-              },
-              {
-                category: "Ironclad Financials",
-                description: "Deep accounting modules that solve the 'missing cash' mystery.",
-                items: [
-                  {
-                    icon: <ForensicLedgerV4Anim />,
-                    title: "Forensic Ledger V4",
-                    desc: "Professional Cash Payment (CP) and Cash Receive (CR) vouchers with Debit Recovery protocols for managing credit customer balances.",
-                    tags: ["Ledger Audit", "Debit Recovery", "Bank Recon"]
-                  },
-                  {
-                    icon: <ClosureAnim />,
-                    title: "The Closure Protocol",
-                    desc: "Uncompromising Day-Closing engine. System mandates audit completeness, auto-reconciles cash-in-drawer, and performs global sync.",
-                    tags: ["Audit Shield", "Auto Check-out", "P&L Reconcile"]
-                  }
-                ]
-              }
-            ].map((group, gIdx) => (
-              <div key={gIdx} className="space-y-12">
-                <div className="flex items-center gap-6">
-                  <div className="h-px flex-1 bg-black/5"></div>
-                  <h3 className="text-xs font-black uppercase tracking-[0.5em] text-[var(--primary-teal-dark)] whitespace-nowrap">
-                    {group.category}
-                  </h3>
-                  <div className="h-px flex-1 bg-black/5"></div>
-                </div>
-
-                <div className="grid gap-8">
-                  {group.items.map((item, iIdx) => (
-                    <motion.div
-                      key={iIdx}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      whileTap={{ scale: 0.98 }}
-                      transition={{ delay: iIdx * 0.1, duration: 0.8 }}
-                      className="group relative p-[1px] rounded-[48px] overflow-hidden"
-                    >
-                      {/* Animated Breathing Border Gradient - Active by default on mobile visibility */}
-                      <motion.div
-                        animate={{
-                          rotate: [0, 360],
-                          opacity: [0.3, 0.6, 0.3]
-                        }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_150deg,var(--primary-teal)_180deg,transparent_210deg,transparent_360deg)] md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-1000"
-                      />
-
-                      {/* Card Content - Glass Layer */}
-                      <div className="relative bg-white/70 backdrop-blur-3xl p-8 md:p-12 rounded-[48px] h-full flex flex-col md:flex-row md:items-center gap-10 border border-black/5 md:hover:border-transparent transition-colors duration-500">
-                        {/* Mini Cyber Scanner Icon Container */}
-                        <div className="relative w-24 h-24 shrink-0">
-                          <motion.div
-                            animate={{
-                              scale: [1, 1.1, 1],
-                              backgroundColor: ["rgba(38,166,154,0.05)", "rgba(38,166,154,0.15)", "rgba(38,166,154,0.05)"]
-                            }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute inset-0 rounded-3xl border border-[var(--primary-teal)]/20"
-                          />
-                          <div className="absolute inset-0 flex items-center justify-center text-[var(--primary-teal)] md:group-hover:scale-110 md:group-hover:text-white transition-all duration-500 z-10">
-                            {item.icon}
-                          </div>
-                          {/* Inner Glowing Core - Pulses subtly on mobile */}
-                          <motion.div
-                            animate={{ opacity: [0, 0.2, 0] }}
-                            transition={{ duration: 3, repeat: Infinity }}
-                            className="absolute inset-6 rounded-full bg-[var(--primary-teal)] blur-xl md:opacity-0 md:group-hover:opacity-100 transition-all duration-500"
-                          />
-                        </div>
-
-                        <div className="flex-1">
-                          <h3 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-4 tracking-tighter md:group-hover:text-[var(--primary-teal)] transition-colors">
-                            {item.title}
-                          </h3>
-                          <p className="text-[var(--text-muted)] text-base font-medium leading-relaxed mb-8">
-                            {item.desc}
-                          </p>
-                          <div className="flex flex-wrap gap-3">
-                            {item.tags.map((tag) => (
-                              <motion.span
-                                key={tag}
-                                animate={{
-                                  backgroundColor: gIdx === 0 ? ["rgba(38,166,154,0.05)", "rgba(38,166,154,0.12)", "rgba(38,166,154,0.05)"] : ["rgba(245,158,11,0.05)", "rgba(245,158,11,0.12)", "rgba(245,158,11,0.05)"],
-                                }}
-                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                                whileTap={{ scale: 0.9, backgroundColor: gIdx === 0 ? "var(--primary-teal)" : "#f59e0b", color: "white" }}
-                                className={`px-4 py-1.5 rounded-full border ${gIdx === 0 ? 'border-[var(--primary-teal)]/10 text-[var(--primary-teal-dark)]' : 'border-amber-500/10 text-amber-700'} text-[10px] font-black uppercase tracking-widest md:text-[var(--primary-teal-dark)] md:bg-black/5 md:group-hover:bg-[var(--primary-teal)] md:group-hover:text-white transition-all duration-300 shadow-sm`}
-                              >
-                                {tag}
-                              </motion.span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* DETAILED POWER MODULES SECTION */}
-      <section className="py-24 bg-[var(--primary-teal-dark)] relative overflow-hidden">
+      <section id="capabilities" className="py-24 bg-[var(--bg-main)] relative overflow-hidden">
         {/* Animated Background Mesh */}
-        <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 opacity-[0.03]">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_20%,var(--primary-teal)_0%,transparent_50%)]"></div>
           <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_80%,var(--primary-teal)_0%,transparent_50%)]"></div>
         </div>
 
         <div className="content-container relative z-10">
-          <div className="grid lg:grid-cols-12 gap-12 items-center mb-16">
-            <div className="lg:col-span-7">
-              <h3 className="text-[9px] font-black uppercase tracking-[0.5em] text-[var(--primary-teal-light)] mb-4">Industrial Logic</h3>
-              <h2 className="text-3xl md:text-6xl font-black text-white tracking-tighter leading-[1.1]">
-                Engineering the <br />
-                <span className="text-3d-tech">Power Modules.</span>
+          <div className="flex flex-col lg:flex-row justify-between items-end gap-8 mb-20">
+            <div className="max-w-2xl">
+              <h3 className="text-[10px] font-black uppercase tracking-[0.6em] text-[var(--primary-teal)] mb-4">Industrial Baseline</h3>
+              <h2 className="text-4xl md:text-6xl font-[900] text-[var(--primary-teal-dark)] tracking-tighter leading-none">
+                Software <br />
+                <span className="text-teal-gradient">Capabilities.</span>
               </h2>
             </div>
-            <div className="lg:col-span-5">
-              <p className="text-base text-white/50 font-medium leading-relaxed">
-                By studying the Q-Line core architecture, we've distilled the most aggressive management features into modular, scalable nodes.
+            <div className="lg:max-w-xs text-right">
+              <p className="text-[var(--text-muted)] text-[10px] font-black leading-relaxed uppercase tracking-widest leading-loose">
+                A military-grade digital architecture designed for high-pressure hospitality hubs. Every industrial node verified for 100% operational uptime.
               </p>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
             {[
-              {
-                title: "Salary Automator",
-                desc: "100% accurate payroll calculation using attendance snapshots, shift multipliers, and automated deduction recovery.",
-                stats: "Neural Reconcile",
-                icon: <BioHRAnim />
-              },
-              {
-                title: "Vendor Dynamics",
-                desc: "Industrial-grade supply chain tracking. Procurement ledgers, credit limits, and vendor performance analytics.",
-                stats: "Full Supply Matrix",
-                icon: <LedgerAnim />
-              },
-              {
-                title: "Role Sovereignty",
-                desc: "Military-grade access control. Precisely define who can override billing or audit forensic vouchers.",
-                stats: "Permission Shield",
-                icon: <AuditAnim />
-              }
-            ].map((module, mIdx) => (
-              <motion.div
-                key={mIdx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ delay: mIdx * 0.1 }}
-                className="bg-white/5 backdrop-blur-3xl border border-white/10 p-8 md:p-10 rounded-[40px] md:hover:bg-white/10 transition-all duration-500 group relative overflow-hidden"
-              >
-                {/* Ambient breathing glow for mobile */}
-                <motion.div
-                  animate={{ opacity: [0.1, 0.2, 0.1], scale: [1, 1.1, 1] }}
-                  transition={{ duration: 5, repeat: Infinity }}
-                  className={`absolute inset-0 bg-gradient-to-br ${mIdx === 0 ? 'from-[var(--primary-teal)]/10' : mIdx === 1 ? 'from-amber-500/10' : 'from-purple-500/10'} to-transparent -z-10`}
-                />
+              // POS CORE
+              { title: "Cash & Card Billing", cat: "POS CORE", icon: <Wallet size={14} />, color: "teal" },
+              { title: "Credit Billing", cat: "POS CORE", icon: <ShieldCheck size={14} />, color: "teal" },
+              { title: "WiFi Thermal Sync", cat: "PRINTING", icon: <Zap size={14} />, color: "teal" },
+              { title: "KOT Matrix", cat: "KITCHEN", icon: <Layers size={14} />, color: "teal" },
+              { title: "Pre-Bill Logic", cat: "BILLING", icon: <FileText size={14} />, color: "teal" },
 
-                <div className="mb-8 flex justify-between items-start">
-                  <div className="relative">
-                    <motion.div
-                      animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-                      transition={{ duration: 4, repeat: Infinity }}
-                      className={`absolute inset-0 ${mIdx === 0 ? 'bg-[var(--primary-teal)]/20' : mIdx === 1 ? 'bg-amber-500/20' : 'bg-purple-500/20'} blur-xl rounded-full`}
-                    />
-                    <div className={`relative w-14 h-14 rounded-[20px] ${mIdx === 0 ? 'bg-[var(--primary-teal)]/20 text-[var(--primary-teal)]' : mIdx === 1 ? 'bg-amber-500/20 text-amber-500' : 'bg-purple-500/20 text-purple-400'} flex items-center justify-center md:group-hover:scale-110 transition-transform`}>
-                      {module.icon}
-                    </div>
+              // FINANCE
+              { title: "Vendor Ledgers", cat: "FINANCE", icon: <Users size={14} />, color: "amber" },
+              { title: "Customer Wallets", cat: "FINANCE", icon: <Fingerprint size={14} />, color: "amber" },
+              { title: "Staff Accounts", cat: "FINANCE", icon: <Activity size={14} />, color: "amber" },
+              { title: "Purchase Invoices", cat: "FINANCE", icon: <FileSpreadsheet size={14} />, color: "amber" },
+              { title: "Closing Protocol", cat: "FINANCE", icon: <Lock size={14} />, color: "amber" },
+
+              // SECURITY & MANAGEMENT
+              { title: "Access Sovereignty", cat: "SECURITY", icon: <ShieldAlert size={14} />, color: "purple" },
+              { title: "Audit Forensic", cat: "SECURITY", icon: <Search size={14} />, color: "purple" },
+              { title: "Salary Automator", cat: "HR CORE", icon: <Activity size={14} />, color: "purple" },
+              { title: "Attendance Matrix", cat: "HR CORE", icon: <LayoutGrid size={14} />, color: "purple" },
+              { title: "Operation Limits", cat: "SECURITY", icon: <Lock size={14} />, color: "purple" },
+
+              // ANALYTICS & HUB
+              { title: "Product Velocity", cat: "ANALYTICS", icon: <BarChart3 size={14} />, color: "blue" },
+              { title: "Sales Statistics", cat: "ANALYTICS", icon: <TrendingUp size={14} />, color: "blue" },
+              { title: "Customer Reports", cat: "ANALYTICS", icon: <UserPlus size={14} />, color: "blue" },
+              { title: "Cloud Replication", cat: "NETWORK", icon: <MonitorSmartphone size={14} />, color: "blue" },
+              { title: "Delivery Receipts", cat: "OPERATIONS", icon: <ArrowUpRight size={14} />, color: "blue" }
+            ].map((feat, fIdx) => (
+              <motion.div
+                key={fIdx}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                whileHover={{ y: -4, scale: 1.02, boxShadow: "0 20px 40px -10px rgba(38,166,154,0.15)" }}
+                transition={{ duration: 0.3, delay: fIdx * 0.03 }}
+                className="bg-white border border-gray-100 p-4 rounded-2xl flex flex-col gap-3 group transition-all shadow-xl shadow-gray-100/50"
+              >
+                <div className="flex justify-between items-center">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${feat.color === 'teal' ? 'bg-[var(--primary-teal)]/10 text-[var(--primary-teal)]' : feat.color === 'amber' ? 'bg-amber-50 text-amber-600' : feat.color === 'purple' ? 'bg-purple-50 text-purple-600' : 'bg-sky-50 text-sky-600'} border border-transparent group-hover:scale-110 transition-transform`}>
+                    {feat.icon}
                   </div>
-                  <span className={`text-[9px] font-black uppercase tracking-widest ${mIdx === 0 ? 'text-[var(--primary-teal)] bg-[var(--primary-teal)]/10' : mIdx === 1 ? 'text-amber-500 bg-amber-500/10' : 'text-purple-400 bg-purple-500/10'} px-3 py-1.5 rounded-full`}>
-                    {module.stats}
-                  </span>
+                  <div className="text-[6px] font-black tracking-widest text-gray-300 uppercase group-hover:text-[var(--primary-teal)] transition-colors">
+                    {feat.cat}
+                  </div>
                 </div>
-                <h3 className="text-xl font-black text-white mb-4 uppercase tracking-tighter">{module.title}</h3>
-                <p className="text-white/70 text-sm font-medium leading-relaxed">
-                  {module.desc}
-                </p>
+                <div>
+                  <div className="text-[var(--primary-teal-dark)] font-bold text-[11px] md:text-xs tracking-tight uppercase leading-tight mb-1">{feat.title}</div>
+                  <div className="h-[1px] w-3 bg-gray-100 group-hover:w-full group-hover:bg-[var(--primary-teal)]/20 transition-all duration-500" />
+                </div>
               </motion.div>
             ))}
+          </div>
+
+          <div className="mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-16 border-t border-gray-200 pt-16">
+            <div className="text-center md:text-left">
+              <span className="text-[7px] font-black uppercase tracking-[0.5em] text-[var(--text-muted)] block mb-2">Printing Engine</span>
+              <span className="text-xl md:text-2xl font-black text-[var(--primary-teal-dark)] uppercase tracking-tighter">Thermal Wireless v4</span>
+            </div>
+            <div className="hidden md:block h-8 w-px bg-gray-200"></div>
+            <div className="text-center md:text-left">
+              <span className="text-[7px] font-black uppercase tracking-[0.5em] text-[var(--text-muted)] block mb-2">Security Protocol</span>
+              <span className="text-xl md:text-2xl font-black text-[var(--primary-teal-dark)] uppercase tracking-tighter">L5 Access Shield</span>
+            </div>
+            <div className="hidden md:block h-8 w-px bg-gray-200"></div>
+            <div className="text-center md:text-left">
+              <span className="text-[7px] font-black uppercase tracking-[0.5em] text-[var(--text-muted)] block mb-2">Account Matrix</span>
+              <span className="text-xl md:text-2xl font-black text-[var(--primary-teal-dark)] uppercase tracking-tighter">Full Forensic Audit</span>
+            </div>
           </div>
         </div>
       </section>
@@ -1320,106 +1189,236 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              {/* Flutter Logo Ornament */}
-              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white shadow-2xl rounded-[30px] flex items-center justify-center p-10 z-40">
-                <svg viewBox="0 0 100 100" className="w-full h-full fill-blue-500">
-                  <path d="M50 0 L100 50 L75 75 L25 25 Z" opacity="0.8" />
-                  <path d="M50 100 L0 50 L25 25 L75 75 Z" />
-                </svg>
-              </div>
+
             </div>
 
           </div>
         </div>
       </section>
 
-      {/* EXECUTIVE COMMAND CENTER - DIGITAL TWIN */}
-      <section id="executive-hub" className="py-24 bg-[var(--bg-main)] relative overflow-hidden">
-        {/* Animated HUD Grid Lines */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--primary-teal) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+      {/* THERMAL PRINTING SECTION */}
+      <section id="printing" className="bg-[var(--bg-main)] relative overflow-hidden">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(var(--primary-teal) 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+        <OrganicFlowBackground />
 
         <div className="content-container relative z-10">
-          <div className="flex flex-col lg:flex-row justify-between gap-8 mb-16">
-            <div className="max-w-2xl">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 mb-5 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal)] bg-white shadow-sm rounded-full border border-[var(--primary-teal)]/10"
-              >
-                <div className="w-2 h-2 rounded-full bg-[var(--primary-teal)] animate-ping" />
-                Live Command v9.2
-              </motion.div>
-              <h2 className="text-3xl md:text-6xl font-black text-[var(--primary-teal-dark)] leading-tight tracking-tighter">
-                Executive <br />
-                <span className="text-3d-tech">Intelligence Hub.</span>
-              </h2>
-            </div>
-            <div className="pb-4">
-              <p className="text-lg text-[var(--text-muted)] font-medium max-w-[320px] lg:text-right leading-relaxed">
-                A military-grade digital twin of your entire workspace, providing <span className="text-[var(--primary-teal-dark)] font-black">Zero-Leakage Visibility</span> across every node.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { component: <RevenueVelocityNode />, title: "Revenue Velocity", category: "FINANCIAL", icon: <Activity size={12} /> },
-              { component: <ForensicStreamNode />, title: "Forensic Stream", category: "SECURITY", icon: <Lock size={12} /> },
-              { component: <NeuralPerformanceNode />, title: "Neural Radar", category: "OPERATIONS", icon: <Users size={12} /> },
-              { component: <InventoryFrictionNode />, title: "Stock Dynamics", category: "LOGISTICS", icon: <Layers size={12} /> }
-            ].map((cluster, cIdx) => (
-              <motion.div
-                key={cIdx}
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ delay: cIdx * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative"
-              >
-                {/* Visual Connector Line */}
-                {cIdx < 3 && (
-                  <div className="hidden lg:block absolute -right-4 top-1/2 w-8 h-px bg-gradient-to-r from-[var(--primary-teal)]/20 to-transparent z-40" />
-                )}
-
-                <div className="mb-4 flex items-center justify-between px-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[var(--primary-teal)]">{cluster.icon}</span>
-                    <span className="text-[9px] font-black uppercase tracking-widest text-[var(--primary-teal)]/40">{cluster.category}</span>
-                  </div>
-                  <div className="flex gap-1">
-                    <div className="w-1 h-1 rounded-full bg-[var(--primary-teal)] animate-pulse" />
-                    <div className="w-1 h-1 rounded-full bg-[var(--primary-teal)]/50" />
-                  </div>
-                </div>
-
-                <div className="relative p-2 rounded-[40px] bg-white shadow-2xl shadow-black/[0.03] border border-black/[0.02] group-hover:scale-[1.02] transition-transform duration-500">
-                  <div className="h-[220px]">
-                    {cluster.component}
-                  </div>
-                </div>
-
-                <div className="mt-6 px-4">
-                  <h3 className="text-lg font-black text-[var(--primary-teal-dark)] mb-1 uppercase tracking-tighter">{cluster.title}</h3>
-                  <div className="h-0.5 w-8 bg-[var(--primary-teal)]/20 transition-all duration-500 group-hover:w-full" />
-                </div>
-
-                {/* Cyber Corner HUD */}
-                <div className="absolute top-[34px] left-0 -ml-2 w-4 h-4 border-t-2 border-l-2 border-[var(--primary-teal)]/20 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                <div className="absolute top-[34px] right-0 -mr-2 w-4 h-4 border-t-2 border-r-2 border-[var(--primary-teal)]/20 rounded-tr-lg opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Bottom Abstract Flow Graphic */}
-          <div className="mt-32 relative h-1 bg-black/5 rounded-full overflow-hidden">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left: Text */}
             <motion.div
-              animate={{ x: ["-100%", "100%"] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-[var(--primary-teal)] to-transparent opacity-40"
-            />
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal)] bg-white shadow-sm rounded-full border border-[var(--primary-teal)]/10">
+                <Printer size={12} className="text-[var(--primary-teal)]" />
+                Thermal Grid v4
+              </div>
+              <h2 className="text-4xl md:text-6xl font-[900] text-[var(--primary-teal-dark)] leading-tight tracking-tighter mb-6">
+                Precision <br />
+                <span className="text-teal-gradient">Thermal Output.</span>
+              </h2>
+              <p className="text-[var(--text-muted)] text-lg font-medium leading-relaxed max-w-lg mb-10">
+                Turn every transaction into a brand statement. Our intelligent print engine orchestrates complex KOT routing, detailed tax invoices, and settlement vouchers with pixel-perfect clarity.
+              </p>
+
+              <div className="space-y-6">
+                {[
+                  { title: "Smart KOT Logic", desc: "Auto-routes kitchen orders to specialized stations (Bar, Kitchen, Grill) instantly." },
+                  { title: "Brand Vouchers", desc: "Customizable layouts with your logo, dynamic footers, and QR codes." },
+                  { title: "Forensic Closing", desc: "Detailed end-of-day settlement reports with cash denomination breakdown." }
+                ].map((item, idx) => (
+                  <div key={idx} className="flex gap-4 group">
+                    <div className="w-10 h-10 rounded-full bg-[var(--primary-teal)] shadow-lg shadow-teal-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      <ScrollText size={18} className="text-white" />
+                    </div>
+                    <div>
+                      <h4 className="text-[var(--primary-teal-dark)] font-bold text-sm uppercase tracking-wide mb-1">{item.title}</h4>
+                      <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right: Visual (Three Overlapping Diagonal Receipts) */}
+            <div className="relative h-[500px] lg:h-[600px] w-full flex items-center justify-center perspective-[2000px] translate-y-12 lg:translate-y-28">
+              {/* Printer Device - SVG Illustration */}
+              <div className="absolute -top-20 lg:-top-24 left-1/2 -translate-x-1/2 lg:left-auto lg:right-12 z-0 opacity-100 pointer-events-none filter drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] scale-[0.85] lg:scale-100 origin-top">
+                <svg width="380" height="220" viewBox="0 0 380 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Main Body Gradient */}
+                  <defs>
+                    <linearGradient id="bodyGrad" x1="190" y1="60" x2="190" y2="200" gradientUnits="userSpaceOnUse">
+                      <stop offset="0" stopColor="#262626" />
+                      <stop offset="1" stopColor="#171717" />
+                    </linearGradient>
+                    <linearGradient id="lidGrad" x1="190" y1="0" x2="190" y2="60" gradientUnits="userSpaceOnUse">
+                      <stop offset="0" stopColor="#333333" />
+                      <stop offset="1" stopColor="#222222" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Main Body Base */}
+                  <path d="M40 80 H340 C351.046 80 360 88.9543 360 100 V190 C360 201.046 351.046 210 340 210 H40 C28.9543 210 20 201.046 20 190 V100 C20 88.9543 28.9543 80 40 80 Z" fill="url(#bodyGrad)" stroke="#404040" strokeWidth="1" />
+
+                  {/* Top Lid / cover */}
+                  <path d="M45 40 H335 C346.046 40 355 48.9543 355 60 V80 H25 V60 C25 48.9543 33.9543 40 45 40 Z" fill="url(#lidGrad)" />
+
+                  {/* Paper Exit Slot - Dark Recess */}
+                  <rect x="50" y="76" width="280" height="12" rx="4" fill="#050505" />
+                  <rect x="54" y="78" width="272" height="6" rx="2" fill="#000" />
+
+                  {/* Glossy Highlight on Top Edge */}
+                  <path d="M45 41 H335 C345 41 354 49 354 50 H26 C26 49 35 41 45 41 Z" fill="white" fillOpacity="0.1" />
+
+                  {/* Status Console (Right Side) */}
+                  <rect x="290" y="50" width="40" height="20" rx="4" fill="#111" stroke="#333" strokeWidth="0.5" />
+
+                  {/* Power LED - Animated Green/Teal */}
+                  <circle cx="300" cy="60" r="3" fill="#26A69A" className="animate-pulse">
+                    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" />
+                  </circle>
+
+                  {/* Error LED - Dim Red */}
+                  <circle cx="310" cy="60" r="3" fill="#EF4444" opacity="0.2" />
+
+                  {/* Feed Button */}
+                  <rect x="320" y="54" width="6" height="12" rx="2" fill="#444" />
+
+                  {/* Front Branding Panel */}
+                  <rect x="140" y="140" width="100" height="24" rx="4" fill="#0A0A0A" stroke="#222" strokeWidth="1" />
+                  <text x="190" y="156" textAnchor="middle" fill="#555" fontSize="10" fontFamily="sans-serif" fontWeight="900" letterSpacing="0.2em">Q-LINE</text>
+
+                  {/* Side Vents */}
+                  <path d="M30 110 H34" stroke="#333" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M30 120 H34" stroke="#333" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M30 130 H34" stroke="#333" strokeWidth="2" strokeLinecap="round" />
+
+                  <path d="M346 110 H350" stroke="#333" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M346 120 H350" stroke="#333" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M346 130 H350" stroke="#333" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </div>
+
+              <div className="relative w-[300px] h-[280px] lg:h-[400px] scale-[0.85] lg:scale-100 origin-top">
+
+                {/* 1. BACK: Closing Report (Voucher) */}
+                <motion.div
+                  initial={{ opacity: 0, x: 50, y: -50, rotate: -15 }}
+                  whileInView={{ opacity: 1, x: -60, y: -40, rotate: -12 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                  className="absolute top-0 left-0 w-[240px] bg-slate-50 shadow-2xl z-10 p-5 font-mono text-[10px] text-gray-800 origin-center border border-gray-200"
+                >
+                  <div className="text-center mb-4 opacity-50">----------------</div>
+                  <div className="text-center font-black uppercase mb-2 text-xs">END OF DAY REPORT</div>
+                  <div className="flex justify-between mb-1"><span>Total Sales</span><span>$4,289.00</span></div>
+                  <div className="flex justify-between mb-1"><span>Cash</span><span>$1,200.00</span></div>
+                  <div className="flex justify-between mb-1"><span>Card</span><span>$3,089.00</span></div>
+                  <div className="text-center mt-4 opacity-50">----------------</div>
+                  <div className="text-center text-[8px] mt-2">TERMINAL: POS-01 | USER: ADMIN</div>
+                  {/* Jagged Edge */}
+                  <div className="absolute -bottom-[6px] left-0 right-0 h-[8px] bg-slate-50 w-full" style={{ clipPath: 'polygon(0% 0%, 5% 100%, 10% 0%, 15% 100%, 20% 0%, 25% 100%, 30% 0%, 35% 100%, 40% 0%, 45% 100%, 50% 0%, 55% 100%, 60% 0%, 65% 100%, 70% 0%, 75% 100%, 80% 0%, 85% 100%, 90% 0%, 95% 100%, 100% 0%)' }}></div>
+                </motion.div>
+
+                {/* 2. MIDDLE: KOT Ticket */}
+                <motion.div
+                  initial={{ opacity: 0, x: 50, y: -50, rotate: 0 }}
+                  whileInView={{ opacity: 1, x: 0, y: 0, rotate: -3 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.4 }}
+                  className="absolute top-6 left-6 w-[240px] bg-yellow-50 shadow-2xl z-20 p-5 font-mono text-[10px] text-gray-900 origin-center border border-yellow-100"
+                >
+                  <div className="flex justify-between border-b-2 border-black items-center pb-2 mb-3">
+                    <span className="font-black text-sm">KOT #44</span>
+                    <span className="bg-black text-white px-1 text-[8px]">DINE-IN</span>
+                  </div>
+                  <div className="text-xs font-bold mb-1">TABLE: T-12</div>
+                  <ul className="space-y-3 mt-3">
+                    <li className="font-bold flex gap-2">
+                      <span className="w-4 h-4 bg-black text-white flex items-center justify-center rounded-sm text-[8px]">1</span>
+                      <span>TRUFFLE FRIES</span>
+                    </li>
+                    <li className="font-bold flex gap-2">
+                      <span className="w-4 h-4 bg-black text-white flex items-center justify-center rounded-sm text-[8px]">1</span>
+                      <span>SPICY PRAWN PIZZA</span>
+                      <span className="text-[8px] uppercase border border-black px-1 ml-auto">No Onion</span>
+                    </li>
+                  </ul>
+                  <div className="mt-4 text-[8px] font-bold text-center border-t border-black pt-2">SERVER: MICHAEL</div>
+                  {/* Jagged Edge */}
+                  <div className="absolute -bottom-[6px] left-0 right-0 h-[8px] bg-yellow-50 w-full" style={{ clipPath: 'polygon(0% 0%, 5% 100%, 10% 0%, 15% 100%, 20% 0%, 25% 100%, 30% 0%, 35% 100%, 40% 0%, 45% 100%, 50% 0%, 55% 100%, 60% 0%, 65% 100%, 70% 0%, 75% 100%, 80% 0%, 85% 100%, 90% 0%, 95% 100%, 100% 0%)' }}></div>
+                </motion.div>
+
+                {/* 3. FRONT: Customer Bill (Original) */}
+                <motion.div
+                  initial={{ opacity: 0, y: -100, rotate: 5 }}
+                  whileInView={{ opacity: 1, y: 40, x: 60, rotate: 6 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.2, delay: 0.6, type: "spring" }}
+                  className="absolute top-12 left-12 w-[260px] bg-white shadow-2xl z-30 p-6 font-mono text-[10px] text-gray-800 border-t-4 border-[var(--primary-teal)]"
+                >
+                  {/* Logo Area */}
+                  <div className="flex justify-center mb-4">
+                    <div className="w-8 h-8 border-2 border-black rounded-lg flex items-center justify-center">
+                      <span className="font-black text-base">Q</span>
+                    </div>
+                  </div>
+
+                  <div className="text-center mb-4">
+                    <div className="font-black text-sm uppercase tracking-tight mb-1">QUANTUM CAFE</div>
+                    <div className="text-[9px] text-gray-500">1024 Silicon Valley, Node 4</div>
+                  </div>
+
+                  <div className="border-b border-dashed border-gray-300 mb-3"></div>
+
+                  <div className="flex justify-between font-bold mb-2">
+                    <span>ITEM</span>
+                    <span>AMT</span>
+                  </div>
+
+                  <div className="space-y-1 mb-3 font-medium text-gray-600">
+                    <div className="flex justify-between">
+                      <span>2 x Dbl Ristretto</span>
+                      <span>$12.00</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>1 x Truffle Fries</span>
+                      <span>$18.50</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>1 x Matcha Latte</span>
+                      <span>$6.50</span>
+                    </div>
+                    <div className="flex justify-between text-gray-400 text-[8px] italic">
+                      <span>-- Tax (5%)</span>
+                      <span>$1.85</span>
+                    </div>
+                  </div>
+
+                  <div className="border-b-2 border-black mb-3"></div>
+
+                  <div className="flex justify-between font-black text-base mb-4">
+                    <span>TOTAL</span>
+                    <span>$38.85</span>
+                  </div>
+
+                  <div className="text-center text-[8px] text-gray-400">
+                    PAID VIA CARD ending 4242
+                    <div className="mt-2 uppercase tracking-widest opacity-50 font-bold">Thank You</div>
+                  </div>
+
+                  {/* Jagged Edge */}
+                  <div className="absolute -bottom-[6px] left-0 right-0 h-[8px] bg-white w-full" style={{ clipPath: 'polygon(0% 0%, 5% 100%, 10% 0%, 15% 100%, 20% 0%, 25% 100%, 30% 0%, 35% 100%, 40% 0%, 45% 100%, 50% 0%, 55% 100%, 60% 0%, 65% 100%, 70% 0%, 75% 100%, 80% 0%, 85% 100%, 90% 0%, 95% 100%, 100% 0%)' }}></div>
+                </motion.div>
+
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
+
 
       {/* OPERATIONAL ECOSYSTEM - BENTO WORKSPACE */}
       <section id="operational-ecosystem" className="py-20 md:py-24 bg-[var(--bg-main)] relative overflow-hidden">
