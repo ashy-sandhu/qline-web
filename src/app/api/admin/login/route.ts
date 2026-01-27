@@ -14,7 +14,8 @@ export async function POST(req: NextRequest) {
         console.log('Login attempt for:', username);
 
         // 1. Find admin
-        const admin = db.prepare('SELECT * FROM admins WHERE username = ?').get(username) as any;
+        const [rows]: any = await db.execute('SELECT * FROM admins WHERE username = ?', [username]);
+        const admin = rows[0];
 
         if (!admin) {
             console.log('Login failed: User not found');

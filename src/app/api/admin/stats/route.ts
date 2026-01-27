@@ -11,11 +11,23 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
         }
 
+        const [
+            [totalRows],
+            [activeRows],
+            [inactiveRows],
+            [suspendedRows]
+        ] = await Promise.all([
+            db.query('SELECT COUNT(*) as count FROM licenses'),
+            db.query('SELECT COUNT(*) as count FROM licenses WHERE status = "ACTIVE"'),
+            db.query('SELECT COUNT(*) as count FROM licenses WHERE status = "INACTIVE"'),
+            db.query('SELECT COUNT(*) as count FROM licenses WHERE status = "SUSPENDED"')
+        ]) as any;
+
         const stats = {
-            totalLicenses: db.prepare('SELECT COUNT(*) as count FROM licenses').get() as any,
-            activeLicenses: db.prepare('SELECT COUNT(*) as count FROM licenses WHERE status = "ACTIVE"').get() as any,
-            inactiveLicenses: db.prepare('SELECT COUNT(*) as count FROM licenses WHERE status = "INACTIVE"').get() as any,
-            suspendedLicenses: db.prepare('SELECT COUNT(*) as count FROM licenses WHERE status = "SUSPENDED"').get() as any,
+            totalLicenses: totalRows[0],
+            activeLicenses: activeRows[0],
+            inactiveLicenses: inactiveRows[0],
+            suspendedLicenses: suspendedRows[0],
         };
 
         return NextResponse.json({

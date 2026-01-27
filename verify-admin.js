@@ -1,37 +1,43 @@
-const Database = require('better-sqlite3');
+const mysql = require('mysql2/promise');
 const bcrypt = require('bcryptjs');
-const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
-const dbPath = 'qline_licensing.db';
-const fullPath = path.resolve(process.cwd(), dbPath);
+async function main() {
+    const connection = await mysql.createConnection({
+        host: process.env.DB_HOST || 'localhost',
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        database: process.env.DB_NAME || 'qline_licensing',
+    });
 
-console.log('Opening Database:', fullPath);
-const db = new Database(fullPath);
+    try {
+        const [rows] = await connection.execute('SELECT * FROM admins');
+        console.log('Found', rows.length, 'admins.');
 
-// Check if admin table exists
-try {
-    const admins = db.prepare('SELECT * FROM admins').all();
-    console.log('Found', admins.length, 'admins.');
+        if (rows.length > 0) {
+            for (const admin of rows) {
+                console.log(`- Username: ${admin.username} (ID: ${admin.id})`);
+                // Force reset to simple password
+                console.log('  [FIX] Force resetting password to: admin123');
+                const newHash = bcrypt.hashSync('admin123', 10);
+                await connection.execute('UPDATE admins SET password = ? WHERE id = ?', [newHash, admin.id]);
+                console.log('  [FIX] Password reset successful.');
+            }
+        } else {
+            console.log('No admins found! Attempting to seed...');
+            const hash = bcrypt.hashSync('admin123', 10);
+            await connection.execute(
+                'INSERT INTO admins (id, username, password) VALUES (?, ?, ?)',
+                [uuidv4(), 'admin', hash]
+            );
+            console.log('Seeded default admin (admin/admin123).');
+        }
 
-    if (admins.length > 0) {
-        admins.forEach(admin => {
-            console.log(`- Username: ${admin.username} (ID: ${admin.id})`);
-            // Force reset to simple password
-            console.log('  [FIX] Force resetting password to: admin123');
-            const newHash = bcrypt.hashSync('admin123', 10);
-            db.prepare('UPDATE admins SET password = ? WHERE id = ?').run(newHash, admin.id);
-            console.log('  [FIX] Password reset successful.');
-        });
-    } else {
-        console.log('No admins found! Attempting to seed...');
-        // Insert default admin
-        const id = require('uuid').v4(); // might fail if uuid import issue in js script, simpler to just use random string
-        const hash = bcrypt.hashSync('admin_change_me_2026', 10);
-        db.prepare('INSERT INTO admins (id, username, password) VALUES (?, ?, ?)')
-            .run('admin-id-1', 'admin', hash);
-        console.log('Seeded default admin.');
+    } catch (e) {
+        console.error('Error:', e);
+    } finally {
+        await connection.end();
     }
-
-} catch (e) {
-    console.error('Error:', e);
 }
+
+main();

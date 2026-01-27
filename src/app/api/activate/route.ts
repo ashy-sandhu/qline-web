@@ -19,7 +19,8 @@ export async function POST(req: NextRequest) {
         }
 
         // 1. Fetch license from DB
-        const license = db.prepare('SELECT * FROM licenses WHERE key = ?').get(licenseKey) as any;
+        const [rows]: any = await db.execute('SELECT * FROM licenses WHERE key_code = ?', [licenseKey]);
+        const license = rows[0];
 
         if (!license) {
             return NextResponse.json(
@@ -45,9 +46,9 @@ export async function POST(req: NextRequest) {
         }
 
         // 4. Update license if not yet activated
-        const now = new Date().toISOString();
+        const now = new Date().toISOString().slice(0, 19).replace('T', ' '); // MySQL DATETIME format
         if (!license.hwid) {
-            db.prepare(`
+            await db.execute(`
                 UPDATE licenses 
                 SET hwid = ?, 
                     restaurantName = ?, 
@@ -55,7 +56,7 @@ export async function POST(req: NextRequest) {
                     activatedAt = ?,
                     updatedAt = ?
                 WHERE id = ?
-            `).run(hwid, restaurantName || 'Generic Restaurant', now, now, license.id);
+            `, [hwid, restaurantName || 'Generic Restaurant', now, now, license.id]);
         }
 
         // 5. Generate signed activation token

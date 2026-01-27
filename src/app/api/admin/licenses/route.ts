@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
         }
 
-        const licenses = db.prepare('SELECT * FROM licenses ORDER BY createdAt DESC').all();
+        const [licenses] = await db.query('SELECT * FROM licenses ORDER BY createdAt DESC');
 
         return NextResponse.json({
             success: true,

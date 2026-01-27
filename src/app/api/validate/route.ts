@@ -28,7 +28,8 @@ export async function POST(req: NextRequest) {
         }
 
         // 2. Cross-verify with DB
-        const license = db.prepare('SELECT * FROM licenses WHERE key = ?').get(decoded.licenseKey) as any;
+        const [rows]: any = await db.execute('SELECT * FROM licenses WHERE key_code = ?', [decoded.licenseKey]);
+        const license = rows[0];
 
         if (!license) {
             return NextResponse.json({

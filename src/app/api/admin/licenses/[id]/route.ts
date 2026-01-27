@@ -15,19 +15,19 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         const body = await req.json();
         const { status, clearHwid, restaurantName } = body;
 
-        const now = new Date().toISOString();
+        // Note: MySQL usage of "NOW()" or standard ISO strings is fine.
+        const now = new Date().toISOString().slice(0, 19).replace('T', ' '); // MySQL DATETIME format
 
         if (clearHwid) {
-            db.prepare('UPDATE licenses SET hwid = NULL, status = "INACTIVE", updatedAt = ? WHERE id = ?')
-                .run(now, id);
+            await db.query('UPDATE licenses SET hwid = NULL, status = "INACTIVE", updatedAt = ? WHERE id = ?', [now, id]);
         } else if (status) {
-            db.prepare('UPDATE licenses SET status = ?, updatedAt = ? WHERE id = ?')
-                .run(status, now, id);
+            await db.query('UPDATE licenses SET status = ?, updatedAt = ? WHERE id = ?', [status, now, id]);
         }
 
         if (restaurantName) {
-            db.prepare('UPDATE licenses SET restaurantName = ?, updatedAt = ? WHERE id = ?')
-                .run(restaurantName, now, id);
+            if (restaurantName) {
+                await db.query('UPDATE licenses SET restaurantName = ?, updatedAt = ? WHERE id = ?', [restaurantName, now, id]);
+            }
         }
 
         return NextResponse.json({ success: true, message: 'License updated successfully.' });
@@ -46,7 +46,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         }
 
         const { id } = await params;
-        db.prepare('DELETE FROM licenses WHERE id = ?').run(id);
+        await db.query('DELETE FROM licenses WHERE id = ?', [id]);
 
         return NextResponse.json({ success: true, message: 'License deleted successfully.' });
 

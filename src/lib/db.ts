@@ -1,74 +1,73 @@
-import Database from 'better-sqlite3';
-import path from 'path';
-import fs from 'fs';
+import mysql from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 
-// Since this is used in Next.js Server Components/API, 
-// environment variables should already be loaded.
-const isProduction = process.env.NODE_ENV === 'production';
-// Use /tmp in production (Linux) to ensure write permissions, unless overridden
-const dbPath = process.env.DATABASE_PATH || (isProduction ? '/tmp/qline_licensing.db' : 'qline_licensing.db');
-const fullPath = path.isAbsolute(dbPath) ? dbPath : path.resolve(process.cwd(), dbPath);
+// Environment variables provided by Hostinger
+const pool = mysql.createPool({
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'qline_licensing',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+});
 
-// Ensure directory exists
-const dbDir = path.dirname(fullPath);
-if (!fs.existsSync(dbDir)) {
-    fs.mkdirSync(dbDir, { recursive: true });
+// Helper to execute queries cleanly
+export async function query(sql: string, params: any[] = []) {
+    const [results] = await pool.execute(sql, params);
+    return results;
 }
 
-const db = new Database(fullPath);
+// Initial Setup Function (Async)
+async function initDB() {
+    try {
+        const connection = await pool.getConnection();
 
-// Enable WAL mode for performance
-db.pragma('journal_mode = WAL');
+        await connection.query(`
+            CREATE TABLE IF NOT EXISTS admins (
+                id VARCHAR(36) PRIMARY KEY,
+                username VARCHAR(255) UNIQUE NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+        `);
 
-// Create tables if they don't exist
-db.exec(`
-    CREATE TABLE IF NOT EXISTS admins (
-        id TEXT PRIMARY KEY,
-        username TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL,
-        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
+        await connection.query(`
+            CREATE TABLE IF NOT EXISTS licenses (
+                id VARCHAR(36) PRIMARY KEY,
+                key_code VARCHAR(255) UNIQUE NOT NULL,
+                hwid VARCHAR(255),
+                status VARCHAR(50) DEFAULT 'INACTIVE',
+                restaurantName VARCHAR(255),
+                activatedAt DATETIME,
+                expiresAt DATETIME,
+                version VARCHAR(50) DEFAULT '4.0.0',
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+        `);
 
-    CREATE TABLE IF NOT EXISTS licenses (
-        id TEXT PRIMARY KEY,
-        key TEXT UNIQUE NOT NULL,
-        hwid TEXT,
-        status TEXT DEFAULT 'INACTIVE', -- ACTIVE, INACTIVE, SUSPENDED
-        restaurantName TEXT,
-        activatedAt DATETIME,
-        expiresAt DATETIME,
-        version TEXT DEFAULT '4.0.0',
-        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
-`);
-
-// Self-seeding for first admin
-const seedAdmin = () => {
-    const username = 'admin';
-    // Use a default password if not provided in env
-    const password = process.env.ADMIN_PASSWORD || 'admin_change_me_2026';
-
-    const existing = db.prepare('SELECT * FROM admins WHERE username = ?').get(username);
-
-    if (!existing) {
-        try {
-            // Use sync version for direct initialization
+        // Seed Admin
+        const [rows]: any = await connection.execute('SELECT * FROM admins WHERE username = ?', ['admin']);
+        if (rows.length === 0) {
+            const password = process.env.ADMIN_PASSWORD || 'admin_change_me_2026';
             const hashedPassword = bcrypt.hashSync(password, 10);
-            db.prepare('INSERT OR IGNORE INTO admins (id, username, password) VALUES (?, ?, ?)')
-                .run(uuidv4(), username, hashedPassword);
-            console.log('-------------------------------------------');
-            console.log('DATABASE: Initialized admin account check.');
-            console.log('-------------------------------------------');
-        } catch (e) {
-            // Ignore if another worker already did it
+            await connection.execute(
+                'INSERT INTO admins (id, username, password) VALUES (?, ?, ?)',
+                [uuidv4(), 'admin', hashedPassword]
+            );
+            console.log('DATABASE: Created default admin account.');
         }
+
+        connection.release();
+    } catch (e) {
+        console.error('DATABASE INIT ERROR:', e);
     }
-};
+}
 
-seedAdmin();
+// Run init (fire and forget for now, or await in entry entry point)
+initDB();
 
-export default db;
+export default pool;
