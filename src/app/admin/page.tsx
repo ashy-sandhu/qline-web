@@ -30,8 +30,9 @@ export default function AdminLoginPage() {
             } else {
                 setError(data.message || 'Invalid credentials');
             }
-        } catch (err) {
-            setError('Connection error. Please try again.');
+        } catch (err: any) {
+            console.error(err);
+            setError(`Error: ${err.message || JSON.stringify(err)}`);
         } finally {
             setIsLoading(false);
         }
