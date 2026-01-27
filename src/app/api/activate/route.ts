@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
+import db from '@/lib/db';
 
-// In a real app, this MUST be in your .env file
+export const dynamic = 'force-dynamic';
+
 const JWT_SECRET = process.env.ACTIVATION_SECRET || 'fallback-secret-for-development';
 
-/**
- * Endpoint for POS Software Activation
- * POST /api/activate
- */
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
@@ -20,42 +18,64 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // --- DATABASE LOGIC (REPLACE WITH YOUR DB CALL) ---
-        // Example using a mock valid key: "QLINE-PREMIUM-2026"
+        // 1. Fetch license from DB
+        const license = db.prepare('SELECT * FROM licenses WHERE key = ?').get(licenseKey) as any;
 
-        const isValidKey = licenseKey === 'QLINE-PREMIUM-2026'; // Mock check
-
-        if (!isValidKey) {
+        if (!license) {
             return NextResponse.json(
                 { message: 'Invalid license key. Please check and try again.' },
                 { status: 403 }
             );
         }
 
-        // Check if key is already bound to another HWID
-        // const existingHwid = await db.getHwidForKey(licenseKey);
-        // if (existingHwid && existingHwid !== hwid) { 
-        //   return NextResponse.json({ message: 'Key already in use on another machine.' }, { status: 403 }); 
-        // }
+        // 2. Check status
+        if (license.status === 'SUSPENDED') {
+            return NextResponse.json(
+                { message: 'This license has been suspended. Please contact support.' },
+                { status: 403 }
+            );
+        }
 
-        // If valid, generate a signed activation token
+        // 3. Check HWID binding
+        if (license.hwid && license.hwid !== hwid) {
+            return NextResponse.json(
+                { message: 'This key is already bound to another machine.' },
+                { status: 403 }
+            );
+        }
+
+        // 4. Update license if not yet activated
+        const now = new Date().toISOString();
+        if (!license.hwid) {
+            db.prepare(`
+                UPDATE licenses 
+                SET hwid = ?, 
+                    restaurantName = ?, 
+                    status = 'ACTIVE', 
+                    activatedAt = ?,
+                    updatedAt = ?
+                WHERE id = ?
+            `).run(hwid, restaurantName || 'Generic Restaurant', now, now, license.id);
+        }
+
+        // 5. Generate signed activation token
         const token = jwt.sign(
             {
                 licenseKey,
                 hwid,
-                restaurantName: restaurantName || 'Generic Restaurant',
-                activatedAt: new Date().toISOString(),
-                version: '4.0.0',
+                restaurantName: restaurantName || license.restaurantName || 'Generic Restaurant',
+                activatedAt: now,
+                version: license.version || '4.0.0',
             },
             JWT_SECRET,
-            { expiresIn: '365d' } // Token valid for 1 year before requiring re-check
+            { expiresIn: '365d' }
         );
 
         return NextResponse.json({
             success: true,
             message: 'Activation successful.',
             token,
-            activationDate: new Date().toISOString(),
+            activationDate: now,
         });
 
     } catch (error) {
