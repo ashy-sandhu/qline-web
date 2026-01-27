@@ -6,8 +6,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 // Since this is used in Next.js Server Components/API, 
 // environment variables should already be loaded.
-const dbPath = process.env.DATABASE_PATH || 'qline_licensing.db';
-const fullPath = path.resolve(process.cwd(), dbPath);
+const isProduction = process.env.NODE_ENV === 'production';
+// Use /tmp in production (Linux) to ensure write permissions, unless overridden
+const dbPath = process.env.DATABASE_PATH || (isProduction ? '/tmp/qline_licensing.db' : 'qline_licensing.db');
+const fullPath = path.isAbsolute(dbPath) ? dbPath : path.resolve(process.cwd(), dbPath);
 
 // Ensure directory exists
 const dbDir = path.dirname(fullPath);
