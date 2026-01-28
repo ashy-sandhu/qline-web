@@ -5,7 +5,7 @@ import { jwtVerify } from 'jose';
 const JWT_SECRET = process.env.ACTIVATION_SECRET || 'fallback-secret-for-development';
 const secret = new TextEncoder().encode(JWT_SECRET);
 
-export async function proxy(req: NextRequest) {
+export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
 
     // Protect all /admin routes except the login page and login API
