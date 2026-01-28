@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import db from '@/lib/db';
+import { query } from '@/lib/db';
 import { verifyAdmin } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
@@ -17,10 +17,10 @@ export async function GET(req: NextRequest) {
             inactiveRes,
             suspendedRes
         ] = await Promise.all([
-            db.query('SELECT COUNT(*) as count FROM licenses'),
-            db.query('SELECT COUNT(*) as count FROM licenses WHERE status = "ACTIVE"'),
-            db.query('SELECT COUNT(*) as count FROM licenses WHERE status = "INACTIVE"'),
-            db.query('SELECT COUNT(*) as count FROM licenses WHERE status = "SUSPENDED"')
+            query('SELECT COUNT(*) as count FROM licenses'),
+            query('SELECT COUNT(*) as count FROM licenses WHERE status = "ACTIVE"'),
+            query('SELECT COUNT(*) as count FROM licenses WHERE status = "INACTIVE"'),
+            query('SELECT COUNT(*) as count FROM licenses WHERE status = "SUSPENDED"')
         ]) as any;
 
         return NextResponse.json({

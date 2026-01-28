@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import db from '@/lib/db';
+import { query } from '@/lib/db';
 import { verifyAdmin } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
         }
 
-        const licenses = await db.query('SELECT * FROM licenses ORDER BY createdAt DESC');
+        const licenses = await query('SELECT * FROM licenses ORDER BY createdAt DESC');
 
         return NextResponse.json({
             success: true,
