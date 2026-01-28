@@ -137,10 +137,32 @@ h4 {
   position: relative;
 }
 
-.premium-card:hover {
-  transform: translateY(-12px) scale(1.02);
+.premium-card:not(.no-hover):hover {
+  transform: translateY(-8px) scale(1.01);
   border-color: var(--primary-teal);
-  box-shadow: 0 25px 50px -12px rgba(38, 166, 154, 0.2);
+  box-shadow: 0 25px 50px -12px rgba(38, 166, 154, 0.15);
+}
+
+/* Scoped Admin Portal Refinements */
+.admin-portal h1,
+.admin-portal h2,
+.admin-portal h3 {
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 768px) {
+  .admin-portal h1 {
+    font-size: 1.5rem !important;
+  }
+
+  .admin-portal h2 {
+    font-size: 1.25rem !important;
+  }
+
+  .admin-portal .premium-card:hover {
+    transform: none !important;
+    /* Disable lift on mobile to prevent layout shift */
+  }
 }
 
 .premium-card::after {

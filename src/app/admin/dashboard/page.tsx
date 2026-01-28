@@ -132,23 +132,23 @@ export default function DashboardPage() {
     if (!isMounted) return null;
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500">
+        <div className="space-y-6 md:space-y-8 animate-in fade-in duration-500 pb-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-teal-gradient">System Overview</h1>
-                    <p className="text-muted">Real-time licensing metrics and activity</p>
+                    <h1 className="text-2xl md:text-3xl font-black text-teal-gradient tracking-tight">System Overview</h1>
+                    <p className="text-xs md:text-sm text-muted font-medium">Real-time licensing metrics and activity</p>
                 </div>
                 <button
                     onClick={fetchData}
-                    className="btn-secondary py-2 flex items-center gap-2"
+                    className="btn-secondary py-2.5 px-6 flex items-center justify-center gap-2 text-sm"
                 >
-                    <RefreshCcw size={18} className={isLoading ? 'animate-spin' : ''} />
-                    Refresh Data
+                    <RefreshCcw size={16} className={isLoading ? 'animate-spin' : ''} />
+                    Refresh Stats
                 </button>
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 pt-2">
                 <StatCard
                     label="Total Issued"
                     value={stats?.total || 0}
@@ -177,41 +177,41 @@ export default function DashboardPage() {
 
             {/* Recent Activity Table */}
             <div className="premium-card glass-panel border-white/40 overflow-hidden text-[#1a2e2c]">
-                <div className="p-6 border-b border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <h2 className="text-xl font-bold text-[var(--primary-teal-dark)]">License Management</h2>
-                    <div className="relative max-w-xs w-full">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" size={16} />
+                <div className="p-4 md:p-6 border-b border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <h2 className="text-lg md:text-xl font-bold text-[var(--primary-teal-dark)]">License Management</h2>
+                    <div className="relative w-full sm:max-w-xs">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
                         <input
                             type="text"
-                            placeholder="Search by key or name..."
+                            placeholder="Find by key or restaurant..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 rounded-lg bg-white/50 border border-teal-500/10 focus:border-teal-500 outline-none text-sm transition-all"
+                            className="w-full pl-9 pr-4 py-2 rounded-xl bg-white/50 border border-teal-500/10 focus:border-teal-500 outline-none text-xs md:text-sm transition-all shadow-sm"
                         />
                     </div>
                 </div>
 
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
+                <div className="overflow-x-auto custom-scrollbar">
+                    <table className="w-full text-left border-collapse min-w-[800px] lg:min-w-full">
                         <thead>
                             <tr className="bg-[var(--primary-teal)]/5">
-                                <th className="p-4 font-bold text-[var(--primary-teal-dark)] text-sm">Product Key</th>
-                                <th className="p-4 font-bold text-[var(--primary-teal-dark)] text-sm">Status</th>
-                                <th className="p-4 font-bold text-[var(--primary-teal-dark)] text-sm">Restaurant</th>
-                                <th className="p-4 font-bold text-[var(--primary-teal-dark)] text-sm">Machine ID</th>
-                                <th className="p-4 font-bold text-[var(--primary-teal-dark)] text-sm text-center">System Status</th>
-                                <th className="p-4 font-bold text-[var(--primary-teal-dark)] text-sm text-center">Action</th>
+                                <th className="p-4 font-black text-[var(--primary-teal-dark)] text-[10px] uppercase tracking-widest">Product Key</th>
+                                <th className="p-4 font-black text-[var(--primary-teal-dark)] text-[10px] uppercase tracking-widest">Status</th>
+                                <th className="p-4 font-black text-[var(--primary-teal-dark)] text-[10px] uppercase tracking-widest">Restaurant</th>
+                                <th className="p-4 font-black text-[var(--primary-teal-dark)] text-[10px] uppercase tracking-widest">Machine ID</th>
+                                <th className="p-4 font-black text-[var(--primary-teal-dark)] text-[10px] uppercase tracking-widest text-center">System Status</th>
+                                <th className="p-4 font-black text-[var(--primary-teal-dark)] text-[10px] uppercase tracking-widest text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-white/20">
                             {filteredLicenses.map((license) => (
-                                <tr key={license.id} className="hover:bg-white/30 transition-colors group">
-                                    <td className="p-4 font-mono text-sm">{license.key}</td>
+                                <tr key={license.id} className="hover:bg-teal-50/30 transition-colors group">
+                                    <td className="p-4 font-mono text-[13px] font-bold text-teal-700">{license.key}</td>
                                     <td className="p-4">
                                         <StatusBadge status={license.status} />
                                     </td>
-                                    <td className="p-4 text-sm font-medium">{license.restaurantName || '-'}</td>
-                                    <td className="p-4 font-mono text-xs text-muted truncate max-w-[120px]" title={license.hwid || ''}>{license.hwid || 'No Binding'}</td>
+                                    <td className="p-4 text-sm font-black text-gray-700">{license.restaurantName || '-'}</td>
+                                    <td className="p-4 font-mono text-[10px] text-muted truncate max-w-[120px]" title={license.hwid || ''}>{license.hwid || 'No Binding'}</td>
                                     <td className="p-4 text-center">
                                         <SystemStatus lastSeen={license.lastSeen} />
                                     </td>
@@ -221,17 +221,17 @@ export default function DashboardPage() {
                                                 setSelectedLicense(license);
                                                 setIsManageModalOpen(true);
                                             }}
-                                            className="text-[var(--primary-teal)] hover:text-[var(--primary-teal-dark)] text-xs font-extra-bold uppercase tracking-tight transition-colors"
+                                            className="px-4 py-1.5 rounded-lg bg-teal-50 text-[var(--primary-teal)] hover:bg-[var(--primary-teal)] hover:text-white text-[10px] font-black uppercase tracking-tighter transition-all shadow-sm border border-teal-100"
                                         >
-                                            Manage
+                                            Control
                                         </button>
                                     </td>
                                 </tr>
                             ))}
                             {filteredLicenses.length === 0 && (
                                 <tr>
-                                    <td colSpan={6} className="p-12 text-center text-muted">
-                                        {isLoading ? 'Fetching records...' : 'No licenses matching your criteria.'}
+                                    <td colSpan={6} className="p-12 text-center text-muted font-bold text-sm">
+                                        {isLoading ? 'Scanning Secure Records...' : 'No licenses matching your criteria.'}
                                     </td>
                                 </tr>
                             )}
@@ -255,21 +255,21 @@ export default function DashboardPage() {
                             initial={{ opacity: 0, scale: 0.95, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative z-10 border border-white/40 overflow-hidden"
+                            className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 md:p-8 relative z-10 border border-white/40 overflow-hidden"
                         >
                             <button
                                 onClick={() => setIsManageModalOpen(false)}
                                 className="absolute top-6 right-6 text-muted hover:text-black transition-colors"
                             >
-                                <X size={24} />
+                                <X size={20} />
                             </button>
 
-                            <div className="mb-8">
-                                <h3 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-2 tracking-tight">License Control</h3>
-                                <p className="text-muted font-mono bg-teal-50 p-2 rounded-lg text-xs tracking-widest">{selectedLicense.key}</p>
+                            <div className="mb-6 md:mb-8">
+                                <h3 className="text-xl md:text-2xl font-black text-[var(--primary-teal-dark)] mb-2 tracking-tight">License Control</h3>
+                                <p className="text-muted font-mono bg-teal-50 p-2 rounded-lg text-[10px] md:text-xs tracking-widest">{selectedLicense.key}</p>
                             </div>
 
-                            <div className="space-y-6">
+                            <div className="space-y-4 md:space-y-6">
                                 <div>
                                     <label className="block text-[10px] font-black uppercase tracking-widest text-muted mb-2">Registered Entity</label>
                                     <input
@@ -337,18 +337,18 @@ function ActionButton({ label, sub, icon: Icon, color, onClick, disabled }: any)
         <button
             onClick={onClick}
             disabled={disabled}
-            className={`w-full flex items-center justify-between p-4 rounded-2xl border transition-all text-left group ${colorStyles[color]} ${disabled ? 'opacity-30 cursor-not-allowed grayscale' : ''}`}
+            className={`w-full flex items-center justify-between p-3 md:p-4 rounded-2xl border transition-all text-left group ${colorStyles[color]} ${disabled ? 'opacity-30 cursor-not-allowed grayscale' : ''}`}
         >
-            <div className="flex items-center gap-4">
-                <div className={`w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform`}>
-                    <Icon size={20} />
+            <div className="flex items-center gap-3 md:gap-4">
+                <div className={`w-8 h-8 md:w-10 md:h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform text-current`}>
+                    <Icon size={18} />
                 </div>
                 <div>
-                    <p className="font-bold tracking-tight">{label}</p>
-                    <p className="text-[10px] opacity-70 font-semibold uppercase tracking-wider">{sub}</p>
+                    <p className="font-black text-sm tracking-tight">{label}</p>
+                    <p className="text-[9px] md:text-[10px] opacity-70 font-bold uppercase tracking-wider">{sub}</p>
                 </div>
             </div>
-            <ChevronRight size={18} className="opacity-30 group-hover:translate-x-1 transition-transform" />
+            <ChevronRight size={16} className="opacity-30 group-hover:translate-x-1 transition-transform" />
         </button>
     );
 }
@@ -362,13 +362,13 @@ function StatCard({ label, value, icon: Icon, color }: any) {
     };
 
     return (
-        <div className="premium-card p-6 glass-panel border-white/40 flex items-center justify-between group hover:border-[var(--primary-teal)]/30 transition-all">
-            <div>
-                <p className="text-muted text-xs font-bold uppercase tracking-wider mb-1">{label}</p>
-                <h3 className="text-3xl font-bold text-[var(--primary-teal-dark)]">{value}</h3>
+        <div className="relative premium-card p-5 md:p-6 glass-panel border-white/30 flex items-center justify-between group hover:border-[var(--primary-teal)]/40 hover:z-10 transition-all cursor-default">
+            <div className="relative z-10">
+                <p className="text-muted text-[10px] font-black uppercase tracking-widest mb-1 opacity-70">{label}</p>
+                <h3 className="text-2xl md:text-3xl font-black text-[var(--primary-teal-dark)] tracking-tighter">{value}</h3>
             </div>
-            <div className={`w-12 h-12 rounded-xl ${colorClasses[color]} flex items-center justify-center shadow-lg transition-transform group-hover:scale-110`}>
-                <Icon className="text-white" size={24} />
+            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl ${colorClasses[color]} flex items-center justify-center shadow-lg transition-transform group-hover:rotate-12 group-hover:scale-110`}>
+                <Icon className="text-white" size={20} />
             </div>
         </div>
     );

@@ -52,62 +52,62 @@ export default function KeysPage() {
     };
 
     return (
-        <div className="space-y-8 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="flex items-center gap-4">
+        <div className="space-y-6 md:space-y-8 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 pb-8">
+            <div className="flex items-center gap-3 md:gap-4 px-1">
                 <Link href="/admin/dashboard" className="p-2 hover:bg-white/50 rounded-lg transition-colors text-muted hover:text-[var(--primary-teal)]">
-                    <ArrowLeft size={20} />
+                    <ArrowLeft size={18} />
                 </Link>
                 <div>
-                    <h1 className="text-3xl font-bold text-teal-gradient uppercase tracking-tight">Generate Keys</h1>
-                    <p className="text-muted text-sm font-medium">Issue new product keys for software distribution</p>
+                    <h1 className="text-2xl md:text-3xl font-black text-teal-gradient uppercase tracking-tight">Generate Keys</h1>
+                    <p className="text-xs md:text-sm text-muted font-medium">Issue new product keys for software distribution</p>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                 {/* Form Section */}
                 <div className="md:col-span-1">
-                    <div className="premium-card p-6 glass-panel border-white/40 h-fit sticky top-28 shadow-xl">
-                        <div className="flex items-center gap-3 mb-6">
-                            <ShieldPlus className="text-[var(--primary-teal)]" size={20} />
-                            <h2 className="font-bold text-[var(--primary-teal-dark)] text-lg">Key Config</h2>
+                    <div className="premium-card p-5 md:p-6 glass-panel border-white/40 h-fit md:sticky md:top-28 shadow-xl">
+                        <div className="flex items-center gap-3 mb-6 px-1">
+                            <ShieldPlus className="text-[var(--primary-teal)]" size={18} />
+                            <h2 className="font-extrabold text-[var(--primary-teal-dark)] text-base md:text-lg uppercase tracking-tight">Key Config</h2>
                         </div>
 
-                        <form onSubmit={handleGenerate} className="space-y-6">
+                        <form onSubmit={handleGenerate} className="space-y-5 md:space-y-6">
                             <div>
-                                <label className="block text-xs font-bold uppercase tracking-wider text-muted mb-2">Key Prefix</label>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-muted mb-2 opacity-70">Key Prefix</label>
                                 <div className="relative">
-                                    <Key className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--primary-teal)]/50" size={16} />
+                                    <Key className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--primary-teal)]/50" size={14} />
                                     <input
                                         type="text"
                                         value={prefix}
                                         onChange={(e) => setPrefix(e.target.value.toUpperCase().slice(0, 8))}
-                                        className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/50 border border-teal-500/10 focus:border-teal-500 outline-none transition-all font-mono text-sm"
+                                        className="w-full pl-9 pr-4 py-2.5 md:py-3 rounded-xl bg-white/50 border border-teal-500/10 focus:border-teal-500 outline-none transition-all font-mono text-xs md:text-sm shadow-sm"
                                         placeholder="E.g. QLINE"
                                     />
                                 </div>
-                                <p className="text-[10px] text-muted mt-2 font-medium">Auto-capitalized (Max 8 chars)</p>
+                                <p className="text-[10px] text-muted mt-2 font-bold opacity-60">Auto-capitalized (Max 8 chars)</p>
                             </div>
 
                             <div>
-                                <label className="block text-xs font-bold uppercase tracking-wider text-muted mb-2">Quantity</label>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-muted mb-2 opacity-70">Quantity</label>
                                 <div className="relative">
-                                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--primary-teal)]/50" size={16} />
+                                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--primary-teal)]/50" size={14} />
                                     <input
                                         type="number"
                                         min="1"
                                         max="50"
                                         value={count}
                                         onChange={(e) => setCount(parseInt(e.target.value) || 1)}
-                                        className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/50 border border-teal-500/10 focus:border-teal-500 outline-none transition-all text-sm font-bold"
+                                        className="w-full pl-9 pr-4 py-2.5 md:py-3 rounded-xl bg-white/50 border border-teal-500/10 focus:border-teal-500 outline-none transition-all text-xs md:text-sm font-black shadow-sm"
                                     />
                                 </div>
-                                <p className="text-[10px] text-muted mt-2 font-medium">Batch limit: 50 keys per operation</p>
+                                <p className="text-[10px] text-muted mt-2 font-bold opacity-60">Batch limit: 50 keys per operation</p>
                             </div>
 
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="btn-primary w-full justify-center py-4 text-sm font-bold uppercase tracking-widest"
+                                className="btn-primary w-full justify-center py-3.5 md:py-4 text-xs md:text-sm font-black uppercase tracking-widest shadow-lg"
                             >
                                 {isLoading ? 'Processing...' : 'Generate Batch'}
                             </button>
@@ -117,10 +117,10 @@ export default function KeysPage() {
 
                 {/* Results Section */}
                 <div className="md:col-span-2">
-                    <div className="premium-card min-h-[460px] glass-panel border-white/40 overflow-hidden flex flex-col shadow-2xl">
-                        <div className="p-6 border-b border-white/20 bg-[var(--primary-teal)]/5 flex items-center justify-between">
-                            <h2 className="font-extrabold text-[var(--primary-teal-dark)] text-lg uppercase tracking-tight">Generated Queue</h2>
-                            {generatedKeys.length > 0 && <span className="bg-[var(--primary-teal)] text-white text-[10px] font-black px-2 py-1 rounded-md">{generatedKeys.length} NEW</span>}
+                    <div className="premium-card min-h-[400px] md:min-h-[460px] glass-panel border-white/40 overflow-hidden flex flex-col shadow-2xl">
+                        <div className="p-5 md:p-6 border-b border-white/20 bg-[var(--primary-teal)]/5 flex items-center justify-between">
+                            <h2 className="font-black text-[var(--primary-teal-dark)] text-base md:text-lg uppercase tracking-tight">Generated Queue</h2>
+                            {generatedKeys.length > 0 && <span className="bg-[var(--primary-teal)] text-white text-[10px] font-black px-2 py-1 rounded-md shadow-sm">{generatedKeys.length} NEW</span>}
                         </div>
 
                         <div className="flex-1 p-6 overflow-y-auto max-h-[500px] custom-scrollbar">
