@@ -6,13 +6,15 @@ export const dynamic = 'force-dynamic';
 export async function GET(req: NextRequest) {
     try {
         const stats = {
-            db_host: process.env.DB_HOST || 'localhost (fallback)',
-            db_user: process.env.DB_USER || 'root (fallback)',
-            db_name: process.env.DB_NAME || 'qline_licensing (fallback)',
-            env: process.env.NODE_ENV
+            db_host_env: process.env.DB_HOST ? 'PRESENT' : 'MISSING',
+            db_user_env: process.env.DB_USER ? 'PRESENT' : 'MISSING',
+            db_name_env: process.env.DB_NAME ? 'PRESENT' : 'MISSING',
+            db_pass_env: process.env.DB_PASSWORD ? 'PRESENT' : 'MISSING',
+            node_env: process.env.NODE_ENV,
+            current_host: process.env.DB_HOST || 'localhost (fallback)'
         };
 
-        // Try a simple query
+        // Try a simple query using the pool
         const startTime = Date.now();
         const results: any = await db.execute('SELECT 1 as ping');
         const endTime = Date.now();
@@ -31,9 +33,11 @@ export async function GET(req: NextRequest) {
             status: 'UNHEALTHY',
             error: error.message,
             diagnostics: {
-                db_host: process.env.DB_HOST || 'NOT_SET',
-                db_user: process.env.DB_USER || 'NOT_SET',
-                db_name: process.env.DB_NAME || 'NOT_SET',
+                db_host_env: process.env.DB_HOST ? 'PRESENT' : 'MISSING',
+                db_user_env: process.env.DB_USER ? 'PRESENT' : 'MISSING',
+                db_name_env: process.env.DB_NAME ? 'PRESENT' : 'MISSING',
+                node_env: process.env.NODE_ENV,
+                host_fallback: 'localhost'
             }
         }, { status: 500 });
     }

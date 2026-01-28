@@ -19,6 +19,17 @@ const poolConfig = {
     keepAliveInitialDelay: 10000,
 };
 
+// Log loaded config (masked) for debugging
+if (process.env.NODE_ENV === 'production') {
+    console.log('DB CONFIG LOADED:', {
+        host: poolConfig.host,
+        user: poolConfig.user,
+        db: poolConfig.database,
+        hasPassword: !!poolConfig.password,
+        raw_host_env: process.env.DB_HOST ? 'PRESENT' : 'MISSING'
+    });
+}
+
 const pool = mysql.createPool(poolConfig);
 
 // Helper to execute queries cleanly
