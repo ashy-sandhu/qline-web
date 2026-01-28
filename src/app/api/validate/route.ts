@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
+import { jwtVerify } from 'jose';
 import db from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
 const JWT_SECRET = process.env.ACTIVATION_SECRET || 'fallback-secret-for-development';
+const secret = new TextEncoder().encode(JWT_SECRET);
 
 export async function POST(req: NextRequest) {
     try {
@@ -15,16 +16,24 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ success: false, message: 'Missing parameters' }, { status: 400 });
         }
 
-        // 1. Verify JWT
+        // 1. Verify JWT via jose
         let decoded: any;
         try {
-            decoded = jwt.verify(token, JWT_SECRET);
+            const { payload } = await jwtVerify(token, secret);
+            decoded = payload;
         } catch (err) {
             return NextResponse.json({
                 success: false,
                 message: 'Invalid or expired token',
                 status: 'INVALID_TOKEN'
-            }, { status: 401 });
+            }, {
+                status: 401,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Content-Type',
+                }
+            });
         }
 
         // 2. Cross-verify with DB

@@ -1,7 +1,8 @@
 import { NextRequest } from 'next/server';
-import jwt from 'jsonwebtoken';
+import { jwtVerify } from 'jose';
 
 const JWT_SECRET = process.env.ACTIVATION_SECRET || 'fallback-secret-for-development';
+const secret = new TextEncoder().encode(JWT_SECRET);
 
 export async function verifyAdmin(req: NextRequest) {
     const sessionToken = req.cookies.get('admin_session')?.value;
@@ -9,8 +10,8 @@ export async function verifyAdmin(req: NextRequest) {
     if (!sessionToken) return false;
 
     try {
-        const decoded = jwt.verify(sessionToken, JWT_SECRET) as any;
-        return decoded && decoded.role === 'ADMIN';
+        const { payload } = await jwtVerify(sessionToken, secret);
+        return payload && payload.role === 'ADMIN';
     } catch (error) {
         return false;
     }

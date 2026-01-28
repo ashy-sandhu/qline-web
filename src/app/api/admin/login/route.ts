@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import db from '@/lib/db';
+import db, { query } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
         console.log('Login attempt for:', username);
 
         // 1. Find admin
-        const [rows]: any = await db.execute('SELECT * FROM admins WHERE username = ?', [username]);
+        const rows: any = await query('SELECT * FROM admins WHERE username = ?', [username]);
         const admin = rows[0];
 
         if (!admin) {
@@ -27,8 +27,10 @@ export async function POST(req: NextRequest) {
         const isValid = await bcrypt.compare(password, admin.password);
         console.log('Password valid?', isValid);
 
-        if (!isValid) {
-            console.log('Login failed: Password mismatch');
+        if (isValid) {
+            console.log('Login successful for:', username);
+        } else {
+            console.log('Login failed: Password mismatch for:', username);
             return NextResponse.json({ success: false, message: 'Invalid credentials' }, { status: 401 });
         }
 
@@ -43,16 +45,20 @@ export async function POST(req: NextRequest) {
         const response = NextResponse.json({ success: true, message: 'Login successful' });
         response.cookies.set('admin_session', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+            secure: true, // Always true for HTTPS on Hostinger
+            sameSite: 'lax',
             maxAge: 60 * 60 * 24, // 24 hours
             path: '/',
         });
 
         return response;
 
-    } catch (error) {
-        console.error('Login Error:', error);
-        return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
+    } catch (error: any) {
+        console.error('Login Error Detailed:', error);
+        return NextResponse.json({
+            success: false,
+            message: 'Internal server error',
+            debug: error.message // Temporarily expose for diagnostics
+        }, { status: 500 });
     }
 }

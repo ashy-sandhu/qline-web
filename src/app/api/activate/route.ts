@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
+import { SignJWT } from 'jose';
 import db from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
 const JWT_SECRET = process.env.ACTIVATION_SECRET || 'fallback-secret-for-development';
+const secret = new TextEncoder().encode(JWT_SECRET);
 
 export async function POST(req: NextRequest) {
     try {
@@ -14,7 +15,14 @@ export async function POST(req: NextRequest) {
         if (!licenseKey || !hwid) {
             return NextResponse.json(
                 { message: 'License key and Hardware ID are required.' },
-                { status: 400 }
+                {
+                    status: 400,
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                        'Access-Control-Allow-Headers': 'Content-Type',
+                    }
+                }
             );
         }
 
@@ -25,7 +33,14 @@ export async function POST(req: NextRequest) {
         if (!license) {
             return NextResponse.json(
                 { message: 'Invalid license key. Please check and try again.' },
-                { status: 403 }
+                {
+                    status: 403,
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                        'Access-Control-Allow-Headers': 'Content-Type',
+                    }
+                }
             );
         }
 
@@ -33,7 +48,14 @@ export async function POST(req: NextRequest) {
         if (license.status === 'SUSPENDED') {
             return NextResponse.json(
                 { message: 'This license has been suspended. Please contact support.' },
-                { status: 403 }
+                {
+                    status: 403,
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                        'Access-Control-Allow-Headers': 'Content-Type',
+                    }
+                }
             );
         }
 
@@ -41,7 +63,14 @@ export async function POST(req: NextRequest) {
         if (license.hwid && license.hwid !== hwid) {
             return NextResponse.json(
                 { message: 'This key is already bound to another machine.' },
-                { status: 403 }
+                {
+                    status: 403,
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                        'Access-Control-Allow-Headers': 'Content-Type',
+                    }
+                }
             );
         }
 
@@ -59,18 +88,18 @@ export async function POST(req: NextRequest) {
             `, [hwid, restaurantName || 'Generic Restaurant', now, now, license.id]);
         }
 
-        // 5. Generate signed activation token
-        const token = jwt.sign(
-            {
-                licenseKey,
-                hwid,
-                restaurantName: restaurantName || license.restaurantName || 'Generic Restaurant',
-                activatedAt: now,
-                version: license.version || '4.0.0',
-            },
-            JWT_SECRET,
-            { expiresIn: '365d' }
-        );
+        // 5. Generate signed activation token via jose
+        const token = await new SignJWT({
+            licenseKey,
+            hwid,
+            restaurantName: restaurantName || license.restaurantName || 'Generic Restaurant',
+            activatedAt: now,
+            version: license.version || '4.0.0',
+        })
+            .setProtectedHeader({ alg: 'HS256' })
+            .setIssuedAt()
+            .setExpirationTime('365d')
+            .sign(secret);
 
         return NextResponse.json({
             success: true,
