@@ -8,10 +8,10 @@ if (!process.env.DB_HOST && process.env.NODE_ENV === 'production') {
 }
 
 const poolConfig = {
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'qline_licensing',
+    host: process.env.DB_HOST || 'srv1983.hstgr.io', // Updated default host
+    user: process.env.DB_USER || 'u303380656_admin',
+    password: process.env.DB_PASSWORD || 'SAS@MIX3.get',
+    database: process.env.DB_NAME || 'u303380656_licensing',
     waitForConnections: true,
     connectionLimit: 5,
     queueLimit: 0,
