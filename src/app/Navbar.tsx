@@ -60,7 +60,7 @@ export default function Navbar() {
       ]
     },
     { name: 'Engine', href: '/#engine' },
-    { name: 'Download', href: '/#download' },
+    { name: 'Download', href: '/download' },
   ];
 
   const handleMouseEnter = (name: string) => {

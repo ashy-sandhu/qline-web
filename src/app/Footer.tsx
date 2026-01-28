@@ -41,6 +41,7 @@ export default function Footer() {
                         <h3 className="text-lg font-bold mb-8 text-white">Project Resources</h3>
                         <ul className="flex flex-col gap-4 text-white text-sm font-medium">
                             <li><Link href="/features" className="hover:text-[var(--primary-teal-light)] transition-colors">Software Features</Link></li>
+                            <li><Link href="/download" className="hover:text-[var(--primary-teal-light)] transition-colors">Software Download</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Pricing Models</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Documentation</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">API Status</Link></li>
