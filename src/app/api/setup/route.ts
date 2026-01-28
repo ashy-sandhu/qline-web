@@ -22,24 +22,32 @@ export async function GET(req: NextRequest) {
         // 1. Ensure tables exist
         await ensureTables();
 
+        let migrationStatus = 'No changes needed';
         // 1b. Migration: Add lastSeen if missing (for existing users)
         try {
             await query('ALTER TABLE licenses ADD COLUMN lastSeen DATETIME AFTER activatedAt');
+            migrationStatus = 'Column lastSeen added successfully';
             console.log('Migration: lastSeen column added.');
-        } catch (e) {
-            console.log('Migration Info: lastSeen column already exists or table busy.');
+        } catch (e: any) {
+            if (e.message && (e.message.includes('Duplicate column') || e.code === 'ER_DUP_FIELDNAME')) {
+                migrationStatus = 'Column lastSeen already exists';
+            } else {
+                migrationStatus = 'Migration Error: ' + e.message;
+            }
+            console.log('Migration Status:', migrationStatus);
         }
 
         console.log('Tables verified.');
 
-        // 2. Check if admin already exists
+        // 2. Check if admin already exists - allow returning status even if admin exists
         const existing: any = await query('SELECT * FROM admins WHERE username = ?', [DEFAULT_USER]);
 
         if (existing && existing.length > 0) {
             return NextResponse.json({
                 success: true,
-                message: 'Database already initialized. Admin exists.',
-                setup_status: 'ALREADY_DONE'
+                message: 'Database check complete.',
+                migration: migrationStatus,
+                setup_status: 'ALREADY_INITIALIZED'
             });
         }
 
