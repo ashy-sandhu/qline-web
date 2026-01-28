@@ -25,9 +25,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         }
 
         if (restaurantName) {
-            if (restaurantName) {
-                await db.query('UPDATE licenses SET restaurantName = ?, updatedAt = ? WHERE id = ?', [restaurantName, now, id]);
-            }
+            await db.query('UPDATE licenses SET restaurantName = ?, updatedAt = ? WHERE id = ?', [restaurantName, now, id]);
         }
 
         return NextResponse.json({ success: true, message: 'License updated successfully.' });

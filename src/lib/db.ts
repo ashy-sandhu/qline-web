@@ -3,6 +3,10 @@ import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 
 // Environment variables provided by Hostinger
+if (!process.env.DB_HOST && process.env.NODE_ENV === 'production') {
+    console.warn('DATABASE WARNING: DB_HOST is not set in production. Falling back to localhost.');
+}
+
 const poolConfig = {
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
