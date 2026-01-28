@@ -1,11 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
-import db from '@/lib/db';
+import { query } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
 const JWT_SECRET = process.env.ACTIVATION_SECRET || 'fallback-secret-for-development';
 const secret = new TextEncoder().encode(JWT_SECRET);
+
+const CORS_HEADERS = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+};
+
+export async function OPTIONS() {
+    return new NextResponse(null, {
+        status: 200,
+        headers: CORS_HEADERS
+    });
+}
 
 export async function POST(req: NextRequest) {
     try {
@@ -13,7 +26,10 @@ export async function POST(req: NextRequest) {
         const { token, hwid } = body;
 
         if (!token || !hwid) {
-            return NextResponse.json({ success: false, message: 'Missing parameters' }, { status: 400 });
+            return NextResponse.json(
+                { success: false, message: 'Missing parameters' },
+                { status: 400, headers: CORS_HEADERS }
+            );
         }
 
         // 1. Verify JWT via jose
@@ -26,18 +42,11 @@ export async function POST(req: NextRequest) {
                 success: false,
                 message: 'Invalid or expired token',
                 status: 'INVALID_TOKEN'
-            }, {
-                status: 401,
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-                    'Access-Control-Allow-Headers': 'Content-Type',
-                }
-            });
+            }, { status: 401, headers: CORS_HEADERS });
         }
 
-        // 2. Cross-verify with DB
-        const [rows]: any = await db.execute('SELECT * FROM licenses WHERE key_code = ?', [decoded.licenseKey]);
+        // 2. Cross-verify with DB using query helper
+        const rows: any = await query('SELECT * FROM licenses WHERE key_code = ?', [decoded.licenseKey]);
         const license = rows[0];
 
         if (!license) {
@@ -45,7 +54,7 @@ export async function POST(req: NextRequest) {
                 success: false,
                 message: 'License record not found',
                 status: 'NOT_FOUND'
-            }, { status: 404 });
+            }, { status: 404, headers: CORS_HEADERS });
         }
 
         if (license.status === 'SUSPENDED') {
@@ -53,7 +62,7 @@ export async function POST(req: NextRequest) {
                 success: false,
                 message: 'License has been suspended',
                 status: 'SUSPENDED'
-            }, { status: 403 });
+            }, { status: 403, headers: CORS_HEADERS });
         }
 
         if (license.hwid !== hwid) {
@@ -61,17 +70,20 @@ export async function POST(req: NextRequest) {
                 success: false,
                 message: 'Hardware ID mismatch',
                 status: 'HWID_MISMATCH'
-            }, { status: 403 });
+            }, { status: 403, headers: CORS_HEADERS });
         }
 
         return NextResponse.json({
             success: true,
             status: license.status,
             message: 'License is valid.'
-        });
+        }, { status: 200, headers: CORS_HEADERS });
 
-    } catch (error) {
+    } catch (error: any) {
         console.error('Validation Error:', error);
-        return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
+        return NextResponse.json(
+            { success: false, message: 'Internal server error', error: error.message },
+            { status: 500, headers: CORS_HEADERS }
+        );
     }
 }
