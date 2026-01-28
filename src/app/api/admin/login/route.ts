@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { SignJWT } from 'jose';
 import db, { query } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
 const JWT_SECRET = process.env.ACTIVATION_SECRET || 'fallback-secret-for-development';
+const secret = new TextEncoder().encode(JWT_SECRET);
 
 export async function POST(req: NextRequest) {
     try {
@@ -34,14 +35,13 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ success: false, message: 'Invalid credentials' }, { status: 401 });
         }
 
-        // 3. Create session token (JWT)
-        const token = jwt.sign(
-            { id: admin.id, username: admin.username, role: 'ADMIN' },
-            JWT_SECRET,
-            { expiresIn: '24h' }
-        );
+        // 3. Create session token (JWT) via jose
+        const token = await new SignJWT({ id: admin.id, username: admin.username, role: 'ADMIN' })
+            .setProtectedHeader({ alg: 'HS256' })
+            .setIssuedAt()
+            .setExpirationTime('24h')
+            .sign(secret);
 
-        // 4. Set cookie
         const response = NextResponse.json({ success: true, message: 'Login successful' });
         response.cookies.set('admin_session', token, {
             httpOnly: true,
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
             success: false,
             message: 'Internal server error',
-            debug: error.message // Temporarily expose for diagnostics
+            error: error.message
         }, { status: 500 });
     }
 }
