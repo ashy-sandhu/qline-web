@@ -44,6 +44,7 @@ export default function DashboardPage() {
     const [selectedLicense, setSelectedLicense] = useState<License | null>(null);
     const [isManageModalOpen, setIsManageModalOpen] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -59,9 +60,10 @@ export default function DashboardPage() {
             if (statsData.success) setStats(statsData.stats || null);
             if (licensesData.success) {
                 // Map DB field 'key_code' to UI required field 'key'
-                const mappedLicenses = (licensesData.licenses || []).map((l: any) => ({
+                const rawLicenses = licensesData.licenses || [];
+                const mappedLicenses = rawLicenses.map((l: any) => ({
                     ...l,
-                    key: l.key_code || l.key // Fallback if already mapped
+                    key: l.key_code || l.key || 'UNKNOWN-KEY'
                 }));
                 setLicenses(mappedLicenses);
             }
@@ -116,13 +118,17 @@ export default function DashboardPage() {
     };
 
     useEffect(() => {
+        setIsMounted(true);
         fetchData();
     }, []);
 
-    const filteredLicenses = licenses.filter(l =>
-        l.key.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (l.restaurantName && l.restaurantName.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
+    const filteredLicenses = licenses.filter(l => {
+        const keyMatch = (l.key || '').toLowerCase().includes(searchQuery.toLowerCase());
+        const nameMatch = (l.restaurantName || '').toLowerCase().includes(searchQuery.toLowerCase());
+        return keyMatch || nameMatch;
+    });
+
+    if (!isMounted) return null;
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
