@@ -56,8 +56,15 @@ export default function DashboardPage() {
             const statsData = await statsRes.json();
             const licensesData = await licensesRes.json();
 
-            if (statsData.success) setStats(statsData.stats);
-            if (licensesData.success) setLicenses(licensesData.licenses);
+            if (statsData.success) setStats(statsData.stats || null);
+            if (licensesData.success) {
+                // Map DB field 'key_code' to UI required field 'key'
+                const mappedLicenses = (licensesData.licenses || []).map((l: any) => ({
+                    ...l,
+                    key: l.key_code || l.key // Fallback if already mapped
+                }));
+                setLicenses(mappedLicenses);
+            }
         } catch (error) {
             console.error('Error fetching dashboard data:', error);
         } finally {
@@ -199,7 +206,7 @@ export default function DashboardPage() {
                                     <td className="p-4 text-sm font-medium">{license.restaurantName || '-'}</td>
                                     <td className="p-4 font-mono text-xs text-muted truncate max-w-[120px]" title={license.hwid || ''}>{license.hwid || 'No Binding'}</td>
                                     <td className="p-4 text-xs text-muted">
-                                        {license.activatedAt ? new Date(license.activatedAt).toLocaleDateString() : 'N/A'}
+                                        {license.activatedAt ? new Date(license.activatedAt).toLocaleString() : 'N/A'}
                                     </td>
                                     <td className="p-4 text-center">
                                         <button
