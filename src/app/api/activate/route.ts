@@ -68,6 +68,7 @@ export async function POST(req: NextRequest) {
                     restaurantName = ?, 
                     status = 'ACTIVE', 
                     activatedAt = ?,
+                    lastSeen = NOW(),
                     updatedAt = ?
                 WHERE id = ?
             `, [hwid, restaurantName || 'Generic Restaurant', now, now, license.id]);
