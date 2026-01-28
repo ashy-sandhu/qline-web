@@ -73,6 +73,9 @@ export async function POST(req: NextRequest) {
             }, { status: 403, headers: CORS_HEADERS });
         }
 
+        // 3. Update lastSeen status
+        await query('UPDATE licenses SET lastSeen = NOW() WHERE id = ?', [license.id]);
+
         return NextResponse.json({
             success: true,
             status: license.status,

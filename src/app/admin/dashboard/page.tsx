@@ -33,6 +33,7 @@ interface License {
     hwid: string | null;
     restaurantName: string | null;
     activatedAt: string | null;
+    lastSeen: string | null;
 }
 
 export default function DashboardPage() {
@@ -198,7 +199,7 @@ export default function DashboardPage() {
                                 <th className="p-4 font-bold text-[var(--primary-teal-dark)] text-sm">Status</th>
                                 <th className="p-4 font-bold text-[var(--primary-teal-dark)] text-sm">Restaurant</th>
                                 <th className="p-4 font-bold text-[var(--primary-teal-dark)] text-sm">Machine ID</th>
-                                <th className="p-4 font-bold text-[var(--primary-teal-dark)] text-sm">Activated At</th>
+                                <th className="p-4 font-bold text-[var(--primary-teal-dark)] text-sm text-center">System Status</th>
                                 <th className="p-4 font-bold text-[var(--primary-teal-dark)] text-sm text-center">Action</th>
                             </tr>
                         </thead>
@@ -211,8 +212,8 @@ export default function DashboardPage() {
                                     </td>
                                     <td className="p-4 text-sm font-medium">{license.restaurantName || '-'}</td>
                                     <td className="p-4 font-mono text-xs text-muted truncate max-w-[120px]" title={license.hwid || ''}>{license.hwid || 'No Binding'}</td>
-                                    <td className="p-4 text-xs text-muted">
-                                        {license.activatedAt ? new Date(license.activatedAt).toLocaleString() : 'N/A'}
+                                    <td className="p-4 text-center">
+                                        <SystemStatus lastSeen={license.lastSeen} />
                                     </td>
                                     <td className="p-4 text-center">
                                         <button
@@ -384,5 +385,34 @@ function StatusBadge({ status }: { status: string }) {
         <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${styles[status]}`}>
             {status}
         </span>
+    );
+}
+
+function SystemStatus({ lastSeen }: { lastSeen: string | null }) {
+    if (!lastSeen) return <span className="text-xs text-muted font-medium italic">Never Seen</span>;
+
+    const lastSeenDate = new Date(lastSeen);
+    const now = new Date();
+    const diffInMinutes = Math.floor((now.getTime() - lastSeenDate.getTime()) / (1000 * 60));
+
+    // Consider online if seen within last 12 minutes (allows for two missed heartbeats)
+    const isOnline = diffInMinutes < 12;
+
+    if (isOnline) {
+        return (
+            <div className="flex items-center justify-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full border border-emerald-100 mx-auto w-fit">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-[10px] font-black uppercase tracking-wider">Online</span>
+            </div>
+        );
+    }
+
+    return (
+        <div className="flex flex-col items-center justify-center opacity-70">
+            <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter">Last Seen</span>
+            <span className="text-[10px] font-bold text-gray-600">
+                {lastSeenDate.toLocaleDateString()} {lastSeenDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            </span>
+        </div>
     );
 }

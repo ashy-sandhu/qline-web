@@ -21,6 +21,15 @@ export async function GET(req: NextRequest) {
 
         // 1. Ensure tables exist
         await ensureTables();
+
+        // 1b. Migration: Add lastSeen if missing (for existing users)
+        try {
+            await query('ALTER TABLE licenses ADD COLUMN lastSeen DATETIME AFTER activatedAt');
+            console.log('Migration: lastSeen column added.');
+        } catch (e) {
+            console.log('Migration Info: lastSeen column already exists or table busy.');
+        }
+
         console.log('Tables verified.');
 
         // 2. Check if admin already exists

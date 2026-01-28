@@ -64,6 +64,7 @@ export async function ensureTables() {
                 status VARCHAR(50) DEFAULT 'INACTIVE',
                 restaurantName VARCHAR(255),
                 activatedAt DATETIME,
+                lastSeen DATETIME,
                 expiresAt DATETIME,
                 version VARCHAR(50) DEFAULT '4.0.0',
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
