@@ -73,7 +73,16 @@ export async function POST(req: NextRequest) {
             }, { status: 403, headers: CORS_HEADERS });
         }
 
-        // 3. Update lastSeen status
+        // 3. New Check: Expiry Status
+        if (license.expiresAt && new Date(license.expiresAt) < new Date()) {
+            return NextResponse.json({
+                success: false,
+                message: 'License has expired',
+                status: 'EXPIRED'
+            }, { status: 403, headers: CORS_HEADERS });
+        }
+
+        // 4. Update lastSeen status
         await query('UPDATE licenses SET lastSeen = NOW() WHERE id = ?', [license.id]);
 
         return NextResponse.json({

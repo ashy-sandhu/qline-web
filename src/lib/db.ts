@@ -61,6 +61,7 @@ export async function ensureTables() {
                 id VARCHAR(36) PRIMARY KEY,
                 key_code VARCHAR(255) UNIQUE NOT NULL,
                 hwid VARCHAR(255),
+                duration_months INT DEFAULT 0,
                 status VARCHAR(50) DEFAULT 'INACTIVE',
                 restaurantName VARCHAR(255),
                 activatedAt DATETIME,

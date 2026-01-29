@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
         const body = await req.json();
         const count = parseInt(body.count) || 1;
         const prefix = body.prefix || 'QLINE';
+        const duration = parseInt(body.duration) || 0; // 0 for Lifetime
 
         const numToGenerate = Math.min(Math.max(count, 1), 50); // Limit to 50 at a time
         const keyPrefix = prefix.toUpperCase();
@@ -27,9 +28,9 @@ export async function POST(req: NextRequest) {
             const key = `${keyPrefix}-${randomPart()}-${randomPart()}-${randomPart()}`;
 
             await query(`
-                INSERT INTO licenses (id, key_code, status, createdAt, updatedAt)
-                VALUES (?, ?, 'INACTIVE', NOW(), NOW())
-            `, [uuidv4(), key]);
+                INSERT INTO licenses (id, key_code, status, duration_months, createdAt, updatedAt)
+                VALUES (?, ?, 'INACTIVE', ?, NOW(), NOW())
+            `, [uuidv4(), key, duration]);
 
             generatedKeys.push(key);
         }

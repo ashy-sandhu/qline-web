@@ -60,18 +60,31 @@ export async function POST(req: NextRequest) {
         }
 
         // 4. Update license if not yet activated
-        const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        const now = new Date();
+        const nowSql = now.toISOString().slice(0, 19).replace('T', ' ');
+
         if (!license.hwid) {
+            let expiresAt = null;
+            if (license.duration_months > 0) {
+                const expiry = new Date(now);
+                expiry.setMonth(expiry.getMonth() + license.duration_months);
+                expiresAt = expiry.toISOString().slice(0, 19).replace('T', ' ');
+            }
+
             await query(`
                 UPDATE licenses 
                 SET hwid = ?, 
                     restaurantName = ?, 
                     status = 'ACTIVE', 
                     activatedAt = ?,
+                    expiresAt = ?,
                     lastSeen = NOW(),
                     updatedAt = ?
                 WHERE id = ?
-            `, [hwid, restaurantName || 'Generic Restaurant', now, now, license.id]);
+            `, [hwid, restaurantName || 'Generic Restaurant', nowSql, expiresAt, nowSql, license.id]);
+
+            // Re-fetch or assign for JWT
+            license.expiresAt = expiresAt;
         }
 
         // 5. Generate signed activation token
@@ -79,7 +92,8 @@ export async function POST(req: NextRequest) {
             licenseKey,
             hwid,
             restaurantName: restaurantName || license.restaurantName || 'Generic Restaurant',
-            activatedAt: now,
+            activatedAt: nowSql,
+            expiresAt: license.expiresAt,
             version: license.version || '4.0.0',
         })
             .setProtectedHeader({ alg: 'HS256' })

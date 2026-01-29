@@ -11,7 +11,8 @@ import {
     ArrowLeft,
     ShieldPlus,
     Hash,
-    CheckCircle2
+    CheckCircle2,
+    Clock
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -21,6 +22,7 @@ export default function KeysPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [generatedKeys, setGeneratedKeys] = useState<string[]>([]);
     const [copiedKey, setCopiedKey] = useState<string | null>(null);
+    const [duration, setDuration] = useState(0); // 0 = Lifetime
 
     const handleGenerate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -31,7 +33,7 @@ export default function KeysPage() {
             const res = await fetch('/api/admin/keys/generate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ count, prefix }),
+                body: JSON.stringify({ count, prefix, duration }),
             });
 
             const data = await res.json();
@@ -102,6 +104,26 @@ export default function KeysPage() {
                                     />
                                 </div>
                                 <p className="text-[10px] text-muted mt-2 font-bold opacity-60">Batch limit: 50 keys per operation</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-muted mb-2 opacity-70">Validity Period</label>
+                                <div className="relative">
+                                    <Clock className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--primary-teal)]/50" size={14} />
+                                    <select
+                                        value={duration}
+                                        onChange={(e) => setDuration(parseInt(e.target.value))}
+                                        className="w-full pl-9 pr-4 py-2.5 md:py-3 rounded-xl bg-white/50 border border-teal-500/10 focus:border-teal-500 outline-none transition-all text-xs md:text-sm font-black shadow-sm appearance-none cursor-pointer"
+                                    >
+                                        <option value={0}>Lifetime / Permanent</option>
+                                        <option value={1}>1 Month</option>
+                                        <option value={3}>3 Months</option>
+                                        <option value={6}>6 Months</option>
+                                        <option value={12}>1 Year (12 Months)</option>
+                                    </select>
+                                    <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 text-muted rotate-90" size={12} />
+                                </div>
+                                <p className="text-[10px] text-muted mt-2 font-bold opacity-60">Calculated from activation date</p>
                             </div>
 
                             <button
