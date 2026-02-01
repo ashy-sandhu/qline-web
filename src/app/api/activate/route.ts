@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
         })
             .setProtectedHeader({ alg: 'HS256' })
             .setIssuedAt()
-            .setExpirationTime('365d')
+            .setExpirationTime(license.expiresAt ? Math.floor(new Date(license.expiresAt).getTime() / 1000) : '100y')
             .sign(secret);
 
         return NextResponse.json({

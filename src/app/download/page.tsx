@@ -5,25 +5,23 @@ import { motion, AnimatePresence, Variants } from 'framer-motion';
 import {
     Download,
     ShieldCheck,
-    Key,
-    MonitorSmartphone,
     Zap,
-    Info,
-    ChevronRight,
-    User,
-    Lock,
-    Cpu,
-    Globe,
-    LayoutDashboard
+    Check,
+    Loader2,
+    ArrowRight,
+    Monitor,
+    Shield,
+    Smartphone,
+    CreditCard,
+    Users
 } from 'lucide-react';
-import Link from 'next/link';
 
 const fadeInUp: Variants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 15 },
     visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.6, ease: "easeOut" }
+        transition: { duration: 0.5, ease: "easeOut" }
     }
 };
 
@@ -33,207 +31,190 @@ const staggerContainer: Variants = {
     }
 };
 
+// Compact Robot Verification
+const RobotCheck = ({ onVerify }: { onVerify: (val: boolean) => void }) => {
+    const [status, setStatus] = useState<'idle' | 'verifying' | 'verified'>('idle');
+
+    const handleCheck = () => {
+        if (status !== 'idle') return;
+        setStatus('verifying');
+        setTimeout(() => {
+            setStatus('verified');
+            onVerify(true);
+        }, 1200);
+    };
+
+    return (
+        <div
+            onClick={handleCheck}
+            className={`flex items-center gap-3 px-5 py-3 rounded-lg border transition-all cursor-pointer ${status === 'verified' ? 'bg-emerald-50 border-emerald-200' : 'bg-slate-50 border-slate-200 hover:border-slate-300'
+                }`}
+        >
+            <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${status === 'verified' ? 'bg-emerald-500 border-emerald-500' : 'bg-white border-slate-300'
+                }`}>
+                {status === 'verifying' && <Loader2 size={12} className="animate-spin text-teal-600" />}
+                {status === 'verified' && <Check size={12} className="text-white" strokeWidth={3} />}
+            </div>
+            <span className={`text-xs font-bold tracking-tight ${status === 'verified' ? 'text-emerald-700' : 'text-slate-600'}`}>
+                {status === 'verified' ? 'Verified Participant' : "I'm not a robot"}
+            </span>
+        </div>
+    );
+};
+
 export default function DownloadPage() {
-    const [isHuman, setIsHuman] = useState(false);
+    const [isVerified, setIsVerified] = useState(false);
     const [isDownloading, setIsDownloading] = useState(false);
 
-    const features = [
+    const plans = [
         {
-            icon: <Zap className="text-[var(--primary-teal)]" />,
-            title: "Real-time Sync",
-            desc: "Instant data propagation across all nodes using our proprietary Flutter core."
+            name: "Evaluation Build",
+            tag: "For Testing Only",
+            desc: "A restricted environment designed for compatibility testing and staff training.",
+            features: [
+                "Single Admin User Limit",
+                "Restricted Customization",
+                "Local-Only Transaction Storage",
+                "Basic Feature Access",
+                "No Cloud Synchronization"
+            ],
+            cta: "Download Demo",
+            highlight: false
         },
         {
-            icon: <MonitorSmartphone className="text-sky-500" />,
-            title: "Multi-Platform",
-            desc: "Native performance on Windows, Android, and Web with zero compromise."
-        },
-        {
-            icon: <ShieldCheck className="text-emerald-500" />,
-            title: "Secure Ledger",
-            desc: "Cryptographically signed transaction logs for 100% financial integrity."
-        },
-        {
-            icon: <Cpu className="text-purple-500" />,
-            title: "Low Latency",
-            desc: "Under 0.1ms response time even during peak dashboard traffic."
+            name: "Commercial License",
+            tag: "Production Ready",
+            desc: "The complete, unlocked Q-Line experience for professional operations.",
+            features: [
+                "Unlimited SKU & Inventory Matrix",
+                "Granular Access Control Protocols (RBAC)",
+                "Real-Time Multi-Node Ledger Sync",
+                "Deep Financial Intelligence Suite",
+                "Biometric Staff Identity & Audit Trails",
+                "Automated Cloud Disaster Recovery",
+                "Industrial Hardware Protocol Integration",
+                "24/7 Priority Engineering Support Channel"
+            ],
+            cta: "Purchase License",
+            highlight: true
         }
     ];
 
     return (
-        <main className="min-h-screen bg-[var(--bg-main)] overflow-x-hidden pt-24 pb-20">
-            {/* Background Accents */}
-            <div className="fixed inset-0 -z-10 opacity-30">
-                <div className="absolute top-[10%] left-[-10%] w-[500px] h-[500px] bg-[var(--primary-teal)]/10 blur-[120px] rounded-full"></div>
-                <div className="absolute bottom-[10%] right-[-10%] w-[400px] h-[400px] bg-[var(--accent-blue)]/10 blur-[100px] rounded-full"></div>
-            </div>
-
-            <div className="content-container">
-                {/* Header Section */}
+        <main className="min-h-screen bg-white text-slate-900 font-jakarta antialiased selection:bg-teal-100 selection:text-teal-900">
+            {/* Header / Hero */}
+            <div className="mx-auto px-6 pt-20 pb-12">
                 <motion.div
                     initial="hidden"
                     animate="visible"
                     variants={staggerContainer}
-                    className="text-center mb-20"
+                    className="space-y-6 text-center"
                 >
-                    <motion.span
-                        variants={fadeInUp}
-                        className="text-[var(--primary-teal)] font-black uppercase tracking-[0.6em] text-[10px] mb-4 block"
-                    >
-                        System Distribution
-                    </motion.span>
                     <motion.h1
                         variants={fadeInUp}
-                        className="text-4xl md:text-6xl font-black text-[var(--primary-teal-dark)] mb-6 tracking-tight"
+                        className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900"
                     >
-                        Deploy the <span className="text-teal-gradient">Evolution</span>.
+                        Q-Line Software <span className="text-teal-600">Distribution</span>
                     </motion.h1>
                     <motion.p
                         variants={fadeInUp}
-                        className="text-lg text-[var(--text-muted)] max-w-2xl mx-auto font-medium"
+                        className="text-lg text-slate-500 font-medium leading-relaxed"
                     >
-                        Download the latest production build of Q-LINE POS. Standardized, secure, and ready for high-frequency operations.
+                        Choose the version that fits your scale. Fully optimized for Windows 10/11 Architecture.
                     </motion.p>
                 </motion.div>
+            </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-                    {/* Left Column: Dynamic Content & Features */}
-                    <div className="lg:col-span-7 space-y-12">
-                        <section>
-                            <h2 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-8 flex items-center gap-3">
-                                <LayoutDashboard className="text-[var(--primary-teal)]" size={24} />
-                                Core Capabilities
-                            </h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {features.map((f, i) => (
-                                    <motion.div
-                                        key={i}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: i * 0.1 }}
-                                        className="premium-card p-6 glass-panel border-white/40 hover:border-[var(--primary-teal)]/20 transition-all"
-                                    >
-                                        <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-4 text-[var(--primary-teal)]">
-                                            {f.icon}
-                                        </div>
-                                        <h3 className="text-lg font-black text-[var(--primary-teal-dark)] mb-2 uppercase tracking-tight">{f.title}</h3>
-                                        <p className="text-sm text-[var(--text-muted)] font-medium leading-relaxed">{f.desc}</p>
-                                    </motion.div>
-                                ))}
+            {/* Plans Section */}
+            <div className="max-w-7xl mx-auto px-6">
+                <div className="flex flex-col lg:flex-row justify-center items-stretch gap-12 lg:gap-24">
+                    {plans.map((plan, i) => (
+                        <div key={i} className="flex-1 max-w-md w-full bg-white p-12 flex flex-col items-center text-center space-y-10 border border-slate-100 rounded-3xl shadow-xl shadow-slate-200/20">
+                            <div className="space-y-2 flex flex-col items-center">
+                                <div className="flex items-center gap-3">
+                                    <h2 className="text-xl font-bold tracking-tight text-slate-900 uppercase">{plan.name}</h2>
+                                    <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider ${plan.highlight ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-500'
+                                        }`}>
+                                        {plan.tag}
+                                    </span>
+                                </div>
+                                <p className="text-sm text-slate-500 font-normal leading-relaxed">{plan.desc}</p>
                             </div>
-                        </section>
 
-                        <section className="premium-card glass-panel dark:bg-black/5 p-8 border-white/20">
-                            <div className="flex items-start gap-4 mb-6">
-                                <div className="w-12 h-12 rounded-2xl bg-[var(--primary-teal)]/10 flex items-center justify-center text-[var(--primary-teal)] shrink-0">
-                                    <Globe size={24} />
+                            <ul className="space-y-4 w-full flex flex-col items-center">
+                                <div className="space-y-4 w-fit">
+                                    {plan.features.map((feature, j) => (
+                                        <li key={j} className="flex items-start gap-4 group">
+                                            <div className="mt-0.5 w-5 h-5 rounded-full bg-teal-50 flex items-center justify-center border border-teal-100 transition-colors group-hover:bg-teal-100 shrink-0">
+                                                <Check size={10} className="text-teal-600" />
+                                            </div>
+                                            <span className="text-base font-medium text-slate-700 leading-snug">{feature}</span>
+                                        </li>
+                                    ))}
                                 </div>
-                                <div>
-                                    <h2 className="text-xl font-black text-[var(--primary-teal-dark)] uppercase tracking-tight mb-1">System Requirements</h2>
-                                    <p className="text-xs text-[var(--text-muted)] font-bold tracking-widest uppercase opacity-60">Optimized for V4.0 Engine</p>
-                                </div>
-                            </div>
-                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {[
-                                    "Windows 10/11 (64-bit Required)",
-                                    "4GB RAM Available (8GB Recommended)",
-                                    "DirectX 11 Compatible Graphics",
-                                    "Stable Internet Connection",
-                                    "1080p Display Resolution",
-                                    "Admin Privileges for Installation"
-                                ].map((req, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-sm font-bold text-[var(--primary-teal-dark)]/80">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary-teal)]" />
-                                        {req}
-                                    </li>
-                                ))}
                             </ul>
-                        </section>
-                    </div>
 
-                    {/* Right Column: Demo Guide & Download Action */}
-                    <div className="lg:col-span-5 space-y-8 h-fit lg:sticky lg:top-32 font-bold">
-                        {/* Login Guide */}
-                        <div className="premium-card bg-[var(--primary-teal-dark)] p-8 text-white shadow-2xl overflow-hidden relative group">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-white/10 transition-colors"></div>
+                            {/* Verification & Action for Free Plan, Placeholder for Pro */}
+                            {i === 0 ? (
+                                <div className="space-y-6 pt-4 w-full flex flex-col items-center">
+                                    <RobotCheck onVerify={setIsVerified} />
 
-                            <div className="flex items-center gap-3 mb-8 relative z-10">
-                                <div className="w-10 h-10 rounded-xl bg-[var(--primary-teal)] flex items-center justify-center">
-                                    <Key size={20} />
+                                    <button
+                                        disabled={!isVerified || isDownloading}
+                                        onClick={() => {
+                                            setIsDownloading(true);
+                                            setTimeout(() => {
+                                                setIsDownloading(false);
+                                                window.location.href = '#'; // Simulated download
+                                            }, 2000);
+                                        }}
+                                        className={`w-full py-4 rounded-xl flex items-center justify-center gap-3 font-bold uppercase tracking-wider text-xs transition-all ${isVerified
+                                            ? 'bg-teal-600 text-white shadow-lg shadow-teal-600/20 hover:bg-teal-700 active:scale-95'
+                                            : 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
+                                            }`}
+                                    >
+                                        {isDownloading ? (
+                                            <><Loader2 size={16} className="animate-spin" /> Retrieving Build...</>
+                                        ) : (
+                                            <><Download size={16} /> {plan.cta}</>
+                                        )}
+                                    </button>
                                 </div>
-                                <h2 className="text-2xl font-black uppercase tracking-tight">Demo Access</h2>
-                            </div>
-
-                            <div className="space-y-6 relative z-10">
-                                <p className="text-sm text-teal-100/70 leading-relaxed font-medium">Use the following credentials to access the system after installation for evaluation.</p>
-
-                                <div className="space-y-4">
-                                    <div className="p-4 rounded-2xl bg-white/10 border border-white/10">
-                                        <div className="text-[10px] font-black uppercase tracking-widest text-teal-400 mb-2">Username</div>
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-xl font-black tracking-widest">demo</span>
-                                            <User size={18} className="text-white/30" />
-                                        </div>
-                                    </div>
-                                    <div className="p-4 rounded-2xl bg-white/10 border border-white/10">
-                                        <div className="text-[10px] font-black uppercase tracking-widest text-teal-400 mb-2">Password</div>
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-xl font-black tracking-widest">demo</span>
-                                            <Lock size={18} className="text-white/30" />
-                                        </div>
-                                    </div>
+                            ) : (
+                                <div className="pt-4 w-full mt-auto flex flex-col items-center">
+                                    <button className="w-full py-4 rounded-xl flex items-center justify-center gap-3 font-bold uppercase tracking-wider text-xs bg-slate-900 text-white hover:bg-slate-800 transition-all group active:scale-95">
+                                        {plan.cta}
+                                        <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                                    </button>
                                 </div>
-
-                                <div className="flex items-start gap-3 p-4 rounded-2xl bg-teal-500/10 border border-teal-500/20 text-xs text-teal-100 font-medium">
-                                    <Info size={16} className="shrink-0 text-teal-400" />
-                                    Note: Demo account has restricted administrative permissions.
-                                </div>
-                            </div>
+                            )}
                         </div>
-
-                        {/* Download Action */}
-                        <div className="premium-card glass-panel border-white/40 p-8 shadow-xl">
-                            <h2 className="text-xl font-black text-[var(--primary-teal-dark)] mb-6 uppercase tracking-tight">Secure Download</h2>
-
-                            <div className="space-y-6">
-                                <div
-                                    className={`p-4 rounded-2xl border-2 cursor-pointer transition-all flex items-center justify-between group ${isHuman ? 'bg-emerald-50 border-emerald-500/20' : 'bg-gray-50 border-black/5 hover:border-[var(--primary-teal)]/20'
-                                        }`}
-                                    onClick={() => setIsHuman(!isHuman)}
-                                >
-                                    <div className="flex items-center gap-4">
-                                        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${isHuman ? 'bg-emerald-500 border-emerald-500' : 'bg-white border-black/10 group-hover:border-[var(--primary-teal)]/30'
-                                            }`}>
-                                            {isHuman && <ShieldCheck size={16} className="text-white" />}
-                                        </div>
-                                        <span className={`text-sm font-black uppercase tracking-widest ${isHuman ? 'text-emerald-700' : 'text-gray-400'}`}>I am a human</span>
-                                    </div>
-                                    {!isHuman && <div className="text-[10px] font-black text-[var(--primary-teal)] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Verify Now</div>}
-                                </div>
-
-                                <button
-                                    disabled={!isHuman || isDownloading}
-                                    className={`w-full py-5 rounded-2xl flex items-center justify-center gap-3 transition-all font-black uppercase tracking-widest shadow-xl ${isHuman
-                                        ? 'btn-primary shadow-[var(--primary-teal)]/20 hover:shadow-[var(--primary-teal)]/40 hover:-translate-y-1'
-                                        : 'bg-gray-200 text-gray-400 cursor-not-allowed grayscale shadow-none'
-                                        }`}
-                                    onClick={() => {
-                                        setIsDownloading(true);
-                                        setTimeout(() => setIsDownloading(false), 2000);
-                                    }}
-                                >
-                                    <Download size={20} className={isDownloading ? 'animate-bounce' : ''} />
-                                    {isDownloading ? 'Initializing...' : 'Download V4.0'}
-                                </button>
-
-                                <p className="text-center text-[10px] text-[var(--text-muted)] font-black uppercase tracking-widest opacity-60">
-                                    Build: 2024.1.28.A | SHA-256 Verified
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
+
+            {/* System Info Footnote */}
+            <div className="mx-auto px-6 py-20">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-12 border-t border-slate-100 pt-16">
+                    {[
+                        { label: "OS Support", val: "Windows 10/11", icon: <Monitor size={14} /> },
+                        { label: "Architecture", val: "x64 Optimized", icon: <Zap size={14} /> },
+                        { label: "Security", val: "SHA-256 Verified", icon: <Shield size={14} /> },
+                        { label: "Binary Size", val: "Build Optimized", icon: <ArrowRight size={14} /> }
+                    ].map((item, i) => (
+                        <div key={i} className="space-y-2 text-center md:text-left">
+                            <div className="flex items-center justify-center md:justify-start gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                                {item.icon}
+                                {item.label}
+                            </div>
+                            <div className="text-base font-bold text-slate-700">{item.val}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Minimal Footer Spacer */}
+            <div className="h-20" />
         </main>
     );
 }
