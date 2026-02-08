@@ -27,7 +27,13 @@ import {
   TrendingUp,
   UserPlus,
   Printer,
-  ScrollText
+  ScrollText,
+  WifiOff,
+  Database,
+  CloudOff,
+  Monitor,
+  Smartphone,
+  Cloud
 } from 'lucide-react';
 import OrganicFlowBackground from './components/OrganicFlowBackground';
 
@@ -1420,64 +1426,275 @@ export default function Home() {
 
 
 
-      {/* OPERATIONAL ECOSYSTEM - BENTO WORKSPACE */}
-      <section id="operational-ecosystem" className="py-20 md:py-24 bg-[var(--bg-main)] relative overflow-hidden">
+      {/* WORKING INDEPENDENTLY FROM INTERNET SECTION */}
+      <section id="offline-capability" className="py-12 md:py-16 bg-[var(--bg-main)] relative overflow-hidden">
         <div className="content-container">
-          <div className="grid lg:grid-cols-12 gap-12 items-start mb-16 px-4">
-            <div className="lg:col-span-12 xl:col-span-8">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                className="inline-flex items-center gap-3 px-3 py-1.5 mb-6 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary-teal-dark)] bg-white shadow-sm rounded-full border border-black/5"
-              >
-                Operational Ecosystem_4.0
-              </motion.div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-[900] text-[var(--primary-teal-dark)] leading-[1.1] tracking-tighter mb-8">
-                A Unified Network of <br />
-                <span className="text-3d-tech">Validated Efficiency.</span>
-              </h2>
-            </div>
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
 
-            <div className="lg:col-span-12 xl:col-span-4 lg:grid lg:grid-cols-2 lg:gap-8 xl:block xl:space-y-0">
-              <p className="text-base text-gray-700 font-medium leading-relaxed mb-6">
-                We don't just deploy software; we architect the digital nervous system for the world's most aggressive hospitality hubs.
+            {/* Left: Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="inline-flex items-center gap-3 px-3 py-1.5 mb-6 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--text-muted)] bg-white shadow-sm rounded-full border border-black/5">
+                <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
+                Offline Protocol
+              </div>
+
+              <h2 className="text-3xl md:text-5xl font-[900] text-[var(--primary-teal-dark)] leading-[1.1] tracking-tighter mb-6">
+                No Internet? <br />
+                <span className="text-teal-gradient">No Problem.</span>
+              </h2>
+
+              <p className="text-lg text-[var(--text-muted)] font-medium leading-relaxed mb-8">
+                Your business doesn't stop when the connection drops. Q-Line is engineered with a <span className="text-[var(--primary-teal-dark)] font-black">Local-First Architecture</span> that keeps your operations running at 100% speed, regardless of internet status.
               </p>
-              <div className="grid grid-cols-2 gap-4 border-t border-black/5 pt-8">
-                <div>
-                  <div className="text-[9px] font-black text-[var(--primary-teal-dark)] uppercase mb-1 tracking-widest">Topology</div>
-                  <div className="text-sm font-bold text-[var(--primary-teal-dark)]">Multi-Node Sync</div>
+
+              <div className="space-y-6">
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center shrink-0 border border-amber-100">
+                    <Database size={20} className="text-amber-600" />
+                  </div>
+                  <div>
+                    <h4 className="text-[var(--primary-teal-dark)] font-bold text-sm uppercase tracking-wide mb-1">Continuous Billing</h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">Punch orders, print KOTs, and settle bills without a single byte of data. The system caches everything locally.</p>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-[9px] font-black text-[var(--primary-teal-dark)] uppercase mb-1 tracking-widest">Protocol</div>
-                  <div className="text-sm font-bold text-[var(--primary-teal-dark)]">Direct-Core V4</div>
+
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">
+                    <CloudOff size={20} className="text-emerald-600" />
+                  </div>
+                  <div>
+                    <h4 className="text-[var(--primary-teal-dark)] font-bold text-sm uppercase tracking-wide mb-1">Zero-Touch Sync</h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">The moment connectivity is restored, our background agent silently uploads all pending data to the cloud. No manual action required.</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+            {/* Right: Visual */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative h-[400px] flex items-center justify-center"
+            >
+              <div className="relative w-full max-w-md aspect-square">
+                {/* Central Offline Hub Circle */}
+                <motion.div
+                  animate={{ boxShadow: ["0 0 0 0px rgba(245, 158, 11, 0.1)", "0 0 0 20px rgba(245, 158, 11, 0)"] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-white border-4 border-amber-100 flex items-center justify-center z-20 shadow-xl"
+                >
+                  <motion.div
+                    animate={{ opacity: [1, 0.5, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <WifiOff size={48} className="text-amber-500" />
+                  </motion.div>
+                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-[0.2em] text-amber-500 whitespace-nowrap">
+                    Local Core Active
+                  </div>
+                </motion.div>
+
+                {/* Orbiting Satellite Nodes */}
+                {[0, 120, 240].map((deg, i) => (
+                  <motion.div
+                    key={i}
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 z-10"
+                  >
+                    <div
+                      className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 rounded-2xl bg-white shadow-lg border border-gray-100 flex items-center justify-center origin-center"
+                      style={{ transform: `rotate(${deg}deg) translateY(-120px) rotate(-${deg}deg)` }}
+                    >
+                      {i === 0 && <Printer size={24} className="text-[var(--primary-teal)]" />}
+                      {i === 1 && <LayoutDashboard size={24} className="text-[var(--primary-teal)]" />}
+                      {i === 2 && <MonitorSmartphone size={24} className="text-[var(--primary-teal)]" />}
+                    </div>
+                  </motion.div>
+                ))}
+
+                {/* Connecting Lines */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-20">
+                  <circle cx="50%" cy="50%" r="120" stroke="currentColor" className="text-gray-300" strokeWidth="1" strokeDasharray="4 4" />
+                </svg>
+
+                {/* Cloud Status (Disconnected) */}
+                <div className="absolute top-0 right-0 p-4 bg-gray-50 rounded-2xl border border-dashed border-gray-300 opacity-50 grayscale">
+                  <div className="flex items-center gap-2 mb-2">
+                    <CloudOff size={16} />
+                    <span className="text-[10px] font-bold uppercase">Cloud</span>
+                  </div>
+                  <div className="h-1 w-12 bg-gray-200 rounded-full overflow-hidden">
+                    <div className="h-full w-0 bg-blue-500"></div>
+                  </div>
+                </div>
+
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* QUANTUM NETWORK ARCHITECTURE VISUAL */}
+      <section id="architecture" className="py-24 bg-white relative overflow-hidden">
+        {/* Background Grid */}
+        <div className="absolute inset-0 z-0 opacity-[0.03]"
+          style={{ backgroundImage: 'radial-gradient(var(--primary-teal-dark) 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
+        </div>
+
+        <div className="content-container relative z-10">
+          <div className="text-center max-w-4xl mx-auto mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="lg:col-span-2 grid md:grid-cols-2 gap-6"
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--primary-teal)]/5 border border-[var(--primary-teal)]/10 text-[var(--primary-teal-dark)] text-[10px] font-black uppercase tracking-[0.3em] mb-6"
             >
-              <PartnerTile name="ELITE DHABA" nodeID="241" />
-              <PartnerTile name="QUANTUM CAFE" nodeID="108" />
-              <PartnerTile name="LEGEND DINING" nodeID="092" />
-              <PartnerTile name="METRO HUB" nodeID="315" />
+              <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary-teal)] animate-pulse" />
+              system_topology_v4
+            </motion.div>
+            <h2 className="text-4xl md:text-6xl font-[900] text-[var(--primary-teal-dark)] tracking-tighter mb-6">
+              The <span className="text-teal-gradient">Quantum Network.</span>
+            </h2>
+            <p className="text-[var(--text-muted)] text-lg max-w-2xl mx-auto">
+              A unified digital nervous system. All endpoints connected to a singular, pulsing core of truth.
+            </p>
+          </div>
+
+          <div className="relative w-full max-w-[1000px] mx-auto aspect-[4/5] md:aspect-[16/9] flex items-center justify-center">
+
+            {/* The Central Hub - Quantum Core */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              className="relative z-20 w-32 h-32 md:w-48 md:h-48 rounded-full bg-white shadow-[0_0_60px_rgba(38,166,154,0.3)] border border-[var(--primary-teal)]/20 flex items-center justify-center group"
+            >
+              {/* Pulsing Rings */}
+              <div className="absolute inset-0 rounded-full border border-[var(--primary-teal)]/30 animate-[ping_3s_linear_infinite]" />
+              <div className="absolute inset-[-20px] rounded-full border border-[var(--primary-teal)]/10 animate-[ping_4s_linear_infinite]" />
+
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-[var(--primary-teal-dark)] rounded-2xl flex items-center justify-center text-white mb-2 shadow-xl">
+                  <Database size={24} className="md:w-8 md:h-8" />
+                </div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal-dark)]">Quantum Core</div>
+                <div className="text-[8px] font-bold text-[var(--primary-teal)] uppercase tracking-wider">Master Node</div>
+              </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-6"
-            >
-              <MetricTile label="Network Load" value="100%" trend="+ CIVILIAN STABILITY" />
-              <MetricTile label="Sync Latency" value="0.04ms" trend="ZERO BRIDGE DELAY" />
-            </motion.div>
+            {/* Satellite Nodes - Desktop Radial / Mobile Cloud */}
+            {[
+              { id: 'pos', name: 'POS Terminal', role: 'Billing Engine', icon: <LayoutDashboard size={20} />, x: 0, y: -180, color: '#26A69A', delay: 0 },
+              { id: 'kds', name: 'KOT Matrix', role: 'Kitchen Display', icon: <Monitor size={20} />, x: 170, y: -100, color: '#FF6B35', delay: 0.1 },
+              { id: 'printer', name: 'Thermal Grid', role: 'WiFi Printing', icon: <Printer size={20} />, x: 210, y: 20, color: '#F77F00', delay: 0.15 },
+              { id: 'mobile', name: 'Waiter Pad', role: 'Mobile Orders', icon: <Smartphone size={20} />, x: 170, y: 120, color: '#0EA5E9', delay: 0.2 },
+              { id: 'ledger', name: 'Forensic Ledger', role: 'Accounting Core', icon: <Wallet size={20} />, x: 0, y: 180, color: '#F59E0B', delay: 0.25 },
+              { id: 'hr', name: 'Bio Attendance', role: 'HR Matrix', icon: <Fingerprint size={20} />, x: -170, y: 120, color: '#10B981', delay: 0.3 },
+              { id: 'reports', name: 'Analytics Hub', role: 'Live Reports', icon: <BarChart3 size={20} />, x: -210, y: 20, color: '#8B5CF6', delay: 0.35 },
+              { id: 'slave', name: 'Slave Terminal', role: 'Multi-Node Sync', icon: <Layers size={20} />, x: -170, y: -100, color: '#06B6D4', delay: 0.4 },
+              { id: 'cloud', name: 'Cloud Vault', role: 'Auto-Backup', icon: <Cloud size={20} />, x: 0, y: -240, color: '#6366F1', delay: 0.45 },
+            ].map((node, i) => (
+              <React.Fragment key={node.id}>
+                {/* Connection Line (Desktop Only) */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none hidden md:block z-0">
+                  <motion.line
+                    x1="50%" y1="50%"
+                    x2={`calc(50% + ${node.x}px)`} y2={`calc(50% + ${node.y}px)`}
+                    stroke="rgba(38, 166, 154, 0.2)"
+                    strokeWidth="2"
+                    strokeDasharray="4 4"
+                    initial={{ pathLength: 0 }}
+                    whileInView={{ pathLength: 1 }}
+                    transition={{ duration: 1.5, delay: node.delay }}
+                  />
+                  {/* Moving Data Packet */}
+                  <motion.circle
+                    r="3"
+                    fill="var(--primary-teal)"
+                    animate={{
+                      cx: ["50%", `calc(50% + ${node.x}px)`],
+                      cy: ["50%", `calc(50% + ${node.y}px)`]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity, repeatDelay: i * 0.5, ease: "linear" }}
+                  />
+                </svg>
+
+                {/* The Node Card */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5, left: '50%', top: '50%' }}
+                  whileInView={{
+                    opacity: 1,
+                    scale: 1,
+                    left: `calc(50% + ${node.x}px)`,
+                    top: `calc(50% + ${node.y}px)`
+                  }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: node.delay, type: "spring", stiffness: 100 }}
+                  whileHover={{ scale: 1.1 }}
+                  className="absolute z-10 hidden md:flex flex-col items-center justify-center gap-3 p-4 rounded-2xl bg-white shadow-xl border border-black/5 transition-shadow w-32 h-32 lg:w-36 lg:h-36 -translate-x-1/2 -translate-y-1/2"
+                >
+                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg flex items-center justify-center text-white shadow-lg shrink-0" style={{ background: `linear-gradient(135deg, ${node.color} 0%, ${node.color}dd 100%)` }}>
+                    {React.cloneElement(node.icon, { size: 20, className: 'lg:w-6 lg:h-6' })}
+                  </div>
+                  <div className="flex flex-col text-center items-center w-full px-1">
+                    <span className="text-[9px] lg:text-[10px] font-black uppercase tracking-tight text-gray-800 leading-tight line-clamp-2 w-full">{node.name}</span>
+                    <span className="text-[7px] lg:text-[8px] font-bold uppercase tracking-wider text-[#26A69A] mt-0.5 line-clamp-1 w-full">{node.role}</span>
+                  </div>
+                </motion.div>
+
+                {/* Mobile Grid Item (Alternative View) */}
+                <motion.div className="md:hidden absolute"
+                  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+                  style={{
+                    top: '50%', left: '50%',
+                    transform: `rotate(${i * 60}deg) translateY(-140px) rotate(-${i * 60}deg)`
+                  }}
+                >
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-lg" style={{ background: `linear-gradient(135deg, ${node.color} 0%, ${node.color}dd 100%)` }}>
+                      {node.icon}
+                    </div>
+                    <span className="text-[8px] font-bold uppercase mt-1 bg-white px-2 py-0.5 rounded-full shadow-sm">{node.name}</span>
+                  </div>
+                </motion.div>
+              </React.Fragment>
+            ))}
           </div>
+
+          <div className="md:hidden mt-20 grid grid-cols-2 gap-4">
+            {/* Mobile-only list view if radial is too cluttered */}
+            {[
+              { name: 'POS Terminal', role: 'Billing Engine', icon: <LayoutDashboard size={16} />, color: '#26A69A' },
+              { name: 'KOT Matrix', role: 'Kitchen Display', icon: <Monitor size={16} />, color: '#FF6B35' },
+              { name: 'Thermal Grid', role: 'WiFi Printing', icon: <Printer size={16} />, color: '#F77F00' },
+              { name: 'Waiter Pad', role: 'Mobile Orders', icon: <Smartphone size={16} />, color: '#0EA5E9' },
+              { name: 'Forensic Ledger', role: 'Accounting', icon: <Wallet size={16} />, color: '#F59E0B' },
+              { name: 'Bio Attendance', role: 'HR Matrix', icon: <Fingerprint size={16} />, color: '#10B981' },
+              { name: 'Analytics Hub', role: 'Live Reports', icon: <BarChart3 size={16} />, color: '#8B5CF6' },
+              { name: 'Slave Terminal', role: 'Multi-Node', icon: <Layers size={16} />, color: '#06B6D4' },
+              { name: 'Cloud Vault', role: 'Auto-Backup', icon: <Cloud size={16} />, color: '#6366F1' },
+            ].map((node, i) => (
+              <div key={i} className="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white" style={{ background: `linear-gradient(135deg, ${node.color} 0%, ${node.color}dd 100%)` }}>
+                  {node.icon}
+                </div>
+                <div>
+                  <div className="text-[10px] font-black uppercase text-gray-800">{node.name}</div>
+                  <div className="text-[8px] font-bold text-[var(--primary-teal)]">{node.role}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
 

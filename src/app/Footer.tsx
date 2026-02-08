@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Twitter, Linkedin, Facebook, Mail, MapPin, Phone } from 'lucide-react';
+import { Twitter, Linkedin, Facebook, Mail, MapPin, Phone, ArrowRight } from 'lucide-react';
 
 export default function Footer() {
     return (
@@ -53,7 +53,7 @@ export default function Footer() {
                         <h3 className="text-lg font-bold mb-8 text-white">Company Info</h3>
                         <ul className="flex flex-col gap-4 text-white text-sm font-medium">
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">About Story</Link></li>
-                            <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Privacy Policy</Link></li>
+                            <li><Link href="/privacy-policy" className="hover:text-[var(--primary-teal-light)] transition-colors">Privacy Policy</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Terms of Service</Link></li>
                             <li><Link href="#" className="hover:text-[var(--primary-teal-light)] transition-colors">Careers</Link></li>
                         </ul>
@@ -63,6 +63,7 @@ export default function Footer() {
                     <div>
                         <h3 className="text-lg font-bold mb-8 text-white">Get in Touch</h3>
                         <ul className="flex flex-col gap-6 text-white text-sm font-medium">
+                            <li><Link href="/contact" className="hover:text-[var(--primary-teal-light)] transition-colors flex items-center gap-2">Contact Us <ArrowRight size={14} /></Link></li>
                             <li className="flex items-start gap-3">
                                 <MapPin size={18} className="text-[var(--primary-teal-light)] shrink-0" />
                                 <span>Vehari Road, <br />Makhdoom Rasheed, Multan</span>
