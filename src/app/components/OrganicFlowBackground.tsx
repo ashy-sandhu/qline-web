@@ -18,7 +18,7 @@ export default function OrganicFlowBackground() {
         let height = 0;
 
         // Configuration
-        const particleCount = 800; // Increased Density
+        const particleCount = 200; // Reduced for performance
         const colors = [
             '#26a69a', // Teal
             '#80cbc4', // Light Teal

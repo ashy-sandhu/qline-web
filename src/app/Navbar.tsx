@@ -59,7 +59,7 @@ export default function Navbar() {
         { name: 'Performance Ecosystem', href: '/#operational-ecosystem', icon: <BarChart3 size={16} /> },
       ]
     },
-    { name: 'Engine', href: '/#engine' },
+    { name: 'Pricing', href: '/pricing' },
     { name: 'Download', href: '/download' },
   ];
 

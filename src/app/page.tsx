@@ -59,13 +59,8 @@ const staggerContainer: Variants = {
 const POSNodeAnim = () => (
   <div className="relative w-12 h-12 flex items-center justify-center">
     <motion.div
-      animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-      transition={{ duration: 2, repeat: Infinity }}
-      className="absolute w-4 h-4 rounded-full bg-[var(--primary-teal)]"
-    />
-    <motion.div
-      animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-      transition={{ duration: 2, repeat: Infinity }}
+      animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
+      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       className="absolute w-4 h-4 rounded-full bg-[var(--primary-teal)]"
     />
     <LayoutDashboard size={24} className="relative z-10" />
@@ -75,20 +70,17 @@ const POSNodeAnim = () => (
 const LedgerAnim = () => (
   <div className="relative w-12 h-12 flex items-center justify-center">
     <motion.div
-      animate={{ y: [-15, 15] }}
-      transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
-      className="absolute w-full h-[2px] bg-amber-400/30 blur-sm"
+      animate={{ y: [-10, 10] }}
+      transition={{ duration: 4, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+      className="absolute w-full h-[1px] bg-amber-400/20 blur-[2px]"
     />
     <motion.div
-      animate={{ opacity: [0.3, 1, 0.3] }}
-      transition={{ duration: 1, repeat: Infinity }}
+      animate={{ opacity: [0.5, 1, 0.5] }}
+      transition={{ duration: 3, repeat: Infinity }}
       className="text-amber-500"
     >
       <Wallet size={32} />
     </motion.div>
-    <div className="absolute inset-0 flex flex-col justify-around py-2 items-center opacity-20 text-amber-500">
-      {[1, 2, 3].map(i => <div key={i} className="w-6 h-[1px] bg-current" />)}
-    </div>
   </div>
 );
 
@@ -96,20 +88,15 @@ const AttendanceAnim = () => (
   <div className="relative w-12 h-12 flex items-center justify-center">
     <motion.div
       animate={{ rotate: 360 }}
-      transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-      className="absolute inset-0 border-t-2 border-r-2 border-[var(--primary-teal)]/20 rounded-full"
+      transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+      className="absolute inset-0 border-t border-r border-[var(--primary-teal)]/20 rounded-full"
     />
     <motion.div
-      animate={{ scale: [1, 1.1, 1] }}
-      transition={{ duration: 2, repeat: Infinity }}
+      animate={{ scale: [1, 1.05, 1] }}
+      transition={{ duration: 4, repeat: Infinity }}
     >
       <Fingerprint size={32} />
     </motion.div>
-    <motion.div
-      animate={{ height: [0, 20, 0] }}
-      transition={{ duration: 1.5, repeat: Infinity }}
-      className="absolute bottom-0 w-[2px] bg-[var(--primary-teal)]"
-    />
   </div>
 );
 
@@ -120,51 +107,36 @@ const PulseAnim = () => (
         d="M0 25 L15 25 L20 10 L30 40 L35 25 L50 25"
         fill="transparent"
         stroke="#0ea5e9"
-        strokeWidth="2"
-        animate={{ pathLength: [0, 1], pathOffset: [0, 1] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+        strokeWidth="1.5"
+        animate={{ pathLength: [0, 1] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
     </svg>
-    <BarChart3 size={24} className="relative z-10 opacity-40 text-sky-500" />
+    <BarChart3 size={24} className="relative z-10 opacity-30 text-sky-500" />
   </div>
 );
 
 const AuditAnim = () => (
   <div className="relative w-12 h-12 flex items-center justify-center">
     <motion.div
-      animate={{ rotateY: [0, 180, 360] }}
-      transition={{ duration: 4, repeat: Infinity }}
+      animate={{ rotateY: [0, 360] }}
+      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       className="text-purple-500"
     >
       <ShieldCheck size={32} />
     </motion.div>
-    <motion.div
-      animate={{ opacity: [0, 1, 0], scale: [0.5, 1.5, 0.5] }}
-      transition={{ duration: 2, repeat: Infinity }}
-      className="absolute inset-0 bg-purple-500/10 rounded-full blur-xl"
-    />
   </div>
 );
 
 const CloudAnim = () => (
   <div className="relative w-12 h-12 flex items-center justify-center">
     <motion.div
-      animate={{ scale: [1, 1.3, 1] }}
-      transition={{ duration: 4, repeat: Infinity }}
-      className="absolute inset-0 border border-sky-400/20 rounded-full"
-    />
-    <motion.div
-      animate={{ y: [-2, 2, -2] }}
-      transition={{ duration: 3, repeat: Infinity }}
+      animate={{ y: [-3, 3] }}
+      transition={{ duration: 4, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
       className="text-sky-500"
     >
       <MonitorSmartphone size={32} />
     </motion.div>
-    <motion.div
-      animate={{ opacity: [0, 1, 0] }}
-      transition={{ duration: 1, repeat: Infinity }}
-      className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-sky-500 shadow-[0_0_8px_#0ea5e9]"
-    />
   </div>
 );
 
@@ -173,13 +145,13 @@ const QuantumPOSAnim = () => (
     {[0, 1, 2].map(i => (
       <motion.div
         key={i}
-        animate={{ x: [0, 40], opacity: [0, 1, 0] }}
-        transition={{ duration: 2, repeat: Infinity, delay: i * 0.6 }}
+        animate={{ opacity: [0.2, 0.6, 0.2] }}
+        transition={{ duration: 3, repeat: Infinity, delay: i * 0.8 }}
         className="h-1 bg-[var(--primary-teal)]/40 rounded-full mb-2"
         style={{ width: i === 1 ? '100%' : '60%' }}
       />
     ))}
-    <LayoutDashboard size={20} className="absolute -left-6 top-2 text-[var(--primary-teal)]" />
+    <LayoutDashboard size={20} className="absolute -left-6 top-2 text-[var(--primary-teal)] opacity-40" />
   </div>
 );
 
@@ -187,32 +159,22 @@ const BioHRAnim = () => (
   <div className="relative w-8 h-8 flex items-center justify-center">
     <motion.div
       animate={{ rotate: 360 }}
-      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-      className="absolute w-12 h-12 border border-dashed border-[var(--primary-teal)]/30 rounded-full"
+      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+      className="absolute w-12 h-12 border border-dashed border-[var(--primary-teal)]/20 rounded-full"
     />
-    <Fingerprint size={24} className="text-[var(--primary-teal)]" />
-    <motion.div
-      animate={{ scale: [1, 1.5, 1], opacity: [0.2, 0.5, 0.2] }}
-      transition={{ duration: 2, repeat: Infinity }}
-      className="absolute w-10 h-10 bg-[var(--primary-teal)] rounded-full blur-md"
-    />
+    <Fingerprint size={24} className="text-[var(--primary-teal)] opacity-60" />
   </div>
 );
 
 const ForensicLedgerV4Anim = () => (
   <div className="relative w-8 h-8">
     <motion.div
-      animate={{ scaleY: [1, 1.2, 1] }}
-      transition={{ duration: 3, repeat: Infinity }}
+      animate={{ opacity: [0.6, 1, 0.6] }}
+      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       className="text-amber-500"
     >
       <ShieldAlert size={28} />
     </motion.div>
-    <motion.div
-      animate={{ y: [0, 10, 0] }}
-      transition={{ duration: 2, repeat: Infinity }}
-      className="absolute -bottom-2 left-0 right-0 h-0.5 bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
-    />
   </div>
 );
 
@@ -220,15 +182,10 @@ const ClosureAnim = () => (
   <div className="relative w-8 h-8 flex items-center justify-center">
     <motion.div
       animate={{ rotate: -360 }}
-      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-      className="absolute w-14 h-14 border-b-2 border-l-2 border-amber-400/40 rounded-full"
+      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      className="absolute w-12 h-12 border-b border-l border-amber-400/20 rounded-full"
     />
-    <Lock size={24} className="text-amber-500" />
-    <motion.div
-      animate={{ scale: [1, 2], opacity: [0.5, 0] }}
-      transition={{ duration: 2, repeat: Infinity }}
-      className="absolute w-6 h-6 border-2 border-amber-500 rounded-full"
-    />
+    <Lock size={24} className="text-amber-500 opacity-60" />
   </div>
 );
 
@@ -237,21 +194,16 @@ const ClosureAnim = () => (
 const RevenueVelocityNode = () => (
   <div className="relative w-full h-full min-h-[160px] flex items-end overflow-hidden rounded-3xl bg-black/5 border border-white/10">
     <motion.div
-      initial={{ scaleY: 0.3 }}
-      animate={{ scaleY: [0.4, 0.65, 0.55, 0.8, 0.6] }}
-      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      initial={{ scaleY: 0.5 }}
+      animate={{ scaleY: [0.5, 0.6, 0.5] }}
+      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       className="w-full bg-gradient-to-t from-[var(--primary-teal)] to-[var(--primary-teal-light)] relative origin-bottom"
     >
-      <div className="absolute top-0 left-0 right-0 h-4 bg-white/30 skew-y-2 blur-sm" />
-      <div className="absolute top-4 left-4 text-white/50 text-[10px] font-black uppercase tracking-widest">Live Flow</div>
+      <div className="absolute top-0 left-0 right-0 h-4 bg-white/10 skew-y-2 blur-sm" />
     </motion.div>
     <div className="absolute inset-x-0 bottom-8 flex justify-center z-10">
       <div className="px-4 py-2 bg-black/40 backdrop-blur-md rounded-xl border border-white/10 text-white font-black text-2xl tracking-tighter">
-        <motion.span
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 1, repeat: Infinity }}
-        >$</motion.span>
-        8,420
+        $8,420
       </div>
     </div>
   </div>
@@ -260,8 +212,8 @@ const RevenueVelocityNode = () => (
 const ForensicStreamNode = () => (
   <div className="relative w-full h-full min-h-[160px] bg-[var(--primary-teal-dark)] rounded-3xl p-4 overflow-hidden border border-[var(--primary-teal)]/20 shadow-inner">
     <motion.div
-      animate={{ y: [0, -200] }}
-      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+      animate={{ y: [0, -100] }}
+      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
       className="space-y-4"
     >
       {[
@@ -278,9 +230,8 @@ const ForensicStreamNode = () => (
         "SYNC: MOBILE LINKED",
       ].map((log, i) => (
         <div key={i} className="text-[9px] font-black tracking-widest flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary-teal)] animate-pulse" />
-          <span className="text-white/60 uppercase">{log}</span>
-          <span className="ml-auto text-white/20">0.00{i}ms</span>
+          <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary-teal)]/40" />
+          <span className="text-white/40 uppercase">{log}</span>
         </div>
       ))}
     </motion.div>
@@ -292,55 +243,34 @@ const NeuralPerformanceNode = () => (
   <div className="relative w-full h-full min-h-[160px] flex items-center justify-center bg-gray-50 rounded-3xl border border-black/5 overflow-hidden">
     <div className="absolute inset-0 flex items-center justify-center">
       {[1, 2, 3].map(i => (
-        <div key={i} className="absolute border border-black/[0.03] rounded-full" style={{ width: i * 60, height: i * 60 }} />
+        <div key={i} className="absolute border border-black/[0.02] rounded-full" style={{ width: i * 60, height: i * 60 }} />
       ))}
     </div>
     <motion.div
       animate={{ rotate: 360 }}
-      transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-      className="absolute w-[200px] h-[200px] bg-gradient-to-r from-[var(--primary-teal)]/10 to-transparent rounded-full origin-center"
-      style={{ clipPath: "polygon(50% 50%, 100% 0, 100% 100%)" }}
-    />
-    <motion.div
-      animate={{ opacity: [0, 1, 0] }}
-      transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-      className="absolute top-12 right-20 w-3 h-3 bg-red-500 rounded-full shadow-[0_0_10px_red]"
-    />
-    <motion.div
-      animate={{ opacity: [0, 1, 0] }}
-      transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-      className="absolute bottom-16 left-24 w-2 h-2 bg-orange-400 rounded-full shadow-[0_0_10px_orange]"
-    />
-    <Users size={32} className="text-[var(--primary-teal-dark)]/20 relative z-10" />
+      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+      className="relative z-10"
+    >
+      <Activity size={40} className="text-[var(--primary-teal)] opacity-20" />
+    </motion.div>
   </div>
 );
 
 const InventoryFrictionNode = () => (
-  <div className="relative w-full h-full min-h-[160px] bg-white rounded-3xl p-6 flex flex-col justify-end border border-black/5 shadow-2xl shadow-black/5">
-    <div className="flex gap-1 mb-6 items-end">
-      {[40, 70, 45, 90, 65, 30, 85].map((h, i) => (
-        <motion.div
-          key={i}
-          initial={{ scaleY: 0 }}
-          whileInView={{ scaleY: h / 100 }}
-          transition={{ duration: 1, delay: i * 0.1 }}
-          className={`flex-1 rounded-t-sm origin-bottom ${i === 3 ? 'bg-red-400' : 'bg-[var(--primary-teal)]/40'}`}
-          style={{ height: '100%' }}
-        />
-      ))}
-    </div>
+  <div className="relative w-full h-full min-h-[160px] bg-white rounded-3xl border border-black/5 p-4 flex flex-col justify-between">
     <div className="flex justify-between items-center">
-      <div className="flex flex-col">
-        <span className="text-[8px] font-black uppercase tracking-widest text-gray-400">Stock Velocity</span>
-        <span className="text-xl font-black text-[var(--primary-teal-dark)]">92.4 <span className="text-xs text-emerald-500">%</span></span>
+      <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center">
+        <TrendingUp size={20} className="text-orange-500" />
       </div>
-      <motion.div
-        animate={{ scale: [1, 1.1, 1] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center text-red-500"
-      >
-        <Sparkles size={16} />
-      </motion.div>
+    </div>
+    <div className="space-y-2">
+      <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+        <motion.div
+          animate={{ width: ["20%", "85%", "20%"] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="h-full bg-orange-500"
+        />
+      </div>
     </div>
   </div>
 );
@@ -743,7 +673,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.1, duration: 0.8 }}
+                transition={{ duration: 0.5 }}
                 className={`premium-card p-4 group flex flex-col items-center text-center bg-gradient-to-br ${feature.gradient} border-2 border-transparent hover:border-[var(--primary-teal)]/20 transition-all duration-700 shadow-2xl shadow-gray-100 h-full`}
               >
                 <motion.div
@@ -751,11 +681,7 @@ export default function Home() {
                   className="relative w-32 h-32 mb-8 group/icon"
                 >
                   {/* Outer Tech Ring - Rotating */}
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-0 rounded-full border-2 border-dashed border-[var(--primary-teal)]/20 md:group-hover/icon:border-[var(--primary-teal)]/50 md:group-hover/icon:duration-5 transition-colors"
-                  />
+                  <div className="absolute inset-0 rounded-full border border-dashed border-[var(--primary-teal)]/10" />
 
                   {/* Inner Orbiting Particles/Dots */}
                   <motion.div
@@ -769,14 +695,7 @@ export default function Home() {
                   {/* Glass Base Plate */}
                   <div className="absolute inset-4 rounded-[28px] bg-white/40 backdrop-blur-xl border border-white/40 shadow-xl flex items-center justify-center md:group-hover/icon:scale-105 md:group-hover/icon:bg-white transition-all duration-500 overflow-hidden">
                     {/* Energy Pulse Background */}
-                    <motion.div
-                      animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.1, 0.3, 0.1]
-                      }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                      className="absolute inset-0 bg-gradient-to-br from-[var(--primary-teal)] to-[var(--accent-blue)]"
-                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary-teal)]/5 to-[var(--accent-blue)]/5" />
 
                     {/* The Icon */}
                     <motion.div
@@ -889,11 +808,12 @@ export default function Home() {
             ].map((feat, fIdx) => (
               <motion.div
                 key={fIdx}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                whileHover={{ y: -4, scale: 1.02, boxShadow: "0 20px 40px -10px rgba(38,166,154,0.15)" }}
-                transition={{ duration: 0.3, delay: fIdx * 0.03 }}
-                className="bg-white border border-gray-100 p-4 rounded-2xl flex flex-col gap-3 group transition-all shadow-xl shadow-gray-100/50"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.4 }}
+                className="bg-white border border-gray-100 p-4 rounded-2xl flex flex-col gap-3 group transition-all h-full"
               >
                 <div className="flex justify-between items-center">
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${feat.color === 'teal' ? 'bg-[var(--primary-teal)]/10 text-[var(--primary-teal)]' : feat.color === 'amber' ? 'bg-amber-50 text-amber-600' : feat.color === 'purple' ? 'bg-purple-50 text-purple-600' : 'bg-sky-50 text-sky-600'} border border-transparent group-hover:scale-110 transition-transform`}>
@@ -1144,8 +1064,8 @@ export default function Home() {
                 <div className="relative w-full max-w-[800px] aspect-[4/3] mx-auto">
                   {/* Main Desktop Frame - Center Back */}
                   <motion.div
-                    animate={{ y: [0, -15, 0] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                    animate={{ y: [0, -8, 0] }}
+                    transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
                     className="absolute top-0 left-1/2 -translate-x-1/2 w-[90%] h-[75%] bg-[#1a1a1a] rounded-[40px] shadow-4xl border-[12px] border-[#2a2a2a] ring-1 ring-black/20 overflow-hidden flex items-center justify-center z-10"
                   >
                     <Image
@@ -1160,8 +1080,8 @@ export default function Home() {
 
                   {/* Tablet Frame - Bottom Left Overlap */}
                   <motion.div
-                    animate={{ y: [10, -10, 10], x: [0, 5, 0] }}
-                    transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                    animate={{ y: [5, -5, 5] }}
+                    transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                     className="absolute bottom-[5%] left-0 w-[55%] h-[50%] bg-[#1a1a1a] rounded-[30px] shadow-5xl border-[10px] border-[#2a2a2a] ring-1 ring-black/20 overflow-hidden z-30 flex items-center justify-center"
                   >
                     <Image
@@ -1176,8 +1096,8 @@ export default function Home() {
 
                   {/* Mobile Frame - Bottom Right Overlap */}
                   <motion.div
-                    animate={{ y: [-10, 15, -10], x: [0, -5, 0] }}
-                    transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    animate={{ y: [-5, 8, -5] }}
+                    transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                     className="absolute bottom-[2%] right-[5%] w-[30%] h-[55%] bg-[#1a1a1a] rounded-[35px] shadow-5xl border-[8px] border-[#2a2a2a] ring-1 ring-black/20 z-40 overflow-hidden flex items-center justify-center"
                   >
                     <Image
