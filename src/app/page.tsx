@@ -330,7 +330,7 @@ export default function Home() {
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="max-w-6xl mx-auto flex flex-col items-center"
+            className="mx-auto flex flex-col items-center"
           >
             {/* V4.0 Badge */}
             <motion.div
@@ -1347,115 +1347,138 @@ export default function Home() {
 
 
       {/* WORKING INDEPENDENTLY FROM INTERNET SECTION */}
-      <section id="offline-capability" className="py-12 md:py-16 bg-[var(--bg-main)] relative overflow-hidden">
-        <div className="content-container">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+      <section id="offline-capability" className="py-24 md:py-12 bg-white relative overflow-hidden">
+        {/* Complex Background Layering */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--primary-teal)]/5 blur-[120px] rounded-full animate-pulse" />
+          <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-amber-500/5 blur-[100px] rounded-full" />
+          <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'radial-gradient(var(--primary-teal-dark) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+        </div>
 
-            {/* Left: Content */}
+        <div className="content-container relative z-10">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+
+            {/* Left: Content (Col-5) */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-5"
             >
-              <div className="inline-flex items-center gap-3 px-3 py-1.5 mb-6 text-[9px] font-black uppercase tracking-[0.3em] text-[var(--text-muted)] bg-white shadow-sm rounded-full border border-black/5">
-                <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
-                Offline Protocol
+              <div className="inline-flex items-center gap-3 px-4 py-2 mb-8 text-[10px] font-black uppercase tracking-[0.3em] text-amber-600 bg-amber-50 rounded-xl border border-amber-100 shadow-sm">
+                <div className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                </div>
+                Offline Sovereignty Protocol
               </div>
 
-              <h2 className="text-3xl md:text-5xl font-[900] text-[var(--primary-teal-dark)] leading-[1.1] tracking-tighter mb-6">
+              <h2 className="text-3xl md:text-5xl font-[900] text-[var(--primary-teal-dark)] leading-[1.1] tracking-tighter mb-8">
                 No Internet? <br />
-                <span className="text-teal-gradient">No Problem.</span>
+                <span className="text-amber-500">No Problem.</span>
               </h2>
 
-              <p className="text-lg text-[var(--text-muted)] font-medium leading-relaxed mb-8">
-                Your business doesn't stop when the connection drops. Q-Line is engineered with a <span className="text-[var(--primary-teal-dark)] font-black">Local-First Architecture</span> that keeps your operations running at 100% speed, regardless of internet status.
+              <p className="text-lg text-[var(--text-muted)] font-medium leading-relaxed mb-10 opacity-90">
+                Your business rhythm should never be dictated by your ISP. Q-Line's <span className="text-[var(--primary-teal-dark)] font-black">Local-First Engine</span> ensures every billing operation remains operational at 100% velocity, even in total isolation.
               </p>
 
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center shrink-0 border border-amber-100">
-                    <Database size={20} className="text-amber-600" />
+              <div className="space-y-8">
+                {[
+                  {
+                    icon: <Database size={22} />,
+                    title: "Total Offline Autonomy",
+                    desc: "Punch orders, settle table bills, and route KOTs with 0.1ms latency. Every transaction is secured in the local vault instantly.",
+                    color: "amber"
+                  },
+                  {
+                    icon: <CloudOff size={22} />,
+                    title: "Quantum Sync Re-Entry",
+                    desc: "Our background agent detects connectivity restoration and initiates military-grade data unification with the cloud vault silently.",
+                    color: "teal"
+                  }
+                ].map((item, idx) => (
+                  <div key={idx} className="flex gap-6 group">
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 border transition-all duration-500 group-hover:scale-110 shadow-sm ${item.color === 'amber' ? 'bg-amber-50 border-amber-100 text-amber-600' : 'bg-teal-50 border-teal-100 text-[var(--primary-teal)]'
+                      }`}>
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h4 className="text-[var(--primary-teal-dark)] font-black text-base uppercase tracking-tight mb-2">{item.title}</h4>
+                      <p className="text-gray-500 text-sm leading-relaxed font-medium">{item.desc}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-[var(--primary-teal-dark)] font-bold text-sm uppercase tracking-wide mb-1">Continuous Billing</h4>
-                    <p className="text-sm text-gray-500 leading-relaxed">Punch orders, print KOTs, and settle bills without a single byte of data. The system caches everything locally.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">
-                    <CloudOff size={20} className="text-emerald-600" />
-                  </div>
-                  <div>
-                    <h4 className="text-[var(--primary-teal-dark)] font-bold text-sm uppercase tracking-wide mb-1">Zero-Touch Sync</h4>
-                    <p className="text-sm text-gray-500 leading-relaxed">The moment connectivity is restored, our background agent silently uploads all pending data to the cloud. No manual action required.</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </motion.div>
 
-            {/* Right: Visual */}
+            {/* Right: The Infographic (Col-7) */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.9, x: 50 }}
+              whileInView={{ opacity: 1, scale: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative h-[400px] flex items-center justify-center"
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-7 relative group"
             >
-              <div className="relative w-full max-w-md aspect-square">
-                {/* Central Offline Hub Circle */}
-                <motion.div
-                  animate={{ boxShadow: ["0 0 0 0px rgba(245, 158, 11, 0.1)", "0 0 0 20px rgba(245, 158, 11, 0)"] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-white border-4 border-amber-100 flex items-center justify-center z-20 shadow-xl"
-                >
-                  <motion.div
-                    animate={{ opacity: [1, 0.5, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <WifiOff size={48} className="text-amber-500" />
-                  </motion.div>
-                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-[0.2em] text-amber-500 whitespace-nowrap">
-                    Local Core Active
-                  </div>
-                </motion.div>
+              {/* Infographic Container with HUD Framing */}
+              <div className="relative rounded-[40px] overflow-hidden border-[8px] border-white shadow-[0_40px_100px_-20px_rgba(38,166,154,0.15)] bg-slate-50 transition-transform duration-700 group-hover:scale-[1.02]">
+                <Image
+                  src="/images/marketing/No_Internet_No_Problem.webp"
+                  alt="Offline Protocol Infographic"
+                  width={1400}
+                  height={800}
+                  className="w-full h-auto object-cover scale-[1.01]"
+                  priority
+                />
 
-                {/* Orbiting Satellite Nodes */}
-                {[0, 120, 240].map((deg, i) => (
-                  <motion.div
-                    key={i}
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-0 z-10"
-                  >
-                    <div
-                      className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 rounded-2xl bg-white shadow-lg border border-gray-100 flex items-center justify-center origin-center"
-                      style={{ transform: `rotate(${deg}deg) translateY(-120px) rotate(-${deg}deg)` }}
-                    >
-                      {i === 0 && <Printer size={24} className="text-[var(--primary-teal)]" />}
-                      {i === 1 && <LayoutDashboard size={24} className="text-[var(--primary-teal)]" />}
-                      {i === 2 && <MonitorSmartphone size={24} className="text-[var(--primary-teal)]" />}
+                {/* Visual Glass Overlay to blend with site */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-[var(--primary-teal-dark)]/5 via-transparent to-amber-500/5 pointer-events-none" />
+                <div className="absolute inset-0 ring-1 ring-inset ring-black/5" />
+              </div>
+
+              {/* HUD Decorative Elements */}
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-6 -right-6 z-20 hidden md:block"
+              >
+                <div className="dark-glass p-4 rounded-2xl border border-white/20 shadow-2xl backdrop-blur-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                      <ShieldCheck size={20} />
                     </div>
-                  </motion.div>
-                ))}
-
-                {/* Connecting Lines */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-20">
-                  <circle cx="50%" cy="50%" r="120" stroke="currentColor" className="text-gray-300" strokeWidth="1" strokeDasharray="4 4" />
-                </svg>
-
-                {/* Cloud Status (Disconnected) */}
-                <div className="absolute top-0 right-0 p-4 bg-gray-50 rounded-2xl border border-dashed border-gray-300 opacity-50 grayscale">
-                  <div className="flex items-center gap-2 mb-2">
-                    <CloudOff size={16} />
-                    <span className="text-[10px] font-bold uppercase">Cloud</span>
-                  </div>
-                  <div className="h-1 w-12 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full w-0 bg-blue-500"></div>
+                    <div>
+                      <div className="text-[8px] font-black uppercase text-white/50 tracking-widest text-left">Protocol Status</div>
+                      <div className="text-sm font-black text-white">RELIABLE_SECURE</div>
+                    </div>
                   </div>
                 </div>
+              </motion.div>
 
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute -bottom-6 -left-6 z-20 hidden md:block"
+              >
+                <div className="glass-panel p-4 rounded-2xl border border-black/5 shadow-2xl bg-white/80 backdrop-blur-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-[var(--primary-teal)]/10 flex items-center justify-center text-[var(--primary-teal)]">
+                      <Zap size={20} />
+                    </div>
+                    <div>
+                      <div className="text-[8px] font-black uppercase text-gray-400 tracking-widest text-left">Data Integrity</div>
+                      <div className="text-sm font-black text-[var(--primary-teal-dark)]">100% FORENSIC</div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Mobile Only Badge */}
+              <div className="mt-8 flex md:hidden justify-center">
+                <div className="px-6 py-3 rounded-2xl bg-white border border-black/5 shadow-lg flex items-center gap-3">
+                  <WifiOff size={18} className="text-amber-500" />
+                  <span className="text-xs font-black uppercase tracking-widest text-[var(--primary-teal-dark)]">Offline Core Powered</span>
+                </div>
               </div>
             </motion.div>
 
@@ -1463,182 +1486,169 @@ export default function Home() {
         </div>
       </section>
 
+
       {/* QUANTUM NETWORK ARCHITECTURE VISUAL */}
-      <section id="architecture" className="py-24 bg-white relative overflow-hidden">
-        {/* Background Grid */}
-        <div className="absolute inset-0 z-0 opacity-[0.03]"
-          style={{ backgroundImage: 'radial-gradient(var(--primary-teal-dark) 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
+      <section id="architecture" className="py-12 bg-white relative overflow-hidden">
+        {/* Sleek Background Animation */}
+        <div className="absolute inset-0 z-0">
+          <OrganicFlowBackground />
         </div>
 
         <div className="content-container relative z-10">
-          <div className="text-center max-w-4xl mx-auto mb-20">
+          <div className="text-center mx-auto mb-6!">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--primary-teal)]/5 border border-[var(--primary-teal)]/10 text-[var(--primary-teal-dark)] text-[10px] font-black uppercase tracking-[0.3em] mb-6"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--primary-teal)]/5 border border-[var(--primary-teal)]/10 text-[var(--primary-teal-dark)] text-[9px] font-black uppercase tracking-[0.3em] mb-4"
             >
-              <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary-teal)] animate-pulse" />
-              system_topology_v4
+              <div className="w-1 h-1 rounded-full bg-[var(--primary-teal)] animate-pulse" />
+              unified_ecosystem_v4
             </motion.div>
-            <h2 className="text-4xl md:text-6xl font-[900] text-[var(--primary-teal-dark)] tracking-tighter mb-6">
+            <h2 className="text-3xl md:text-4xl font-[900] text-[var(--primary-teal-dark)] tracking-tighter">
               The <span className="text-teal-gradient">Quantum Network.</span>
             </h2>
-            <p className="text-[var(--text-muted)] text-lg max-w-2xl mx-auto">
-              A unified digital nervous system. All endpoints connected to a singular, pulsing core of truth.
+            <p className="text-[var(--text-muted)] text-base mx-auto font-medium opacity-90">
+              A military-grade digital nervous system. Every node is precision-synced to a singular, pulsing core of truth for zero-leakage enterprise management.
             </p>
           </div>
 
-          <div className="relative w-full max-w-[1000px] mx-auto aspect-[4/5] md:aspect-[16/9] flex items-center justify-center">
+          {/* Centralized Infographic Pane - Reduced Size */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98, y: 30 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full mx-auto group"
+          >
+            {/* Main Infographic Container */}
+            <div className="relative rounded-[32px] overflow-hidden border-[6px] border-white shadow-[0_30px_80px_-15px_rgba(38,166,154,0.15)] bg-slate-50 transition-transform duration-700 group-hover:scale-[1.005]">
+              <Image
+                src="/images/marketing/quantum_network_view.webp"
+                alt="Quantum Network Ecosystem"
+                width={1600}
+                height={900}
+                className="w-full h-auto object-cover scale-[1.002]"
+                priority
+              />
 
-            {/* The Central Hub - Quantum Core */}
+              {/* Visual Glass Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary-teal-dark)]/5 via-transparent to-transparent pointer-events-none" />
+
+              {/* Scanline Effect Overlay (Even more subtle) */}
+              <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%]" />
+            </div>
+
+            {/* Floating Ambient HUD Elements - even more scaled down */}
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              className="relative z-20 w-32 h-32 md:w-48 md:h-48 rounded-full bg-white shadow-[0_0_60px_rgba(38,166,154,0.3)] border border-[var(--primary-teal)]/20 flex items-center justify-center group"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-4 -left-2 z-20 hidden lg:block"
             >
-              {/* Pulsing Rings */}
-              <div className="absolute inset-0 rounded-full border border-[var(--primary-teal)]/30 animate-[ping_3s_linear_infinite]" />
-              <div className="absolute inset-[-20px] rounded-full border border-[var(--primary-teal)]/10 animate-[ping_4s_linear_infinite]" />
-
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-[var(--primary-teal-dark)] rounded-2xl flex items-center justify-center text-white mb-2 shadow-xl">
-                  <Database size={24} className="md:w-8 md:h-8" />
+              <div className="dark-glass p-2.5 rounded-xl border border-white/20 shadow-xl backdrop-blur-2xl">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-[var(--primary-teal)]/20 flex items-center justify-center text-[var(--primary-teal)]">
+                    <Activity size={16} />
+                  </div>
+                  <div className="text-left">
+                    <div className="text-[7px] font-bold uppercase text-white/50 tracking-widest mb-0.5">Traffic Flow</div>
+                    <div className="text-sm font-bold text-white tabular-nums">12.8 Gbps</div>
+                  </div>
                 </div>
-                <div className="text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal-dark)]">Quantum Core</div>
-                <div className="text-[8px] font-bold text-[var(--primary-teal)] uppercase tracking-wider">Master Node</div>
               </div>
             </motion.div>
 
-            {/* Satellite Nodes - Desktop Radial / Mobile Cloud */}
-            {[
-              { id: 'pos', name: 'POS Terminal', role: 'Billing Engine', icon: <LayoutDashboard size={20} />, x: 0, y: -180, color: '#26A69A', delay: 0 },
-              { id: 'kds', name: 'KOT Matrix', role: 'Kitchen Display', icon: <Monitor size={20} />, x: 170, y: -100, color: '#FF6B35', delay: 0.1 },
-              { id: 'printer', name: 'Thermal Grid', role: 'WiFi Printing', icon: <Printer size={20} />, x: 210, y: 20, color: '#F77F00', delay: 0.15 },
-              { id: 'mobile', name: 'Waiter Pad', role: 'Mobile Orders', icon: <Smartphone size={20} />, x: 170, y: 120, color: '#0EA5E9', delay: 0.2 },
-              { id: 'ledger', name: 'Forensic Ledger', role: 'Accounting Core', icon: <Wallet size={20} />, x: 0, y: 180, color: '#F59E0B', delay: 0.25 },
-              { id: 'hr', name: 'Bio Attendance', role: 'HR Matrix', icon: <Fingerprint size={20} />, x: -170, y: 120, color: '#10B981', delay: 0.3 },
-              { id: 'reports', name: 'Analytics Hub', role: 'Live Reports', icon: <BarChart3 size={20} />, x: -210, y: 20, color: '#8B5CF6', delay: 0.35 },
-              { id: 'slave', name: 'Slave Terminal', role: 'Multi-Node Sync', icon: <Layers size={20} />, x: -170, y: -100, color: '#06B6D4', delay: 0.4 },
-              { id: 'cloud', name: 'Cloud Vault', role: 'Auto-Backup', icon: <Cloud size={20} />, x: 0, y: -240, color: '#6366F1', delay: 0.45 },
-            ].map((node, i) => (
-              <React.Fragment key={node.id}>
-                {/* Connection Line (Desktop Only) */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none hidden md:block z-0">
-                  <motion.line
-                    x1="50%" y1="50%"
-                    x2={`calc(50% + ${node.x}px)`} y2={`calc(50% + ${node.y}px)`}
-                    stroke="rgba(38, 166, 154, 0.2)"
-                    strokeWidth="2"
-                    strokeDasharray="4 4"
-                    initial={{ pathLength: 0 }}
-                    whileInView={{ pathLength: 1 }}
-                    transition={{ duration: 1.5, delay: node.delay }}
-                  />
-                  {/* Moving Data Packet */}
-                  <motion.circle
-                    r="3"
-                    fill="var(--primary-teal)"
-                    animate={{
-                      cx: ["50%", `calc(50% + ${node.x}px)`],
-                      cy: ["50%", `calc(50% + ${node.y}px)`]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity, repeatDelay: i * 0.5, ease: "linear" }}
-                  />
-                </svg>
-
-                {/* The Node Card */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5, left: '50%', top: '50%' }}
-                  whileInView={{
-                    opacity: 1,
-                    scale: 1,
-                    left: `calc(50% + ${node.x}px)`,
-                    top: `calc(50% + ${node.y}px)`
-                  }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: node.delay, type: "spring", stiffness: 100 }}
-                  whileHover={{ scale: 1.1 }}
-                  className="absolute z-10 hidden md:flex flex-col items-center justify-center gap-3 p-4 rounded-2xl bg-white shadow-xl border border-black/5 transition-shadow w-32 h-32 lg:w-36 lg:h-36 -translate-x-1/2 -translate-y-1/2"
-                >
-                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg flex items-center justify-center text-white shadow-lg shrink-0" style={{ background: `linear-gradient(135deg, ${node.color} 0%, ${node.color}dd 100%)` }}>
-                    {React.cloneElement(node.icon, { size: 20, className: 'lg:w-6 lg:h-6' })}
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              className="absolute -bottom-4 -right-2 z-20 hidden lg:block"
+            >
+              <div className="glass-panel p-2.5 rounded-xl border border-black/5 shadow-xl bg-white/90 backdrop-blur-2xl">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500">
+                    <Layers size={16} />
                   </div>
-                  <div className="flex flex-col text-center items-center w-full px-1">
-                    <span className="text-[9px] lg:text-[10px] font-black uppercase tracking-tight text-gray-800 leading-tight line-clamp-2 w-full">{node.name}</span>
-                    <span className="text-[7px] lg:text-[8px] font-bold uppercase tracking-wider text-[#26A69A] mt-0.5 line-clamp-1 w-full">{node.role}</span>
+                  <div className="text-left">
+                    <div className="text-[7px] font-bold uppercase text-gray-400 tracking-widest mb-0.5">Neural Engine</div>
+                    <div className="text-sm font-bold text-[var(--primary-teal-dark)]">L4_OPTIMIZED</div>
                   </div>
-                </motion.div>
-
-                {/* Mobile Grid Item (Alternative View) */}
-                <motion.div className="md:hidden absolute"
-                  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-                  style={{
-                    top: '50%', left: '50%',
-                    transform: `rotate(${i * 60}deg) translateY(-140px) rotate(-${i * 60}deg)`
-                  }}
-                >
-                  <div className="flex flex-col items-center justify-center">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-lg" style={{ background: `linear-gradient(135deg, ${node.color} 0%, ${node.color}dd 100%)` }}>
-                      {node.icon}
-                    </div>
-                    <span className="text-[8px] font-bold uppercase mt-1 bg-white px-2 py-0.5 rounded-full shadow-sm">{node.name}</span>
-                  </div>
-                </motion.div>
-              </React.Fragment>
-            ))}
-          </div>
-
-          <div className="md:hidden mt-20 grid grid-cols-2 gap-4">
-            {/* Mobile-only list view if radial is too cluttered */}
-            {[
-              { name: 'POS Terminal', role: 'Billing Engine', icon: <LayoutDashboard size={16} />, color: '#26A69A' },
-              { name: 'KOT Matrix', role: 'Kitchen Display', icon: <Monitor size={16} />, color: '#FF6B35' },
-              { name: 'Thermal Grid', role: 'WiFi Printing', icon: <Printer size={16} />, color: '#F77F00' },
-              { name: 'Waiter Pad', role: 'Mobile Orders', icon: <Smartphone size={16} />, color: '#0EA5E9' },
-              { name: 'Forensic Ledger', role: 'Accounting', icon: <Wallet size={16} />, color: '#F59E0B' },
-              { name: 'Bio Attendance', role: 'HR Matrix', icon: <Fingerprint size={16} />, color: '#10B981' },
-              { name: 'Analytics Hub', role: 'Live Reports', icon: <BarChart3 size={16} />, color: '#8B5CF6' },
-              { name: 'Slave Terminal', role: 'Multi-Node', icon: <Layers size={16} />, color: '#06B6D4' },
-              { name: 'Cloud Vault', role: 'Auto-Backup', icon: <Cloud size={16} />, color: '#6366F1' },
-            ].map((node, i) => (
-              <div key={i} className="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white" style={{ background: `linear-gradient(135deg, ${node.color} 0%, ${node.color}dd 100%)` }}>
-                  {node.icon}
-                </div>
-                <div>
-                  <div className="text-[10px] font-black uppercase text-gray-800">{node.name}</div>
-                  <div className="text-[8px] font-bold text-[var(--primary-teal)]">{node.role}</div>
                 </div>
               </div>
+            </motion.div>
+
+            {/* Status Pulse Glow (Ambient) */}
+            <div className="absolute inset-x-0 bottom-0 h-1/4 bg-[var(--primary-teal)]/5 blur-[60px] -z-10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+          </motion.div>
+
+          {/* Quick Metrics Overlay (Bottom) - Even more compact & Softened */}
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 w-fit mx-auto px-4">
+            {[
+              { label: "Mesh Latency", value: "< 48ms" },
+              { label: "Encryption", value: "AES-256" },
+              { label: "Audit Hash", value: "SHA-512" },
+              { label: "Congestion", value: "0.0%" }
+            ].map((metric, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-gray-50/40 backdrop-blur-sm p-3 rounded-2xl border border-black/5 text-center min-w-[120px]"
+              >
+                <div className="text-[8px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-0.5">{metric.label}</div>
+                <div className="text-base font-bold text-[var(--primary-teal-dark)]">{metric.value}</div>
+              </motion.div>
             ))}
           </div>
 
         </div>
       </section>
 
-      {/* CTA SECTION - ULTRA HIGH WEIGHT */}
-      <section id="download" className="py-24">
-        <div className="content-container !max-w-[1400px]">
-          <div className="bg-[var(--primary-teal-dark)] rounded-[60px] p-16 md:p-24 text-center relative overflow-hidden group">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--primary-teal)_0%,transparent_70%)] opacity-20"></div>
-            <div className="relative z-10 max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-6xl font-black text-white mb-10 tracking-tighter leading-tight">
+      {/* CTA SECTION - REFINED DOWNLOAD EXPERIENCE */}
+      <section id="download" className="py-24 relative overflow-hidden">
+        <div className="content-container">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative rounded-[40px] md:rounded-[60px] p-12 md:p-20 text-center overflow-hidden group shadow-[0_40px_100px_-20px_rgba(20,20,20,0.1)]"
+          >
+            {/* Background Layer with Animation */}
+            <div className="absolute inset-0 z-0">
+              <OrganicFlowBackground />
+              <div className="absolute inset-0 bg-white/40 backdrop-blur-md" />
+            </div>
+
+            <div className="relative z-10 max-w-3xl mx-auto">
+              <h2 className="text-3xl md:text-5xl font-black text-[var(--primary-teal-dark)] mb-6 tracking-tighter leading-tight">
                 Future-Proof <br />
-                <span className="text-teal-gradient animate-pulse">Your Revenue.</span>
+                <span className="text-teal-gradient">Your Revenue.</span>
               </h2>
-              <div className="flex flex-wrap items-center justify-center gap-8">
-                <button className="btn-primary !bg-white !text-[var(--primary-teal-dark)] !px-12 !py-6 !text-xl !rounded-[30px] shadow-4xl hover:!scale-110 active:scale-95 transition-all">
-                  Get Started Now
-                </button>
-                <div className="flex flex-col items-start text-white/40 font-black tracking-[0.4em] text-xs">
-                  <div className="flex gap-2 mb-2"><span className="w-12 h-px bg-white/20 self-center"></span> OR <span className="w-12 h-px bg-white/20 self-center"></span></div>
-                  <div className="hover:text-white transition-colors cursor-pointer">SCHEDULE ELITE DEMO</div>
+              <p className="text-[var(--text-muted)] text-base md:text-lg mb-10 font-medium opacity-80">
+                Join the elite league of high-performance food points using Q-Line. Deploy in minutes, scale for decades.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn-primary !px-10 !py-5 !text-lg !rounded-3xl shadow-2xl transition-all w-full sm:w-auto"
+                >
+                  Get Started For Free
+                </motion.button>
+                <div className="flex items-center gap-3 group/btn cursor-pointer">
+                  <span className="w-10 h-px bg-gray-200 group-hover/btn:w-14 transition-all" />
+                  <span className="text-sm font-bold text-gray-500 uppercase tracking-widest hover:text-[var(--primary-teal)] transition-colors">
+                    Schedule Elite Demo
+                  </span>
                 </div>
               </div>
             </div>
-          </div>
+
+            {/* Subtle Gradient Accent */}
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[var(--primary-teal)] to-transparent opacity-30" />
+          </motion.div>
         </div>
       </section>
     </main >

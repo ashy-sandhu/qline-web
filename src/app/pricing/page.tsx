@@ -8,7 +8,11 @@ import {
     Check,
     X,
     ChevronRight,
-    ChevronDown
+    ChevronDown,
+    CreditCard,
+    Smartphone,
+    Wallet,
+    Lock
 } from 'lucide-react';
 import OrganicFlowBackground from '../components/OrganicFlowBackground';
 
@@ -191,15 +195,46 @@ const comparisonGroups = [
 ];
 
 const durations = [
-    { id: '1m', label: '1 Month', unit: 'per month' },
-    { id: '3m', label: '3 Months', unit: 'per month' },
-    { id: '6m', label: '6 Months', unit: 'per month' },
-    { id: '1y', label: '1 Year', unit: 'per month' }
+    { id: '1m', label: '1 Month', months: 1 },
+    { id: '3m', label: '3 Months', months: 3 },
+    { id: '6m', label: '6 Months', months: 6 },
+    { id: '1y', label: '1 Year', months: 12 }
+];
+
+const formatPKR = (num: number) => {
+    return num.toLocaleString('en-US');
+};
+
+const parsePKR = (str: string) => {
+    return parseInt(str.replace(/,/g, ''), 10);
+};
+
+const paymentMethods = [
+    { id: 'jazzcash', name: 'JazzCash / EasyPaisa', icon: Smartphone, color: '#DE0000', desc: 'Pay via Mobile Wallet' },
+    { id: 'safepay', name: 'Debit / Credit Card', icon: CreditCard, color: '#1A1F71', desc: 'Secure card payment via Safepay' },
+    { id: 'bank', name: 'Bank Transfer', icon: Wallet, color: '#10b981', desc: 'Direct IBFT / Raast' }
 ];
 
 export default function PricingPage() {
     const [selectedDuration, setSelectedDuration] = useState(durations[3]); // Default to 1 Year (index 3)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [activePlan, setActivePlan] = useState<any>(null);
+    const [checkoutStep, setCheckoutStep] = useState<'summary' | 'processing' | 'success'>('summary');
+    const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
+
+    const openCheckout = (plan: any) => {
+        setActivePlan(plan);
+        setCheckoutStep('summary');
+        setSelectedPayment(null);
+    };
+
+    const handlePayment = () => {
+        if (!selectedPayment) return;
+        setCheckoutStep('processing');
+        setTimeout(() => {
+            setCheckoutStep('success');
+        }, 2500);
+    };
 
     return (
         <main className="min-h-screen pt-4 pb-20 relative overflow-hidden bg-white">
@@ -225,7 +260,7 @@ export default function PricingPage() {
                     </motion.p>
 
                     {/* Duration Selector */}
-                    <div className="relative z-50">
+                    <div className="relative z-50 mt-5! mb-10!">
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -281,7 +316,7 @@ export default function PricingPage() {
                 </div>
 
                 {/* Plans Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-24 px-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-4! px-4">
                     {plans.map((plan, index) => (
                         <motion.div
                             key={plan.id}
@@ -318,11 +353,25 @@ export default function PricingPage() {
 
                                 {/* Pricing Block */}
                                 <div className="w-full mt-2 mb-6">
-                                    <div className="flex flex-col items-center justify-center h-12">
-                                        <span className="text-3xl font-black text-[var(--primary-teal-dark)] leading-none">PKR {plan.prices[selectedDuration.id as keyof typeof plan.prices]}</span>
-                                        <span className="text-[var(--text-muted)] text-[10px] font-black uppercase tracking-wider mt-1 opacity-70">
-                                            / month
-                                        </span>
+                                    <div className="flex flex-col items-center justify-center">
+                                        <div className="flex flex-col items-center">
+                                            <span className="text-3xl font-black text-[var(--primary-teal-dark)] leading-none">
+                                                PKR {plan.prices[selectedDuration.id as keyof typeof plan.prices]}
+                                            </span>
+                                            <span className="text-[var(--text-muted)] text-[10px] font-black uppercase tracking-wider mt-1 opacity-70">
+                                                / month
+                                            </span>
+                                        </div>
+                                        <div className="mt-3 flex flex-col items-center text-center">
+                                            {selectedDuration.months > 1 && (
+                                                <span className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wide">
+                                                    Total: PKR {formatPKR(parsePKR(plan.prices[selectedDuration.id as keyof typeof plan.prices]) * selectedDuration.months)} for {selectedDuration.label}
+                                                </span>
+                                            )}
+                                            <span className="text-[9px] font-medium text-slate-400 uppercase tracking-tight mt-0.5">
+                                                *Plus applicable taxes
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -361,8 +410,11 @@ export default function PricingPage() {
                                     )}
                                 </div>
 
-                                <button className={`w-full py-4 rounded-2xl text-white font-black uppercase tracking-widest text-xs transition-all duration-300 shadow-xl shadow-black/5 hover:translate-y-[-2px] ${plan.btnClass}`}>
-                                    Select Plan
+                                <button
+                                    onClick={() => openCheckout(plan)}
+                                    className={`w-full py-4 rounded-2xl text-white font-black uppercase tracking-widest text-xs transition-all duration-300 shadow-lg ${plan.btnClass}`}
+                                >
+                                    Get Started
                                 </button>
                             </div>
                         </motion.div>
@@ -370,28 +422,21 @@ export default function PricingPage() {
                 </div>
 
                 {/* Comparison Table Section */}
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="max-w-6xl mx-auto px-4"
-                >
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-black text-[var(--primary-teal-dark)] uppercase tracking-tight">
-                            Detailed Feature Comparison
-                        </h2>
-                        <p className="text-[var(--text-muted)] mt-2 font-medium">Find the perfect plan for your business needs</p>
-                    </div>
+                <div className="content-container relative z-10 py-24 border-t border-slate-100">
+                    <div className="mx-auto px-4">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-4xl font-black text-[var(--primary-teal-dark)] mb-4">Compare Features</h2>
+                            <p className="text-[var(--text-muted)] font-medium">Find the perfect set of tools for your business growth.</p>
+                        </div>
 
-                    <div className="bg-white/50 backdrop-blur-sm rounded-[32px] border border-black/5 overflow-hidden shadow-2xl shadow-teal-900/5">
-                        <div className="overflow-x-auto">
+                        <div className="overflow-x-auto rounded-3xl border border-slate-100 shadow-2xl shadow-slate-100 bg-white">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="border-b border-black/5 bg-slate-50/50">
-                                        <th className="py-4 px-10 text-[11px] font-black uppercase tracking-widest text-[var(--primary-teal-dark)] min-w-[280px]">Feature Capability</th>
+                                    <tr className="bg-slate-50/50">
+                                        <th className="py-6 px-8 text-sm font-black text-[var(--primary-teal-dark)]/50 uppercase tracking-widest border-b border-slate-100">Feature</th>
                                         {plans.map(plan => (
-                                            <th key={plan.id} className="py-4 px-4 text-center text-[11px] font-black uppercase tracking-widest" style={{ color: plan.color }}>
-                                                {plan.name}
+                                            <th key={plan.id} className="py-6 px-4 text-center border-b border-slate-100">
+                                                <span className="text-xs font-black uppercase tracking-widest" style={{ color: plan.color }}>{plan.name}</span>
                                             </th>
                                         ))}
                                     </tr>
@@ -399,27 +444,25 @@ export default function PricingPage() {
                                 <tbody>
                                     {comparisonGroups.map((group, gIndex) => (
                                         <React.Fragment key={gIndex}>
-                                            <tr className="bg-slate-100/30">
-                                                <td colSpan={5} className="py-3 px-10 text-[9px] font-black uppercase tracking-[0.2em]" style={{ color: group.color }}>
+                                            <tr style={{ backgroundColor: `${group.color}10` }}>
+                                                <td colSpan={5} className="py-4 px-8 text-[11px] font-black uppercase tracking-[0.2em]" style={{ color: group.color }}>
                                                     {group.category}
                                                 </td>
                                             </tr>
                                             {group.features.map((feature, fIndex) => (
-                                                <tr key={fIndex} className="border-b border-black/5 last:border-0 hover:bg-[var(--primary-teal)]/5 transition-colors">
-                                                    <td className="py-3 px-10 text-sm font-bold text-[var(--primary-teal-dark)]/90">{feature.name}</td>
-                                                    {feature.plans.map((isIncluded, planIndex) => (
-                                                        <td key={planIndex} className="py-3 px-4 text-center">
-                                                            <div className="flex justify-center">
-                                                                {isIncluded ? (
-                                                                    <div className="w-5 h-5 rounded-full flex items-center justify-center text-white shadow-md" style={{ backgroundColor: plans[planIndex].color }}>
-                                                                        <Check size={12} strokeWidth={4} />
-                                                                    </div>
-                                                                ) : (
-                                                                    <div className="w-5 h-5 rounded-full flex items-center justify-center text-slate-300 bg-slate-200/50">
-                                                                        <X size={12} strokeWidth={4} className="opacity-40" />
-                                                                    </div>
-                                                                )}
-                                                            </div>
+                                                <tr key={fIndex} className="group hover:bg-slate-50 transition-colors duration-150">
+                                                    <td className="py-3 px-8 text-xs font-bold text-[var(--primary-teal-dark)] border-b border-slate-50">{feature.name}</td>
+                                                    {feature.plans.map((included, pIndex) => (
+                                                        <td key={pIndex} className="py-3 px-4 text-center border-b border-slate-50">
+                                                            {included ? (
+                                                                <div className="flex justify-center">
+                                                                    <Check size={18} className="text-teal-500" strokeWidth={3} />
+                                                                </div>
+                                                            ) : (
+                                                                <div className="flex justify-center">
+                                                                    <X size={14} className="text-slate-200" />
+                                                                </div>
+                                                            )}
                                                         </td>
                                                     ))}
                                                 </tr>
@@ -430,8 +473,138 @@ export default function PricingPage() {
                             </table>
                         </div>
                     </div>
-                </motion.div>
+                </div>
 
+                {/* Checkout Modal Overlay */}
+                <AnimatePresence>
+                    {activePlan && (
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                onClick={() => setActivePlan(null)}
+                                className="absolute inset-0 bg-[var(--primary-teal-dark)]/40 backdrop-blur-sm"
+                            ></motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                                className="relative w-full max-w-lg bg-white rounded-[2.5rem] shadow-2xl overflow-hidden"
+                            >
+                                <button
+                                    onClick={() => setActivePlan(null)}
+                                    className="absolute top-6 right-6 p-2 rounded-full hover:bg-slate-50 text-slate-400 transition-colors z-10"
+                                >
+                                    <X size={24} />
+                                </button>
+
+                                <div className="p-10">
+                                    {checkoutStep === 'summary' && (
+                                        <>
+                                            <div className="mb-8">
+                                                <div className="flex items-center gap-2 text-[var(--primary-teal)] mb-2">
+                                                    <Lock size={14} strokeWidth={3} />
+                                                    <span className="text-[10px] font-black uppercase tracking-widest">Secure Checkout</span>
+                                                </div>
+                                                <h3 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-2 uppercase tracking-tight">Subscribe Now</h3>
+                                                <p className="text-sm font-medium text-[var(--text-muted)]">Order #QL-{Math.floor(1000 + Math.random() * 9000)}</p>
+                                            </div>
+
+                                            <div className="bg-slate-50 rounded-3xl p-6 mb-8 border border-black/5">
+                                                <div className="flex justify-between items-center mb-4 pb-4 border-b border-black/5">
+                                                    <span className="text-xs font-black uppercase tracking-wider text-slate-400">Selected Plan</span>
+                                                    <div className="text-right">
+                                                        <span className="block text-sm font-black text-[var(--primary-teal-dark)] uppercase">{activePlan.name} Tier</span>
+                                                        <span className="block text-[10px] font-bold text-[var(--text-muted)] uppercase">{selectedDuration.label} / Billed monthly</span>
+                                                    </div>
+                                                </div>
+                                                <div className="flex justify-between items-start">
+                                                    <div className="flex flex-col">
+                                                        <span className="text-xs font-black uppercase tracking-wider text-slate-400">Total Amount</span>
+                                                        <span className="text-[9px] font-bold text-slate-400 uppercase">*Plus applicable taxes</span>
+                                                    </div>
+                                                    <div className="text-right">
+                                                        <span className="text-xl font-black text-[var(--primary-teal)]">
+                                                            PKR {formatPKR(parsePKR(activePlan.prices[selectedDuration.id]) * selectedDuration.months)}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="mb-8">
+                                                <label className="block text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal)] mb-4">
+                                                    Payment Method
+                                                </label>
+                                                <div className="grid grid-cols-1 gap-3">
+                                                    {paymentMethods.map((method) => (
+                                                        <button
+                                                            key={method.id}
+                                                            onClick={() => setSelectedPayment(method.id)}
+                                                            className={`flex items-center gap-4 px-5 py-4 rounded-2xl border-2 transition-all duration-300 text-left ${selectedPayment === method.id
+                                                                ? 'border-[var(--primary-teal)] bg-[var(--primary-teal)]/5 shadow-md'
+                                                                : 'border-slate-100 bg-white hover:border-slate-200'
+                                                                }`}
+                                                        >
+                                                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${selectedPayment === method.id ? 'bg-[var(--primary-teal)] text-white' : 'bg-slate-50 text-slate-400'}`}>
+                                                                <method.icon size={20} strokeWidth={2.5} />
+                                                            </div>
+                                                            <div className="flex-1">
+                                                                <span className="block text-xs font-black uppercase tracking-wider text-[var(--primary-teal-dark)]">{method.name}</span>
+                                                                <span className="block text-[10px] font-medium text-[var(--text-muted)]">{method.desc}</span>
+                                                            </div>
+                                                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${selectedPayment === method.id ? 'border-[var(--primary-teal)] bg-[var(--primary-teal)]' : 'border-slate-200'}`}>
+                                                                {selectedPayment === method.id && <Check size={12} strokeWidth={4} className="text-white" />}
+                                                            </div>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            <button
+                                                disabled={!selectedPayment}
+                                                onClick={handlePayment}
+                                                className={`w-full py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-sm transition-all duration-300 shadow-xl shadow-[var(--primary-teal)]/20 ${selectedPayment
+                                                    ? 'bg-[var(--primary-teal)] text-white hover:bg-[var(--primary-teal-dark)]'
+                                                    : 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                                                    }`}
+                                            >
+                                                Pay Now
+                                            </button>
+                                        </>
+                                    )}
+
+                                    {checkoutStep === 'processing' && (
+                                        <div className="py-20 flex flex-col items-center justify-center">
+                                            <div className="w-16 h-16 border-4 border-slate-100 border-t-[var(--primary-teal)] rounded-full animate-spin mb-8"></div>
+                                            <h3 className="text-xl font-black text-[var(--primary-teal-dark)] mb-2 uppercase tracking-tight">Processing Payment</h3>
+                                            <p className="text-sm font-medium text-[var(--text-muted)]">Please wait while we secure your session...</p>
+                                        </div>
+                                    )}
+
+                                    {checkoutStep === 'success' && (
+                                        <div className="py-10 flex flex-col items-center justify-center text-center">
+                                            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-8">
+                                                <Check size={40} className="text-green-500" strokeWidth={4} />
+                                            </div>
+                                            <h3 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-3 uppercase tracking-tight">Welcome to Q-Line!</h3>
+                                            <p className="text-sm font-medium text-[var(--text-muted)] mb-8 leading-relaxed max-w-[260px]">
+                                                Your {activePlan.name} subscription is now active. Let's get your store started.
+                                            </p>
+                                            <button
+                                                onClick={() => setActivePlan(null)}
+                                                className="px-10 py-4 bg-[var(--primary-teal-dark)] text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-black transition-all"
+                                            >
+                                                Go to Dashboard
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </motion.div>
+                        </div>
+                    )}
+                </AnimatePresence>
                 {/* CTA Section */}
                 <div className="mt-32 text-center bg-[var(--primary-teal-dark)] rounded-[40px] p-12 md:p-20 relative overflow-hidden shadow-2xl shadow-black/20">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-[var(--primary-teal)]/10 blur-[100px] -mr-48 -mt-48"></div>
