@@ -17,6 +17,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const navItems = [
         { name: 'Dashboard', icon: LayoutDashboard, href: '/admin/dashboard' },
         { name: 'License Keys', icon: Key, href: '/admin/keys' },
+        { name: 'Leads', icon: User, href: '/admin/leads' },
     ];
 
     const handleLogout = () => {

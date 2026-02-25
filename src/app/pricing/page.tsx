@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Script from 'next/script';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -12,7 +13,14 @@ import {
     CreditCard,
     Smartphone,
     Wallet,
-    Lock
+    Lock,
+    Mail,
+    User,
+    Phone,
+    MapPin,
+    Building2,
+    Calendar,
+    Send
 } from 'lucide-react';
 import OrganicFlowBackground from '../components/OrganicFlowBackground';
 
@@ -221,20 +229,81 @@ export default function PricingPage() {
     const [activePlan, setActivePlan] = useState<any>(null);
     const [checkoutStep, setCheckoutStep] = useState<'summary' | 'processing' | 'success'>('summary');
     const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
+    const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+    const [isSubmittingLead, setIsSubmittingLead] = useState(false);
+
+    const [leadForm, setLeadForm] = useState({
+        email: '',
+        phone: '',
+        businessPhone: '',
+        businessName: '',
+        businessLocation: ''
+    });
 
     const openCheckout = (plan: any) => {
         setActivePlan(plan);
         setCheckoutStep('summary');
-        setSelectedPayment(null);
+        setSelectedPayment(null); // Actually we don't need this anymore but keep for now
     };
 
-    const handlePayment = () => {
-        if (!selectedPayment) return;
+    const handleLeadSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!turnstileToken) {
+            alert('Please complete the bot check.');
+            return;
+        }
+
+        setIsSubmittingLead(true);
         setCheckoutStep('processing');
-        setTimeout(() => {
-            setCheckoutStep('success');
-        }, 2500);
+
+        try {
+            const result = await fetch('/api/leads', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...leadForm,
+                    planId: activePlan.id,
+                    durationMonths: selectedDuration.months,
+                    turnstileToken
+                }),
+            });
+
+            const data = await result.json();
+
+            if (result.ok) {
+                setCheckoutStep('success');
+            } else {
+                alert(data.error || 'Something went wrong. Please try again.');
+                setCheckoutStep('summary');
+                // Reset turnstile if failed
+                if (typeof (window as any).turnstile !== 'undefined') {
+                    (window as any).turnstile.reset();
+                }
+                setTurnstileToken(null);
+            }
+        } catch (error) {
+            console.error('Lead submission error:', error);
+            alert('Failed to submit. Check your connection.');
+            setCheckoutStep('summary');
+        } finally {
+            setIsSubmittingLead(false);
+        }
     };
+
+    const handleLeadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLeadForm({
+            ...leadForm,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    // Callback for Turnstile
+    useEffect(() => {
+        (window as any).onTurnstileSuccess = (token: string) => {
+            setTurnstileToken(token);
+        };
+    }, []);
 
     return (
         <main className="min-h-screen pt-4 pb-20 relative overflow-hidden bg-white">
@@ -502,77 +571,142 @@ export default function PricingPage() {
 
                                 <div className="p-10">
                                     {checkoutStep === 'summary' && (
-                                        <>
-                                            <div className="mb-8">
-                                                <div className="flex items-center gap-2 text-[var(--primary-teal)] mb-2">
-                                                    <Lock size={14} strokeWidth={3} />
-                                                    <span className="text-[10px] font-black uppercase tracking-widest">Secure Checkout</span>
+                                        <div className="max-h-[80vh] overflow-y-auto pr-2 custom-scrollbar">
+                                            <div className="mb-6">
+                                                <div className="flex items-center gap-2 text-[var(--primary-teal)] mb-1">
+                                                    <Calendar size={14} strokeWidth={3} />
+                                                    <span className="text-[10px] font-black uppercase tracking-widest">Plan Activation Request</span>
                                                 </div>
-                                                <h3 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-2 uppercase tracking-tight">Subscribe Now</h3>
-                                                <p className="text-sm font-medium text-[var(--text-muted)]">Order #QL-{Math.floor(1000 + Math.random() * 9000)}</p>
+                                                <h3 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-1 uppercase tracking-tight">Confirm Your Plan</h3>
+                                                <p className="text-xs font-medium text-[var(--text-muted)]">Complete the form below to initiate your {activePlan.name} activation.</p>
                                             </div>
 
-                                            <div className="bg-slate-50 rounded-3xl p-6 mb-8 border border-black/5">
-                                                <div className="flex justify-between items-center mb-4 pb-4 border-b border-black/5">
-                                                    <span className="text-xs font-black uppercase tracking-wider text-slate-400">Selected Plan</span>
+                                            <div className="bg-slate-50 rounded-3xl p-5 mb-8 border border-black/5">
+                                                <div className="flex justify-between items-center mb-3 pb-3 border-b border-black/5">
+                                                    <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Selected Tier</span>
                                                     <div className="text-right">
-                                                        <span className="block text-sm font-black text-[var(--primary-teal-dark)] uppercase">{activePlan.name} Tier</span>
-                                                        <span className="block text-[10px] font-bold text-[var(--text-muted)] uppercase">{selectedDuration.label} / Billed monthly</span>
+                                                        <span className="block text-sm font-black text-[var(--primary-teal-dark)] uppercase">{activePlan.name}</span>
+                                                        <span className="block text-[9px] font-bold text-[var(--text-muted)] uppercase">{selectedDuration.label} License</span>
                                                     </div>
                                                 </div>
-                                                <div className="flex justify-between items-start">
+                                                <div className="flex justify-between items-center">
                                                     <div className="flex flex-col">
-                                                        <span className="text-xs font-black uppercase tracking-wider text-slate-400">Total Amount</span>
-                                                        <span className="text-[9px] font-bold text-slate-400 uppercase">*Plus applicable taxes</span>
+                                                        <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Pricing Info</span>
+                                                        <span className="text-[9px] font-bold text-slate-400 uppercase">Monthly Rate</span>
                                                     </div>
                                                     <div className="text-right">
-                                                        <span className="text-xl font-black text-[var(--primary-teal)]">
-                                                            PKR {formatPKR(parsePKR(activePlan.prices[selectedDuration.id]) * selectedDuration.months)}
+                                                        <span className="text-lg font-black text-[var(--primary-teal)]">
+                                                            PKR {activePlan.prices[selectedDuration.id]} / mo
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div className="mb-8">
-                                                <label className="block text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal)] mb-4">
-                                                    Payment Method
-                                                </label>
-                                                <div className="grid grid-cols-1 gap-3">
-                                                    {paymentMethods.map((method) => (
-                                                        <button
-                                                            key={method.id}
-                                                            onClick={() => setSelectedPayment(method.id)}
-                                                            className={`flex items-center gap-4 px-5 py-4 rounded-2xl border-2 transition-all duration-300 text-left ${selectedPayment === method.id
-                                                                ? 'border-[var(--primary-teal)] bg-[var(--primary-teal)]/5 shadow-md'
-                                                                : 'border-slate-100 bg-white hover:border-slate-200'
-                                                                }`}
-                                                        >
-                                                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${selectedPayment === method.id ? 'bg-[var(--primary-teal)] text-white' : 'bg-slate-50 text-slate-400'}`}>
-                                                                <method.icon size={20} strokeWidth={2.5} />
-                                                            </div>
-                                                            <div className="flex-1">
-                                                                <span className="block text-xs font-black uppercase tracking-wider text-[var(--primary-teal-dark)]">{method.name}</span>
-                                                                <span className="block text-[10px] font-medium text-[var(--text-muted)]">{method.desc}</span>
-                                                            </div>
-                                                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${selectedPayment === method.id ? 'border-[var(--primary-teal)] bg-[var(--primary-teal)]' : 'border-slate-200'}`}>
-                                                                {selectedPayment === method.id && <Check size={12} strokeWidth={4} className="text-white" />}
-                                                            </div>
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            </div>
+                                            <form onSubmit={handleLeadSubmit} className="space-y-4">
+                                                <div className="space-y-4">
+                                                    <div className="space-y-2">
+                                                        <label className="text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal)] flex items-center gap-2">
+                                                            <Mail size={12} /> Email Address
+                                                        </label>
+                                                        <input
+                                                            required
+                                                            type="email"
+                                                            name="email"
+                                                            value={leadForm.email}
+                                                            onChange={handleLeadChange}
+                                                            placeholder="your@email.com"
+                                                            className="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-slate-100 focus:border-[var(--primary-teal)] focus:ring-0 outline-none transition-all font-bold text-sm"
+                                                        />
+                                                    </div>
 
-                                            <button
-                                                disabled={!selectedPayment}
-                                                onClick={handlePayment}
-                                                className={`w-full py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-sm transition-all duration-300 shadow-xl shadow-[var(--primary-teal)]/20 ${selectedPayment
-                                                    ? 'bg-[var(--primary-teal)] text-white hover:bg-[var(--primary-teal-dark)]'
-                                                    : 'bg-slate-100 text-slate-400 cursor-not-allowed'
-                                                    }`}
-                                            >
-                                                Pay Now
-                                            </button>
-                                        </>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                        <div className="space-y-2">
+                                                            <label className="text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal)] flex items-center gap-2">
+                                                                <Phone size={12} /> Personal Phone
+                                                            </label>
+                                                            <input
+                                                                required
+                                                                type="tel"
+                                                                name="phone"
+                                                                value={leadForm.phone}
+                                                                onChange={handleLeadChange}
+                                                                placeholder="+92 300 1234567"
+                                                                className="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-slate-100 focus:border-[var(--primary-teal)] focus:ring-0 outline-none transition-all font-bold text-sm"
+                                                            />
+                                                        </div>
+                                                        <div className="space-y-2">
+                                                            <label className="text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal)] flex items-center gap-2">
+                                                                <Building2 size={12} /> Business Phone
+                                                            </label>
+                                                            <input
+                                                                required
+                                                                type="tel"
+                                                                name="businessPhone"
+                                                                value={leadForm.businessPhone}
+                                                                onChange={handleLeadChange}
+                                                                placeholder="+92 61 1234567"
+                                                                className="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-slate-100 focus:border-[var(--primary-teal)] focus:ring-0 outline-none transition-all font-bold text-sm"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="space-y-2">
+                                                        <label className="text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal)] flex items-center gap-2">
+                                                            <Building2 size={12} /> Business Name
+                                                        </label>
+                                                        <input
+                                                            required
+                                                            type="text"
+                                                            name="businessName"
+                                                            value={leadForm.businessName}
+                                                            onChange={handleLeadChange}
+                                                            placeholder="Your Restaurant Name"
+                                                            className="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-slate-100 focus:border-[var(--primary-teal)] focus:ring-0 outline-none transition-all font-bold text-sm"
+                                                        />
+                                                    </div>
+
+                                                    <div className="space-y-2">
+                                                        <label className="text-[10px] font-black uppercase tracking-widest text-[var(--primary-teal)] flex items-center gap-2">
+                                                            <MapPin size={12} /> Business Location
+                                                        </label>
+                                                        <input
+                                                            required
+                                                            type="text"
+                                                            name="businessLocation"
+                                                            value={leadForm.businessLocation}
+                                                            onChange={handleLeadChange}
+                                                            placeholder="City, Area"
+                                                            className="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-slate-100 focus:border-[var(--primary-teal)] focus:ring-0 outline-none transition-all font-bold text-sm"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="space-y-4">
+                                                    <div className="flex justify-center py-2">
+                                                        <div
+                                                            className="cf-turnstile"
+                                                            data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'}
+                                                            data-callback="onTurnstileSuccess"
+                                                        ></div>
+                                                    </div>
+
+                                                    <button
+                                                        type="submit"
+                                                        disabled={!turnstileToken}
+                                                        className="w-full py-5 rounded-2xl bg-[var(--primary-teal)] text-white font-black uppercase tracking-[0.2em] text-sm transition-all duration-300 shadow-xl shadow-[var(--primary-teal)]/20 hover:bg-[var(--primary-teal-dark)] disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    >
+                                                        <div className="flex items-center justify-center gap-3">
+                                                            <Send size={18} />
+                                                            <span>Request Activation</span>
+                                                        </div>
+                                                    </button>
+                                                </div>
+
+                                                <p className="text-[9px] text-center text-slate-400 font-bold uppercase tracking-wider">
+                                                    Our team will contact you within 24 hours for activation
+                                                </p>
+                                            </form>
+                                        </div>
                                     )}
 
                                     {checkoutStep === 'processing' && (
@@ -588,15 +722,15 @@ export default function PricingPage() {
                                             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-8">
                                                 <Check size={40} className="text-green-500" strokeWidth={4} />
                                             </div>
-                                            <h3 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-3 uppercase tracking-tight">Welcome to Q-Line!</h3>
-                                            <p className="text-sm font-medium text-[var(--text-muted)] mb-8 leading-relaxed max-w-[260px]">
-                                                Your {activePlan.name} subscription is now active. Let's get your store started.
+                                            <h3 className="text-2xl font-black text-[var(--primary-teal-dark)] mb-3 uppercase tracking-tight">Request Received!</h3>
+                                            <p className="text-sm font-medium text-[var(--text-muted)] mb-8 leading-relaxed max-w-[280px]">
+                                                Thank you for choosing the {activePlan.name} tier. Our activation specialist will call you shortly to finalize your setup.
                                             </p>
                                             <button
                                                 onClick={() => setActivePlan(null)}
                                                 className="px-10 py-4 bg-[var(--primary-teal-dark)] text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-black transition-all"
                                             >
-                                                Go to Dashboard
+                                                Close
                                             </button>
                                         </div>
                                     )}
@@ -625,6 +759,7 @@ export default function PricingPage() {
                     </div>
                 </div>
             </div>
+            {activePlan && <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />}
         </main>
     );
 }

@@ -72,6 +72,21 @@ export async function ensureTables() {
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
             );
         `);
+        await connection.query(`
+            CREATE TABLE IF NOT EXISTS leads (
+                id VARCHAR(36) PRIMARY KEY,
+                email VARCHAR(255) NOT NULL,
+                phone VARCHAR(50) NOT NULL,
+                businessPhone VARCHAR(50),
+                businessName VARCHAR(255) NOT NULL,
+                businessLocation VARCHAR(255) NOT NULL,
+                planId VARCHAR(50) NOT NULL,
+                durationMonths INT NOT NULL,
+                status VARCHAR(50) DEFAULT 'opened',
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+        `);
         connection.release();
     } catch (e) {
         console.error('DATABASE ENSURE TABLES ERROR:', e);
